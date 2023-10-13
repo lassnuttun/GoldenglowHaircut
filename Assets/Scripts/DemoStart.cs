@@ -1,22 +1,16 @@
 ﻿using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class DemoStart : MonoBehaviour
 {
+    // 所有 Manager 的初始化都需要修改
     void Start()
     {
-        DeckManager.Instance.InitDeck();
-
-        FightCardManager.Instance.Init();
-
-        FightCardManager.Instance.DrawCards(4);
-
-        FightCardManager.Instance.UpdateHandPile();
-
-        SubGameManager.Instance.Init("DemoGame");
-
-        UIManager.Instance.ShowUI<FightUI>("FightUI");
+        PlayerInfoManager.Instance.InitPlayerInfo();
+        // 进入战斗的 Init 阶段
+        FightManager.Instance.MoveOn(FightUnitType.Init);
     }
 }

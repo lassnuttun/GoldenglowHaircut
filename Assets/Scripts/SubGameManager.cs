@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using Spine.Unity;
 using System.Threading.Tasks;
 
+// 需要与 FightManager 一起重构
 public class SubGameManager
 {
     public static SubGameManager Instance { get; private set; } = new SubGameManager();
@@ -17,19 +18,13 @@ public class SubGameManager
 
     public List<Enemy> enemyList { get; private set; }
 
-    private static AssetBundle configab;
-
-    private static AssetBundle skelab;
-
 
     public void Init(string gameID)
     {
-        configab = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/config");
-        skelab = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/skeleton");
-        string file = configab.LoadAsset(gameID).ToString();
+        string file = AssetBundleManager.LoadResource<Object>(gameID, "config").ToString();
         subgameInfo = JsonConvert.DeserializeObject<SubgameConfigInfo>(file);
 
-        var resource = skelab.LoadAsset("Goldenglow");
+        Object resource = AssetBundleManager.LoadResource<Object>("Goldenglow", "skeleton");
         GameObject playerModel = Object.Instantiate(resource) as GameObject;
         player = playerModel.AddComponent<Player>();
 
@@ -53,13 +48,13 @@ public class SubGameManager
         enemyList = new List<Enemy>();
         for (int i = 0; i < subgameInfo.enemies.Length; i++)
         {
-            resource = skelab.LoadAsset(subgameInfo.enemies[i]);
+            resource = AssetBundleManager.LoadResource<Object>(subgameInfo.enemies[i], "skeleton");
             GameObject enemyModel = Object.Instantiate(resource) as GameObject;
             enemyModel.name = subgameInfo.enemies[i];
             enemyModel.transform.position = enemyPos[i];
             Enemy enemy = enemyModel.AddComponent<Enemy>();
 
-            file = configab.LoadAsset(subgameInfo.enemies[i]).ToString();
+            file = AssetBundleManager.LoadResource<Object>(subgameInfo.enemies[i], "config").ToString();
             EnemyConfigInfo enemyConfigInfo = JsonConvert.DeserializeObject<EnemyConfigInfo>(file);
             enemy.maxHP = enemyConfigInfo.enemyHP;
             enemy.curHP = enemy.maxHP;

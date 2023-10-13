@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6565187141495069918}
   - component: {fileID: 6565187141495069912}
   - component: {fileID: 6565187141495069913}
+  - component: {fileID: 114264196632455496}
   m_Layer: 5
   m_Name: Card0
   m_TagString: Untagged
@@ -27,13 +28,13 @@ RectTransform:
   m_GameObject: {fileID: 6565187141495069919}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 0.12, y: 0.12, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1408, y: 2000}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -72,3 +73,17 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &114264196632455496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6565187141495069919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1492a45243e26c4aa37041e3e1f4158, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardID: 
+  cardName: "\u957F\u5D0E\u7D20\u4E16"

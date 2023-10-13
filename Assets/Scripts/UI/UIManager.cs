@@ -6,15 +6,12 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager Instance { get; private set; } // 直接 new 是否有区别，待验证
+    public static UIManager Instance { get; private set; }
     private Transform canvasTransTool;
     private List<UIBase> uiLoadedList; // 已加载的 UI
 
-    private static AssetBundle uiab;
-
     private void Awake()
     {
-        uiab = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/ui");
         Instance = this;
         canvasTransTool = GameObject.Find("Canvas").transform;
         uiLoadedList = new List<UIBase>();
@@ -41,11 +38,10 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            var resource = uiab.LoadAsset(ui_name);
+            Object resource = AssetBundleManager.LoadResource<Object>(ui_name, "ui");
             GameObject new_ui = Instantiate(resource, canvasTransTool) as GameObject;
             new_ui.name = ui_name;
             ui = new_ui.AddComponent<T>();
-            ui.transform.position = Vector3.zero;
             uiLoadedList.Add(ui);
         }
         return ui;
@@ -79,7 +75,7 @@ public class UIManager : MonoBehaviour
         uiLoadedList.Clear();
     }
 
-    public T GetUIScript<T>(string ui_name) where T : UIBase
+    public T GetUI<T>(string ui_name) where T : UIBase
     {
         UIBase ui = SearchLoadedUI(ui_name);
         if (ui != null)
@@ -91,9 +87,9 @@ public class UIManager : MonoBehaviour
 
     public GameObject GenerateCdBar()
     {
-        var resource = uiab.LoadAsset("cdBar");
+        Object resource = AssetBundleManager.LoadResource<Object>("cdBar", "ui");
         GameObject cdBar = Instantiate(resource, canvasTransTool) as GameObject;
-        cdBar.GetComponent<RectTransform>().localScale = new Vector3(0.1f, 0.1f);
+        cdBar.GetComponent<RectTransform>().localScale = new Vector3(0.14f, 0.14f);
         return cdBar;
     }
 }
