@@ -64,23 +64,23 @@
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Scripts\AssetBundleManager.cs" />
-    <Compile Include="Assets\Scripts\Card.cs" />
-    <Compile Include="Assets\Scripts\DeckPile.cs" />
+    <Compile Include="Assets\Scripts\Card\CardBase.cs" />
+    <Compile Include="Assets\Scripts\Card\CardDisplay.cs" />
     <Compile Include="Assets\Scripts\DemoStart.cs" />
-    <Compile Include="Assets\Scripts\DiscardPile.cs" />
-    <Compile Include="Assets\Scripts\Enemy.cs" />
-    <Compile Include="Assets\Scripts\FightCardManager.cs" />
-    <Compile Include="Assets\Scripts\FightEnemyTurn.cs" />
-    <Compile Include="Assets\Scripts\FightInit.cs" />
-    <Compile Include="Assets\Scripts\FightLose.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyBase.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyDisplay.cs" />
+    <Compile Include="Assets\Scripts\Fight\FightEnemyTurn.cs" />
+    <Compile Include="Assets\Scripts\Fight\FightInit.cs" />
+    <Compile Include="Assets\Scripts\Fight\FightLose.cs" />
+    <Compile Include="Assets\Scripts\Fight\FightPlayerTurn.cs" />
+    <Compile Include="Assets\Scripts\Fight\FightUnit.cs" />
+    <Compile Include="Assets\Scripts\Fight\FightWin.cs" />
     <Compile Include="Assets\Scripts\FightManager.cs" />
-    <Compile Include="Assets\Scripts\FightPlayerTurn.cs" />
-    <Compile Include="Assets\Scripts\FightUnit.cs" />
-    <Compile Include="Assets\Scripts\FightWin.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
-    <Compile Include="Assets\Scripts\PlayerInfoManager.cs" />
-    <Compile Include="Assets\Scripts\Power.cs" />
-    <Compile Include="Assets\Scripts\SubGameManager.cs" />
+    <Compile Include="Assets\Scripts\Miscellaneous\DeckPile.cs" />
+    <Compile Include="Assets\Scripts\Miscellaneous\DiscardPile.cs" />
+    <Compile Include="Assets\Scripts\Miscellaneous\Power.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerDisplay.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerInfoManager.cs" />
     <Compile Include="Assets\Scripts\UI\FightUI.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
     <Compile Include="Assets\Scripts\UI\UIEventTrigger.cs" />
@@ -90,6 +90,7 @@
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\Skeleton\Enemy\Blemishine\Default\BattleFront\char_423_blemsh.atlas.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\Fonts\SourceHanSansCN\LICENSE.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\Spine\version.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
@@ -110,12 +111,6 @@
     <None Include="Assets\Skeleton\Enemy\Mlynar\Default\BattleFront\char_4064_mlynar.atlas.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
-    <Reference Include="UnityEngine.Purchasing">
-      <HintPath>D:/unity_projects/Demo/Library/ScriptAssemblies/UnityEngine.Purchasing.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Purchasing">
-      <HintPath>D:/unity_projects/Demo/Library/ScriptAssemblies/UnityEditor.Purchasing.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/unity_projects/Demo/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

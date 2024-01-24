@@ -7,13 +7,13 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
-    private Transform canvasTransTool;
+    public Transform CanvasTransTool { get; private set; }
     private List<UIBase> uiLoadedList; // 已加载的 UI
 
     private void Awake()
     {
         Instance = this;
-        canvasTransTool = GameObject.Find("Canvas").transform;
+        CanvasTransTool = GameObject.Find("Canvas").transform;
         uiLoadedList = new List<UIBase>();
     }
 
@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
         else
         {
             Object resource = AssetBundleManager.LoadResource<Object>(ui_name, "ui");
-            GameObject new_ui = Instantiate(resource, canvasTransTool) as GameObject;
+            GameObject new_ui = Instantiate(resource, CanvasTransTool) as GameObject;
             new_ui.name = ui_name;
             ui = new_ui.AddComponent<T>();
             uiLoadedList.Add(ui);
@@ -83,13 +83,5 @@ public class UIManager : MonoBehaviour
             return ui.GetComponent<T>();
         }
         return null;
-    }
-
-    public GameObject GenerateCdBar()
-    {
-        Object resource = AssetBundleManager.LoadResource<Object>("cdBar", "ui");
-        GameObject cdBar = Instantiate(resource, canvasTransTool) as GameObject;
-        cdBar.GetComponent<RectTransform>().localScale = new Vector3(0.14f, 0.14f);
-        return cdBar;
     }
 }

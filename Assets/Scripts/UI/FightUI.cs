@@ -1,34 +1,80 @@
 ﻿using DG.Tweening;
-using System.Collections;
+using Newtonsoft.Json;
+using Spine.Unity;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class FightUI : UIBase
 {
-    public static readonly float cardScale = 0.12f;
+    public static readonly float CardScale = 0.12f;
 
-    private Vector2 discardPilePos;
+    private Vector2 DiscardPilePos;
 
-    private List<Card> handPile;
+    private List<CardDisplay> HandPile;
+
+    private PlayerDisplay Player;
+
+    private List<EnemyDisplay> EnemyList;
 
     void Awake()
     {
-        transform.Find("endTurn").GetComponent<Button>().onClick.AddListener(() =>
+        // AddListener 的语法还要研究一下
+        transform.Find("endTurn").GetComponent<Button>().onClick.AddListener
+        (
+            () =>
             {
-                Debug.Log("end");
-                if (FightManager.Instance.fightUnit is FightPlayerTurn)
+                if (FightManager.Instance.CurState is FightPlayerTurn)
                 {
                     FightManager.Instance.MoveOn(FightUnitType.EnemyTurn);
                 }
             }
         );
-        discardPilePos = transform.Find("discardPile").GetComponent<RectTransform>().localPosition;
-        handPile = new List<Card>();
+        DiscardPilePos = transform.Find("discardPile").GetComponent<RectTransform>().localPosition;
+        HandPile = new List<CardDisplay>();
+        EnemyList = new List<EnemyDisplay>();
     }
 
     void Start()
     {
+        Object resource = AssetBundleManager.LoadResource<Object>("Goldenglow", "skeleton");
+        GameObject playerModel = Object.Instantiate(resource) as GameObject;
+        Player = playerModel.AddComponent<PlayerDisplay>();
+
+        List<EnemyBase> Enemies = FightManager.Instance.EnemyList;
+        List<Vector3> enemyPos = new List<Vector3>();
+        switch (Enemies.Count)
+        {
+            case 1:
+                enemyPos.Add(new Vector3(5, -1.5f));
+                break;
+            case 2:
+                enemyPos.Add(new Vector3(3, -1.5f));
+                enemyPos.Add(new Vector3(6, -1.5f));
+                break;
+            case 3:
+                enemyPos.Add(new Vector3(1, -1.5f));
+                enemyPos.Add(new Vector3(3.5f, -1.5f));
+                enemyPos.Add(new Vector3(6, -1.5f));
+                break;
+        }
+
+        Object CdBarRes = AssetBundleManager.LoadResource<Object>("cdBar", "ui");
+        for (int i = 0; i < Enemies.Count; i++)
+        {
+            resource = AssetBundleManager.LoadResource<Object>(Enemies[i].EnemyID, "skeleton");
+            GameObject enemyModel = Object.Instantiate(resource) as GameObject;
+            enemyModel.transform.position = enemyPos[i];
+            EnemyDisplay enemy = enemyModel.AddComponent<EnemyDisplay>();
+            enemy.Enemy = Enemies[i];
+            enemy.SkeletonAnimation = enemyModel.GetComponent<SkeletonAnimation>();
+            GameObject cdBar = Instantiate(CdBarRes, UIManager.Instance.CanvasTransTool) as GameObject;
+            cdBar.GetComponent<RectTransform>().localScale = new Vector3(0.14f, 0.14f);
+            enemy.CdBarObj = cdBar;
+            enemy.EnemyNameText = cdBar.transform.Find("EnemyName").GetComponent<TextMeshProUGUI>();
+            EnemyList.Add(enemy);
+        }
     }
 
     void Update()
@@ -38,7 +84,7 @@ public class FightUI : UIBase
     public void UpdateHandPilePos()
     {
         Transform canvasTrans = GameObject.Find("Canvas").transform;
-        int count = FightCardManager.Instance.handPile.Count;
+        int count = FightManager.Instance.CardPiles[1].Count;
 
         // 卡牌的位置、角度排布还需要进一步修改
         float r = 900;
@@ -76,31 +122,32 @@ public class FightUI : UIBase
 
         for (int i = count - 1; i >= 0; i--)
         {
-            Object resource = AssetBundleManager.LoadResource<Object>(FightCardManager.Instance.handPile[i], "card");
+            Object resource = AssetBundleManager.LoadResource<Object>(FightManager.Instance.CardPiles[1][i].CardID, "card");
             GameObject cardObj = GameObject.Instantiate(resource, canvasTrans) as GameObject;
-            cardObj.GetComponent<RectTransform>().localScale = new Vector3(cardScale, cardScale, 1);
+            cardObj.GetComponent<RectTransform>().localScale = new Vector3(CardScale, CardScale, 1);
             cardObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(Mathf.Sin(rotations[i] * Mathf.Deg2Rad) * r, Mathf.Cos(rotations[i] * Mathf.Deg2Rad) * r + y);
             cardObj.GetComponent<RectTransform>().rotation = Quaternion.Euler(new Vector3(0, 0, -rotations[i]));
-            handPile.Add(cardObj.GetComponent<Card>());
+            cardObj.GetComponent<CardDisplay>().Card = FightManager.Instance.CardPiles[1][i];
+            HandPile.Add(cardObj.GetComponent<CardDisplay>());
         }
     }
 
-    public void MoveFromHandToDiscard(Card card)
+    public void MoveFromHandToDiscard(CardDisplay card)
     {
         card.enabled = false;
-        FightCardManager.Instance.discardPile.Add(card.cardID);
-        FightCardManager.Instance.handPile.Remove(card.cardID);
+        FightManager.Instance.CardPiles[2].Add(card.Card);
+        FightManager.Instance.CardPiles[2].Remove(card.Card);
         UpdateHandPilePos();
-        card.GetComponent<RectTransform>().DOAnchorPos(discardPilePos, 0.25f);
+        card.GetComponent<RectTransform>().DOAnchorPos(DiscardPilePos, 0.25f);
         card.transform.DOScale(0, 0.25f);
         Destroy(card.gameObject, 1);
     }
 
     public void MoveAllFromHandToDiscard()
     {
-        for ( int i = handPile.Count - 1; i >= 0; i--)
+        for ( int i = HandPile.Count - 1; i >= 0; i--)
         {
-            MoveFromHandToDiscard(handPile[i]);
+            MoveFromHandToDiscard(HandPile[i]);
         }
     }
 }

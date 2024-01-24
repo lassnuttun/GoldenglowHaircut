@@ -1,10 +1,11 @@
 ManifestFileVersion: 0
-CRC: 3618892021
+CRC: 3794087364
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
       Name: ui
-      Dependencies: {}
+      Dependencies:
+        Dependency_0: font
     Info_1:
       Name: skeleton
       Dependencies: {}
@@ -13,4 +14,7 @@ AssetBundleManifest:
       Dependencies: {}
     Info_3:
       Name: card
+      Dependencies: {}
+    Info_4:
+      Name: font
       Dependencies: {}

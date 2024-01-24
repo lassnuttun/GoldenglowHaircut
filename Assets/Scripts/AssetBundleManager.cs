@@ -6,7 +6,7 @@ public class AssetBundleManager
 {
     private static AssetBundle assetBundle = null;
 
-    private static Dictionary<string, AssetBundle>DicAssetBundle = new Dictionary<string, AssetBundle>();
+    private static Dictionary<string, AssetBundle> DicAssetBundle = new Dictionary<string, AssetBundle>();
 
     public static T LoadResource<T>(string assetBundleName, string assetBundleGroupName) where T : Object
     {
