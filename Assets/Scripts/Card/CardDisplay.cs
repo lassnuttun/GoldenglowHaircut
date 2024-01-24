@@ -32,17 +32,24 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         CardCostText.text = Card.CardCost.ToString();
     }
 
+    
+    private Vector3 originalPosition;
     public void OnBeginDrag(PointerEventData eventData)
     {
+        originalPosition = transform.position;
+        transform.position = eventData.position;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        transform.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        transform.position = originalPosition;
     }
+
 
     private int index;
     private Vector3 eulerAngle;
