@@ -6,6 +6,7 @@ public class FightEnemyTurn : FightUnit
 {
     public override void Init()
     {
+        Debug.Log("Fight Enemy Turn");
         UIManager.Instance.GetUI<FightUI>("FightUI").MoveAllFromHandToDiscard();
     }
 

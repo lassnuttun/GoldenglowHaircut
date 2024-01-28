@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2335308031
+CRC: 1154715554
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3affa65a7817c9e7c2330a92ec70d611
+    Hash: dc29b9fe5c0aee2414fb90e4612114d2
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 62734d56b3ec1c2c8d70f473ada508c4
+    Hash: 11fa998289e87f87fa347e964598e670
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -14,8 +14,6 @@ ClassTypes:
 - Class: 21
   Script: {instanceID: 0}
 - Class: 28
-  Script: {instanceID: 0}
-- Class: 48
   Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
@@ -27,8 +25,6 @@ ClassTypes:
   Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
 - Class: 115
   Script: {instanceID: 0}
-- Class: 128
-  Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
 - Class: 222
@@ -39,4 +35,5 @@ Assets:
 - Assets/Prefabs/Card/Card2.prefab
 - Assets/Prefabs/Card/Card1.prefab
 - Assets/Prefabs/Card/Card0.prefab
-Dependencies: []
+Dependencies:
+- D:/unity_projects/Demo/AssetBundles/StandaloneWindows/font

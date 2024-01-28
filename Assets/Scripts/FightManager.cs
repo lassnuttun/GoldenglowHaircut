@@ -33,10 +33,12 @@ public class FightManager : MonoBehaviour
         MaxPW = PlayerInfoManager.Instance.MaxPw; 
         CurPW = MaxPW; 
         DrawCount = PlayerInfoManager.Instance.DrawCount;
-        CardPiles = new List<List<CardBase>>(3);
-        CardPiles.Add(PlayerInfoManager.Instance.Deck);
-        CardPiles.Add(new List<CardBase>());
-        CardPiles.Add(new List<CardBase>());
+        CardPiles = new List<List<CardBase>>(3)
+        {
+            PlayerInfoManager.Instance.Deck,
+            new List<CardBase>(),
+            new List<CardBase>()
+        };
         Shuffle();
     }
 
@@ -68,6 +70,7 @@ public class FightManager : MonoBehaviour
 
     public void DrawCards(int count)
     {
+        Debug.Log("Draw Cards");
         count = Mathf.Min(count, MaxHandPileCount - CardPiles[1].Count);
         if (count <= 0)
         {
@@ -121,7 +124,7 @@ public class FightManager : MonoBehaviour
     }
 }
 
-public class SubgameConfigInfo
+sealed class SubgameConfigInfo
 {
     public string subgameID;
 
@@ -130,7 +133,7 @@ public class SubgameConfigInfo
     public string[] enemies;
 }
 
-public class EnemyConfigInfo
+sealed class EnemyConfigInfo
 {
     public string enemyID;
 

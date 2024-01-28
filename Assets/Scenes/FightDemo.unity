@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 1391162106}
   - component: {fileID: 1391162108}
   m_Layer: 0
-  m_Name: game
+  m_Name: Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -415,6 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e2b15f92be1b9748bc35092f1794cbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Seed: 
 --- !u!114 &1391162108
 MonoBehaviour:
   m_ObjectHideFlags: 0

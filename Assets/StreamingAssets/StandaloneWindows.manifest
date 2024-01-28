@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3794087364
+CRC: 1486309857
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -14,7 +14,8 @@ AssetBundleManifest:
       Dependencies: {}
     Info_3:
       Name: card
-      Dependencies: {}
+      Dependencies:
+        Dependency_0: font
     Info_4:
       Name: font
       Dependencies: {}
