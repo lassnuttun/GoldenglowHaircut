@@ -52,7 +52,8 @@ public class FightManager : MonoBehaviour
         {
             file = AssetBundleManager.LoadResource<Object>(gameConfig.enemies[i], "config").ToString();
             EnemyConfigInfo enemyConfig = JsonConvert.DeserializeObject<EnemyConfigInfo>(file);
-            EnemyList.Add(new EnemyBase(enemyConfig.enemyID, enemyConfig.enemyName, "NULL", enemyConfig.enemyHP, enemyConfig.enemySP));
+            // EnemyList.Add(new EnemyBase(enemyConfig.enemyID, enemyConfig.enemyName, "NULL", enemyConfig.enemyHP, enemyConfig.enemySP));
+            EnemyList.Add(new Mlynar(enemyConfig.enemyID, enemyConfig.enemyName, "NULL", enemyConfig.enemyHP, enemyConfig.enemySP));
         }
     }
 
@@ -70,7 +71,6 @@ public class FightManager : MonoBehaviour
 
     public void DrawCards(int count)
     {
-        Debug.Log("Draw Cards");
         count = Mathf.Min(count, MaxHandPileCount - CardPiles[1].Count);
         if (count <= 0)
         {
@@ -79,9 +79,9 @@ public class FightManager : MonoBehaviour
 
         if (count >= CardPiles[0].Count)
         {
+            count -= CardPiles[0].Count;
             CardPiles[1].AddRange(CardPiles[0]);
             CardPiles[0].Clear();
-            count -= CardPiles[0].Count;
             CardPiles[0].AddRange(CardPiles[2]);
             CardPiles[2].Clear();
             Shuffle();
@@ -139,7 +139,7 @@ sealed class EnemyConfigInfo
 
     public string enemyName;
 
-    public uint enemyHP;
+    public int enemyHP;
 
-    public uint enemySP;
+    public int enemySP;
 }

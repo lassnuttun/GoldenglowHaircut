@@ -21,7 +21,7 @@ public class EnemyDisplay : MonoBehaviour
     {
     }
 
-    public void ShowEnemy()
+    public virtual void ShowEnemy()
     {
         EnemyNameText.text = Enemy.EnemyName;
 
@@ -32,5 +32,24 @@ public class EnemyDisplay : MonoBehaviour
         hpFill.fillAmount = (float)Enemy.EnemyCurHP / (float)Enemy.EnemyMaxHP;
         TextMeshProUGUI hpText = CdBarObj.transform.Find("hpText").GetComponent<TextMeshProUGUI>();
         hpText.text = Enemy.EnemyCurHP.ToString() + "/" + Enemy.EnemyMaxHP.ToString();
+    }
+
+    public virtual void Move1() { }
+    public virtual void Move2() { }
+    public virtual void Move3() { }
+    public virtual void Move4() { }
+    public virtual void Move5() { }
+
+    public void HitBy(CardBase card, out int deltaHP, out int deltaSP) 
+    {
+        deltaHP = card.CardHP;
+        deltaSP = card.CardSP;
+    }
+
+    public virtual void ChangeState(CardBase card) 
+    {
+        HitBy(card, out int deltaHP, out int deltaSP);
+        Enemy.IncHP(deltaHP); 
+        Enemy.IncSP(deltaSP);
     }
 }

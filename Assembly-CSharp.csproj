@@ -69,6 +69,8 @@
     <Compile Include="Assets\Scripts\DemoStart.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyBase.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyDisplay.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Mlynar.cs" />
+    <Compile Include="Assets\Scripts\Enemy\MlynarDisplay.cs" />
     <Compile Include="Assets\Scripts\Fight\FightEnemyTurn.cs" />
     <Compile Include="Assets\Scripts\Fight\FightInit.cs" />
     <Compile Include="Assets\Scripts\Fight\FightLose.cs" />

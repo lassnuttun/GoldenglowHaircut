@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using Newtonsoft.Json;
 using Spine.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
@@ -51,6 +52,7 @@ public class FightUI : UIBase
         switch (Enemies.Count)
         {
             case 1:
+                enemyPos.Add(new Vector2(-385.0f, -90.0f));
                 break;
             case 2:
                 break;
@@ -67,7 +69,15 @@ public class FightUI : UIBase
             resource = AssetBundleManager.LoadResource<Object>(Enemies[i].EnemyID, "skeleton");
             GameObject enemyModel = Instantiate(resource, canvas) as GameObject;
             enemyModel.GetComponent<RectTransform>().anchoredPosition = enemyPos[i];
-            EnemyDisplay enemy = enemyModel.AddComponent<EnemyDisplay>();
+            EnemyDisplay enemy;
+            if (Enemies[i] is Mlynar)
+            {
+                enemy = enemyModel.AddComponent<MlynarDisplay>();
+            }
+            else
+            {
+                enemy = enemyModel.AddComponent<EnemyDisplay>();
+            }
             enemy.Enemy = Enemies[i];
             enemy.SkelGrap = enemyModel.GetComponent<SkeletonGraphic>();
             GameObject cdBar = Instantiate(CdBarRes, enemyModel.transform) as GameObject;
@@ -83,7 +93,7 @@ public class FightUI : UIBase
 
     public void UpdateHandPilePos()
     {
-        Transform FightUITrans = GameObject.Find("Canvas").transform;
+        Transform canvas = GameObject.Find("Canvas").transform;
         int count = FightManager.Instance.CardPiles[1].Count;
 
         // 卡牌的位置、角度排布还需要进一步修改
@@ -123,7 +133,7 @@ public class FightUI : UIBase
         for (int i = count - 1; i >= 0; i--)
         {
             Object resource = AssetBundleManager.LoadResource<Object>(FightManager.Instance.CardPiles[1][i].CardID, "card");
-            GameObject cardObj = Instantiate(resource, FightUITrans) as GameObject;
+            GameObject cardObj = Instantiate(resource, canvas) as GameObject;
             cardObj.GetComponent<RectTransform>().localScale = new Vector3(CardScale, CardScale, 1);
             cardObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(Mathf.Sin(rotations[i] * Mathf.Deg2Rad) * r, Mathf.Cos(rotations[i] * Mathf.Deg2Rad) * r + y);
             cardObj.GetComponent<RectTransform>().rotation = Quaternion.Euler(new Vector3(0, 0, -rotations[i]));
@@ -154,6 +164,19 @@ public class FightUI : UIBase
             card.transform.DOScale(0, 0.25f);
             Destroy(card.gameObject, 1);
         }
+        HandPile.Clear();
         UpdateHandPilePos();
+    }
+
+    public IEnumerator EnemyActionDisplay()
+    {
+        foreach (var enemy in EnemyList)
+        {
+            Debug.Log(enemy.Enemy.EnemyName);
+            enemy.Move1();
+            yield return new WaitForSeconds(3.0f);
+        }
+        FightManager.Instance.MoveOn(FightUnitType.PlayerTurn);
+        yield break;
     }
 }

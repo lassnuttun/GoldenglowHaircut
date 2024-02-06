@@ -7,8 +7,13 @@ public class FightEnemyTurn : FightUnit
     public override void Init()
     {
         Debug.Log("Fight Enemy Turn");
-        UIManager.Instance.GetUI<FightUI>("FightUI").MoveAllFromHandToDiscard();
+        var fightUI = UIManager.Instance.GetUI<FightUI>("FightUI");
+        fightUI.MoveAllFromHandToDiscard();
+        fightUI.StartCoroutine(fightUI.EnemyActionDisplay());
     }
 
-    public override void OnUpdate() { }
+    public override void OnUpdate() 
+    {
+        base.OnUpdate();
+    }
 }
