@@ -1,9 +1,13 @@
-﻿using System.Collections;
+﻿using Spine.Unity;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Mlynar : EnemyBase
 {
+    public MlynarDisplay Display { get; private set; }
     public int ThornVal { get; private set; }
     public int ThornInc { get; private set; }
 
@@ -13,9 +17,28 @@ public class Mlynar : EnemyBase
         ThornInc = 3;
     }
 
+    public override void BindDisplayComponent(GameObject enemyModel)
+    {
+        Display = enemyModel.AddComponent<MlynarDisplay>();
+        Display.SkelGrap = enemyModel.GetComponent<SkeletonGraphic>();
+        Object CdBarRes = AssetBundleManager.LoadResource<Object>("cdBar", "ui");
+        GameObject cdBar = GameObject.Instantiate(CdBarRes, enemyModel.transform) as GameObject;
+        Display.CdBarObj = cdBar;
+        Display.EnemyNameText = cdBar.transform.Find("EnemyName").GetComponent<TextMeshProUGUI>();
+
+        Display.EnemyNameText.text = EnemyName;
+        Display.SkelGrap.AnimationState.SetAnimation(0, "Start", false);
+        Display.SkelGrap.AnimationState.AddAnimation(0, "Idle", true, 0);
+
+        Display.UpdateDisplayInfo(EnemyHP, EnemySP);
+    }
+
     public override void Move1()
     {
         ThornVal += ThornInc;
+        EnemyHP.Inc(20);
+        Display.Move1();
+        Display.UpdateDisplayInfo(EnemyHP, EnemySP);
     }
 
     public override void Move2()

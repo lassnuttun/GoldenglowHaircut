@@ -18,8 +18,6 @@ public class FightUI : UIBase
 
     private PlayerDisplay Player;
 
-    private List<EnemyDisplay> EnemyList;
-
     void Awake()
     {
         // AddListener 的语法还要研究一下
@@ -35,7 +33,6 @@ public class FightUI : UIBase
         );
         DiscardPilePos = transform.Find("discardPile").GetComponent<RectTransform>().position;
         HandPile = new List<CardDisplay>();
-        EnemyList = new List<EnemyDisplay>();
     }
 
     void Start()
@@ -48,7 +45,7 @@ public class FightUI : UIBase
 
         List<EnemyBase> Enemies = FightManager.Instance.EnemyList;
         List<Vector2> enemyPos = new List<Vector2>();
-        // case 1, case 2 的位置需要修改
+        // case 2 的位置需要修改
         switch (Enemies.Count)
         {
             case 1:
@@ -62,28 +59,12 @@ public class FightUI : UIBase
                 enemyPos.Add(new Vector2(-192.0f, -90.0f));
                 break;
         }
-
-        Object CdBarRes = AssetBundleManager.LoadResource<Object>("cdBar", "ui");
         for (int i = 0; i < Enemies.Count; i++)
         {
             resource = AssetBundleManager.LoadResource<Object>(Enemies[i].EnemyID, "skeleton");
             GameObject enemyModel = Instantiate(resource, canvas) as GameObject;
             enemyModel.GetComponent<RectTransform>().anchoredPosition = enemyPos[i];
-            EnemyDisplay enemy;
-            if (Enemies[i] is Mlynar)
-            {
-                enemy = enemyModel.AddComponent<MlynarDisplay>();
-            }
-            else
-            {
-                enemy = enemyModel.AddComponent<EnemyDisplay>();
-            }
-            enemy.Enemy = Enemies[i];
-            enemy.SkelGrap = enemyModel.GetComponent<SkeletonGraphic>();
-            GameObject cdBar = Instantiate(CdBarRes, enemyModel.transform) as GameObject;
-            enemy.CdBarObj = cdBar;
-            enemy.EnemyNameText = cdBar.transform.Find("EnemyName").GetComponent<TextMeshProUGUI>();
-            EnemyList.Add(enemy);
+            Enemies[i].BindDisplayComponent(enemyModel);
         }
     }
 
@@ -166,17 +147,5 @@ public class FightUI : UIBase
         }
         HandPile.Clear();
         UpdateHandPilePos();
-    }
-
-    public IEnumerator EnemyActionDisplay()
-    {
-        foreach (var enemy in EnemyList)
-        {
-            Debug.Log(enemy.Enemy.EnemyName);
-            enemy.Move1();
-            yield return new WaitForSeconds(3.0f);
-        }
-        FightManager.Instance.MoveOn(FightUnitType.PlayerTurn);
-        yield break;
     }
 }

@@ -7,30 +7,29 @@ public abstract class EnemyBase
     public string EnemyID { get; private set; }
     public string EnemyName { get; private set; }
     public string EnemyDescription { get; private set; }
-    public int EnemyMaxHP { get; private set; }
-    public int EnemyCurHP { get; private set; }
-    public int EnemyMaxSP { get; private set; }
-    public int EnemyCurSP { get; private set; }
+    
+    public ConditionBar EnemyHP { get; private set; }
+    public ConditionBar EnemySP { get; private set; }
 
     public EnemyBase(string enemyID, string enemyName, string enemyDescription, int enemyMaxHP, int enemyMaxSP)
     {
         EnemyID = enemyID;
         EnemyName = enemyName;
         EnemyDescription = enemyDescription;
-        EnemyMaxHP = enemyMaxHP;
-        EnemyCurHP = EnemyMaxHP;
-        EnemyMaxSP = enemyMaxSP;
-        EnemyCurSP = 0;
+        EnemyHP = new ConditionBar(enemyMaxHP, 0);
+        EnemySP = new ConditionBar(enemyMaxSP, 0);
     }
-
-    public void IncHP(int deltaHP)
+    public abstract void BindDisplayComponent(GameObject gameObject);
+    public void HitBy(CardBase card, out int deltaHP, out int deltaSP)
     {
-        EnemyCurHP = Mathf.Min(EnemyMaxHP, Mathf.Max(EnemyCurHP + deltaHP, 0));
+        deltaHP = card.CardHP;
+        deltaSP = card.CardSP;
     }
-
-    public void IncSP(int deltaSP) 
+    public virtual void ChangeState(CardBase card)
     {
-        EnemyCurSP = Mathf.Min(EnemyMaxSP, Mathf.Max(EnemyCurSP + deltaSP, 0));
+        HitBy(card, out int deltaHP, out int deltaSP);
+        EnemyHP.Inc(deltaHP);
+        EnemySP.Inc(deltaSP);
     }
 
     public abstract void Move1();

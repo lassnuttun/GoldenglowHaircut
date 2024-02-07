@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\Card\CardBase.cs" />
     <Compile Include="Assets\Scripts\Card\CardDisplay.cs" />
     <Compile Include="Assets\Scripts\DemoStart.cs" />
+    <Compile Include="Assets\Scripts\Enemy\ConditionBar.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyBase.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyDisplay.cs" />
     <Compile Include="Assets\Scripts\Enemy\Mlynar.cs" />

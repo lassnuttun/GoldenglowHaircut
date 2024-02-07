@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -52,8 +53,10 @@ public class FightManager : MonoBehaviour
         {
             file = AssetBundleManager.LoadResource<Object>(gameConfig.enemies[i], "config").ToString();
             EnemyConfigInfo enemyConfig = JsonConvert.DeserializeObject<EnemyConfigInfo>(file);
-            // EnemyList.Add(new EnemyBase(enemyConfig.enemyID, enemyConfig.enemyName, "NULL", enemyConfig.enemyHP, enemyConfig.enemySP));
-            EnemyList.Add(new Mlynar(enemyConfig.enemyID, enemyConfig.enemyName, "NULL", enemyConfig.enemyHP, enemyConfig.enemySP));
+            if (enemyConfig.enemyID == "Mlynar")
+            {
+                EnemyList.Add(new Mlynar(enemyConfig.enemyID, enemyConfig.enemyName, "NULL", enemyConfig.enemyHP, enemyConfig.enemySP));
+            }
         }
     }
 
@@ -63,9 +66,7 @@ public class FightManager : MonoBehaviour
         {
             int j = Random.Range(0, i + 1);
             // 不同子类交换是否会导致问题
-            CardBase tmp = CardPiles[0][i];
-            CardPiles[0][i] = CardPiles[0][j];
-            CardPiles[0][j] = tmp;
+            (CardPiles[0][j], CardPiles[0][i]) = (CardPiles[0][i], CardPiles[0][j]);
         }
     }
 
@@ -121,6 +122,17 @@ public class FightManager : MonoBehaviour
         {
             CurState.OnUpdate();
         }
+    }
+
+    public IEnumerator EnemyAction()
+    {
+        foreach (var enemy in EnemyList)
+        {
+            enemy.Move1();
+            yield return new WaitForSeconds(3.0f);
+        }
+        Instance.MoveOn(FightUnitType.PlayerTurn);
+        yield break;
     }
 }
 
