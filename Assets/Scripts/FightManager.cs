@@ -80,8 +80,12 @@ public class FightManager : MonoBehaviour
 
         if (count >= CardPiles[0].Count)
         {
-            count -= CardPiles[0].Count;
-            CardPiles[1].AddRange(CardPiles[0]);
+            for (int i = CardPiles[0].Count - 1; i >= 0; i--)
+            {
+                CardPiles[1].Add(CardPiles[0][i]);
+                UIManager.Instance.GetUI<FightUI>("FightUI").AddCard();
+                count--;
+            }
             CardPiles[0].Clear();
             CardPiles[0].AddRange(CardPiles[2]);
             CardPiles[2].Clear();
@@ -93,8 +97,23 @@ public class FightManager : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             CardPiles[1].Add(CardPiles[0][len - i - 1]);
+            UIManager.Instance.GetUI<FightUI>("FightUI").AddCard();
         }
         CardPiles[0].RemoveRange(len - count, count);
+    }
+
+    public void RemoveCard(int index)
+    {
+        int count = Instance.CardPiles[1].Count;
+        if (index < 0 || index >= count)
+        {
+            return;
+        }
+
+        CardBase card = CardPiles[1][index];
+        CardPiles[1].RemoveAt(index);
+        CardPiles[2].Add(card);
+        UIManager.Instance.GetUI<FightUI>("FightUI").RemoveCard(index);
     }
 
     public void MoveOn(FightUnitType type)
@@ -129,7 +148,7 @@ public class FightManager : MonoBehaviour
         foreach (var enemy in EnemyList)
         {
             enemy.Move1();
-            yield return new WaitForSeconds(3.0f);
+            yield return new WaitForSeconds(1.5f);
         }
         Instance.MoveOn(FightUnitType.PlayerTurn);
         yield break;

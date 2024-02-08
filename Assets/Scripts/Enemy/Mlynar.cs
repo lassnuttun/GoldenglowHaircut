@@ -36,7 +36,7 @@ public class Mlynar : EnemyBase
     public override void Move1()
     {
         ThornVal += ThornInc;
-        EnemyHP.Inc(20);
+        EnemySP.Inc(10);
         Display.Move1();
         Display.UpdateDisplayInfo(EnemyHP, EnemySP);
     }

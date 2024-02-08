@@ -28,5 +28,10 @@ public class EnemyDisplay : MonoBehaviour
         hpFill.fillAmount = (float)EnemyHP.CurValue / (float)EnemyHP.MaxValue;
         TextMeshProUGUI hpText = CdBarObj.transform.Find("hpText").GetComponent<TextMeshProUGUI>();
         hpText.text = EnemyHP.CurValue.ToString() + "/" + EnemyHP.MaxValue.ToString();
+
+        Image spFill = CdBarObj.transform.Find("spBar").Find("fill").GetComponent<Image>();
+        spFill.fillAmount = (float)EnemySP.CurValue / (float)EnemySP.MaxValue;
+        TextMeshProUGUI spText = CdBarObj.transform.Find("spText").GetComponent<TextMeshProUGUI>();
+        spText.text = EnemySP.CurValue.ToString() + "/" + EnemySP.MaxValue.ToString();
     }
 }

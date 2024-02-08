@@ -7,8 +7,11 @@ public class FightEnemyTurn : FightUnit
     public override void Init()
     {
         Debug.Log("Fight Enemy Turn");
-        var fightUI = UIManager.Instance.GetUI<FightUI>("FightUI");
-        fightUI.MoveAllFromHandToDiscard();
+        int count = FightManager.Instance.CardPiles[1].Count;
+        for (int i = count - 1; i >= 0; i--)
+        {
+            FightManager.Instance.RemoveCard(i);
+        }
         FightManager.Instance.StartCoroutine(FightManager.Instance.EnemyAction());
     }
 
