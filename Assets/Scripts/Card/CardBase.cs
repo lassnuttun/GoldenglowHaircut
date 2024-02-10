@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// 卡牌基类
 public class CardBase
 {
+    public CardDisplay Display { get; private set; }
     public string CardID { get; private set; }
     public string CardName { get; private set; }
     public string CardDescription { get; private set; }
@@ -30,5 +30,13 @@ public class CardBase
         CardCost = cardCost;
         CardHP = cardHP;
         CardSP = cardSP;
+    }
+
+    public void BindDisplayComponent(GameObject cardModel)
+    {
+        Display = cardModel.GetComponent<CardDisplay>();
+        Display.CardNameText.text = CardName;
+        Display.CardCostText.text = CardCost.ToString();
+        Display.CardDescriptionText.text = CardDescription;
     }
 }

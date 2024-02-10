@@ -15,8 +15,6 @@ public class FightUI : UIBase
     private Vector3 DeckPilePos;
     private Vector3 DiscardPilePos;
 
-    private List<CardDisplay> HandPile;
-
     private PlayerDisplay Player;
 
     void Awake()
@@ -33,7 +31,6 @@ public class FightUI : UIBase
         );
         DeckPilePos = transform.Find("deckPile").GetComponent<RectTransform>().position;
         DiscardPilePos = transform.Find("discardPile").GetComponent<RectTransform>().position;
-        HandPile = new List<CardDisplay>();
     }
 
     void Start()
@@ -69,9 +66,7 @@ public class FightUI : UIBase
         }
     }
 
-    void Update()
-    {
-    }
+    void Update() { }
 
     private List<float> CardRotation(int count)
     {
@@ -119,51 +114,41 @@ public class FightUI : UIBase
     public void AddCard()
     {
         Transform canvas = GameObject.Find("Canvas").transform;
-        int count = FightManager.Instance.CardPiles[1].Count;
-
+        List<CardBase> HandPile = FightManager.Instance.CardPiles[1];
+        int count = HandPile.Count;
 
         List<float> rotations = CardRotation(count);
 
-        RectTransform rectTransform;
-        for (int i = count - 2; i >= 0; i--)
-        {
-            rectTransform = HandPile[i].GetComponent<RectTransform>();
-            rectTransform.DOAnchorPos(CardPosition(rotations[i]), 0.5f);
-            rectTransform.DOLocalRotate(new Vector3(0, 0, -rotations[i]), 0.5f);
-        }
-        
-        Object resource = AssetBundleManager.LoadResource<Object>(FightManager.Instance.CardPiles[1][count - 1].CardID, "card");
+        Object resource = AssetBundleManager.LoadResource<Object>(HandPile[count - 1].CardID, "card");
         GameObject cardObj = Instantiate(resource, canvas) as GameObject;
-        rectTransform = cardObj.GetComponent<RectTransform>();
+        HandPile[count - 1].BindDisplayComponent(cardObj);
+        RectTransform rectTransform = cardObj.GetComponent<RectTransform>();
         rectTransform.localScale = new Vector3(0, 0, 0);
         rectTransform.position = DeckPilePos;
-        rectTransform.DOAnchorPos(CardPosition(rotations[count - 1]), 0.5f);
-        rectTransform.DOScale(CardScale, 0.5f);
-        rectTransform.DORotate(new Vector3(0, 0, -rotations[count - 1]), 0.5f);
-        cardObj.GetComponent<CardDisplay>().Card = FightManager.Instance.CardPiles[1][count - 1];
-        HandPile.Add(cardObj.GetComponent<CardDisplay>());
+
+        for (int i = count - 1; i >= 0; i--)
+        {
+            rectTransform = HandPile[i].Display.GetComponent<RectTransform>();
+            rectTransform.DOAnchorPos(CardPosition(rotations[i]), 0.5f);
+            rectTransform.DOScale(CardScale, 0.5f);
+            rectTransform.DOLocalRotate(new Vector3(0, 0, -rotations[i]), 0.5f);
+        }
     }
 
-    public void RemoveCard(int index)
+    public void RemoveCard(CardDisplay card)
     {
-        int count = FightManager.Instance.CardPiles[1].Count;
-        if (index < 0 || index > count)
-        {
-            return;
-        }
-
-        CardDisplay card = HandPile[index];
-        HandPile.RemoveAt(index);
         card.enabled = false;
         RectTransform rectTransform = card.GetComponent<RectTransform>();
         rectTransform.DOMove(DiscardPilePos, 0.5f);
         rectTransform.DOScale(0, 0.5f).OnComplete(() => { Destroy(card.gameObject, 1); });
 
+        List<CardBase> HandPile = FightManager.Instance.CardPiles[1];
+        int count = HandPile.Count;
         List<float> rotations = CardRotation(count);
 
         for (int i = 0; i < count; i++)
         {
-            rectTransform = HandPile[i].GetComponent<RectTransform>();
+            rectTransform = HandPile[i].Display.GetComponent<RectTransform>();
             rectTransform.DOAnchorPos(CardPosition(rotations[i]), 0.5f);
             rectTransform.DOLocalRotate(new Vector3(0, 0, -rotations[i]), 0.5f);
         }

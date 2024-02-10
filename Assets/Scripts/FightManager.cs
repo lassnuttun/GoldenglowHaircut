@@ -70,12 +70,12 @@ public class FightManager : MonoBehaviour
         }
     }
 
-    public void DrawCards(int count)
+    public IEnumerator DrawCards(int count)
     {
         count = Mathf.Min(count, MaxHandPileCount - CardPiles[1].Count);
         if (count <= 0)
         {
-            return;
+            yield break;
         }
 
         if (count >= CardPiles[0].Count)
@@ -98,6 +98,7 @@ public class FightManager : MonoBehaviour
         {
             CardPiles[1].Add(CardPiles[0][len - i - 1]);
             UIManager.Instance.GetUI<FightUI>("FightUI").AddCard();
+            yield return new WaitForSeconds(1.5f);
         }
         CardPiles[0].RemoveRange(len - count, count);
     }
@@ -113,7 +114,7 @@ public class FightManager : MonoBehaviour
         CardBase card = CardPiles[1][index];
         CardPiles[1].RemoveAt(index);
         CardPiles[2].Add(card);
-        UIManager.Instance.GetUI<FightUI>("FightUI").RemoveCard(index);
+        UIManager.Instance.GetUI<FightUI>("FightUI").RemoveCard(card.Display);
     }
 
     public void MoveOn(FightUnitType type)

@@ -6,7 +6,6 @@ using System;
 
 public class EnemyDisplay : MonoBehaviour
 {
-    // public EnemyBase Enemy;
     public TextMeshProUGUI EnemyNameText;
     // public TextMeshProUGUI EnemyDescriptionText;
     public SkeletonGraphic SkelGrap;

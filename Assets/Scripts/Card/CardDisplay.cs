@@ -8,29 +8,14 @@ using TMPro;
 
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public CardBase Card;
     public TextMeshProUGUI CardNameText;
     public TextMeshProUGUI CardDescriptionText;
     public TextMeshProUGUI CardCostText;
     public Image CardImage;
 
-    void Start()
-    {
-        ShowCard();
-    }
+    void Start() { }
 
-    void Update()
-    {
-
-    }
-
-    public void ShowCard()
-    {
-        // Debug.Log(Card.CardName);
-        CardNameText.text = Card.CardName;
-        CardDescriptionText.text = Card.CardDescription;
-        CardCostText.text = Card.CardCost.ToString();
-    }
+    void Update() { }
 
     
     private Vector3 originalPosition;
