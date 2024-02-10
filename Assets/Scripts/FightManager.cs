@@ -77,13 +77,14 @@ public class FightManager : MonoBehaviour
         {
             yield break;
         }
-
+        FightUI fightUI = UIManager.Instance.GetUI<FightUI>("FightUI");
         if (count >= CardPiles[0].Count)
         {
             for (int i = CardPiles[0].Count - 1; i >= 0; i--)
             {
                 CardPiles[1].Add(CardPiles[0][i]);
-                UIManager.Instance.GetUI<FightUI>("FightUI").AddCard();
+                fightUI.AddCard();
+                yield return new WaitForSeconds(FightUI.CardInterval);
                 count--;
             }
             CardPiles[0].Clear();
@@ -97,10 +98,11 @@ public class FightManager : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             CardPiles[1].Add(CardPiles[0][len - i - 1]);
-            UIManager.Instance.GetUI<FightUI>("FightUI").AddCard();
-            yield return new WaitForSeconds(1.5f);
+            fightUI.AddCard();
+            yield return new WaitForSeconds(FightUI.CardInterval);
         }
         CardPiles[0].RemoveRange(len - count, count);
+        yield break;
     }
 
     public void RemoveCard(int index)

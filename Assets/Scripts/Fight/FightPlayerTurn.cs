@@ -8,7 +8,6 @@ public class FightPlayerTurn : FightUnit
     {
         Debug.Log("Fight Player Turn");
         FightManager.Instance.CurPW = FightManager.Instance.MaxPW;
-        // FightManager.Instance.DrawCards(FightManager.Instance.DrawCount);
         FightManager.Instance.StartCoroutine(FightManager.Instance.DrawCards(FightManager.Instance.DrawCount));
     }
 

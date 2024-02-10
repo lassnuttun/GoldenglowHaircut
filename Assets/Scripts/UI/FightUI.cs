@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class FightUI : UIBase
 {
     public static readonly float CardScale = 0.12f;
+    public static readonly float CardInterval = 0.25f;
 
     private Vector3 DeckPilePos;
     private Vector3 DiscardPilePos;
@@ -129,9 +130,9 @@ public class FightUI : UIBase
         for (int i = count - 1; i >= 0; i--)
         {
             rectTransform = HandPile[i].Display.GetComponent<RectTransform>();
-            rectTransform.DOAnchorPos(CardPosition(rotations[i]), 0.5f);
-            rectTransform.DOScale(CardScale, 0.5f);
-            rectTransform.DOLocalRotate(new Vector3(0, 0, -rotations[i]), 0.5f);
+            rectTransform.DOAnchorPos(CardPosition(rotations[i]), CardInterval);
+            rectTransform.DOScale(CardScale, CardInterval);
+            rectTransform.DOLocalRotate(new Vector3(0, 0, -rotations[i]), CardInterval);
         }
     }
 
@@ -139,8 +140,8 @@ public class FightUI : UIBase
     {
         card.enabled = false;
         RectTransform rectTransform = card.GetComponent<RectTransform>();
-        rectTransform.DOMove(DiscardPilePos, 0.5f);
-        rectTransform.DOScale(0, 0.5f).OnComplete(() => { Destroy(card.gameObject, 1); });
+        rectTransform.DOMove(DiscardPilePos, CardInterval);
+        rectTransform.DOScale(0, CardInterval).OnComplete(() => { Destroy(card.gameObject, 1); });
 
         List<CardBase> HandPile = FightManager.Instance.CardPiles[1];
         int count = HandPile.Count;
@@ -149,8 +150,8 @@ public class FightUI : UIBase
         for (int i = 0; i < count; i++)
         {
             rectTransform = HandPile[i].Display.GetComponent<RectTransform>();
-            rectTransform.DOAnchorPos(CardPosition(rotations[i]), 0.5f);
-            rectTransform.DOLocalRotate(new Vector3(0, 0, -rotations[i]), 0.5f);
+            rectTransform.DOAnchorPos(CardPosition(rotations[i]), CardInterval);
+            rectTransform.DOLocalRotate(new Vector3(0, 0, -rotations[i]), CardInterval);
         }
     }
 }

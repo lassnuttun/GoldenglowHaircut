@@ -30,18 +30,15 @@ public class PlayerInfoManager
     public void InitPlayerInfo()
     {
         Deck = new List<CardBase>();
-        CardBase card0 = new CardBase("Card0", "长崎素世", "稍作安抚，减少 5 点敏感值", 1, 0, -5);
-        CardBase card1 = new CardBase("Card1", "千早爱音", "简单修剪，增加 5 点修剪值", 1, 5, 0);
-        CardBase card2 = new CardBase("Card2", "若叶睦", "粗暴修剪，增加 10 点修剪值，增加 5 点敏感值", 1, 10, 5);
         for (int i = 0; i < 4; i++)
         {
-            Deck.Add(card0);
+            Deck.Add(new CardBase("Card0", "长崎素世", "稍作安抚，减少 5 点敏感值", 1, 0, -5));
         }
         for (int i = 0; i < 4; i++)
         {
-            Deck.Add(card1);
+            Deck.Add(new CardBase("Card1", "千早爱音", "简单修剪，增加 5 点修剪值", 1, 5, 0));
         }
-        Deck.Add(card2);
+        Deck.Add(new CardBase("Card2", "若叶睦", "粗暴修剪，增加 10 点修剪值，增加 5 点敏感值", 1, 10, 5));
 
         MaxPw = 3;
         Money = 100;
