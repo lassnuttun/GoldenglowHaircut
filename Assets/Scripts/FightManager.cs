@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FightManager : MonoBehaviour
@@ -117,6 +118,15 @@ public class FightManager : MonoBehaviour
         CardPiles[1].RemoveAt(index);
         CardPiles[2].Add(card);
         UIManager.Instance.GetUI<FightUI>("FightUI").RemoveCard(card.Display);
+    }
+
+    public IEnumerator RemoveAllCard()
+    {
+        foreach (var card in CardPiles[1].AsEnumerable().Reverse()) 
+        {
+            Instance.RemoveCard(CardPiles[1].IndexOf(card));
+            yield return new WaitForSeconds(FightUI.CardInterval);
+        }
     }
 
     public void MoveOn(FightUnitType type)

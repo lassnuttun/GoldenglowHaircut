@@ -7,11 +7,12 @@ public class FightEnemyTurn : FightUnit
     public override void Init()
     {
         Debug.Log("Fight Enemy Turn");
-        int count = FightManager.Instance.CardPiles[1].Count;
-        for (int i = count - 1; i >= 0; i--)
-        {
-            FightManager.Instance.RemoveCard(i);
-        }
+        //int count = FightManager.Instance.CardPiles[1].Count;
+        //for (int i = count - 1; i >= 0; i--)
+        //{
+        //    FightManager.Instance.RemoveCard(i);
+        //}
+        FightManager.Instance.StartCoroutine(FightManager.Instance.RemoveAllCard());
         FightManager.Instance.StartCoroutine(FightManager.Instance.EnemyAction());
     }
 
