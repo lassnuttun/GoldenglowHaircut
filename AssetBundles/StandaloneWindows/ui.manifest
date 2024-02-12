@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 578238178
+CRC: 3675190327
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 76b43b4092469538ca6b5b607841c8ce
+    Hash: c55c84a38c7d0f7e257fa35c9672c16d
   TypeTreeHash:
     serializedVersion: 2
     Hash: 09d84945146f0cb69df09b5a82024d61
@@ -40,5 +40,6 @@ ClassTypes:
 Assets:
 - Assets/Prefabs/UI/cdBar.prefab
 - Assets/Prefabs/UI/FightUI.prefab
+- Assets/Prefabs/UI/Arrow.prefab
 Dependencies:
 - D:/unity_projects/Demo/AssetBundles/StandaloneWindows/font

@@ -36,6 +36,7 @@ public class FightUI : UIBase
 
     void Start()
     {
+        // 需要替换成 UIManager 的 api
         Object resource = AssetBundleManager.LoadResource<Object>("Goldenglow", "skeleton");
         Transform canvas = UIManager.Instance.CanvasTransTool;
         GameObject playerModel = Instantiate(resource, canvas) as GameObject;
