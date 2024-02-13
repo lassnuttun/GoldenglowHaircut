@@ -17,6 +17,12 @@ public class Mlynar : EnemyBase
         ThornInc = 3;
     }
 
+    public override void ChangeState(CardBase card)
+    {
+        base.ChangeState(card);
+        Display.UpdateDisplayInfo(EnemyHP, EnemySP);
+    }
+
     public override void BindDisplayComponent(GameObject enemyModel)
     {
         Display = enemyModel.AddComponent<MlynarDisplay>();

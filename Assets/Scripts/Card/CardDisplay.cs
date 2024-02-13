@@ -22,6 +22,18 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         return FightManager.Instance.CurState is FightPlayerTurn;
     }
+
+    private CardBase GetCard()
+    {
+        foreach (var Card in FightManager.Instance.CardPiles[1])
+        {
+            if (Card.Display == this)
+            {
+                return Card;
+            }
+        }
+        return null;
+    }
     
     //private Vector3 originalPosition;
     //public void OnBeginDrag(PointerEventData eventData)
@@ -49,7 +61,6 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     //    }
     //}
 
-
     private int index;
     private Vector3 eulerAngle;
     public void OnPointerEnter(PointerEventData eventData)
@@ -70,12 +81,15 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        UIManager.Instance.ShowUI<ArrowDisplay>("Arrow");
-        ArrowDisplay arrowDisplay = UIManager.Instance.GetUI<ArrowDisplay>("Arrow");
-        arrowDisplay.SetStartPos(transform.position);
-        // Cursor.visible = false;
-        StopAllCoroutines();
-        StartCoroutine(OnMouseRightDown(eventData));
+        if (Check())
+        {
+            UIManager.Instance.ShowUI<ArrowDisplay>("Arrow");
+            ArrowDisplay arrowDisplay = UIManager.Instance.GetUI<ArrowDisplay>("Arrow");
+            arrowDisplay.SetStartPos(transform.position);
+            // Cursor.visible = false;
+            StopAllCoroutines();
+            StartCoroutine(OnMouseRightDown(eventData));
+        }
     }
 
     private IEnumerator OnMouseRightDown(PointerEventData eventData)
@@ -105,7 +119,15 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
         if (hit.collider)
         {
-            Debug.Log(hit.transform.name);
+            if (Input.GetMouseButtonDown(0))
+            {
+                StopAllCoroutines();
+                UIManager.Instance.CloseUI("Arrow");
+                var Enemy = hit.collider.gameObject.GetComponent<MlynarDisplay>().GetEnemy();
+                var Card = GetCard();
+                Enemy.ChangeState(Card);
+                FightManager.Instance.RemoveCard(FightManager.Instance.CardPiles[1].IndexOf(Card));
+            }
         }
     }
 
