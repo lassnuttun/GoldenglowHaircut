@@ -4,10 +4,11 @@ using UnityEngine;
 
 public abstract class EnemyBase
 {
+    public EnemyDisplay Display { get; protected set; }
     public string EnemyID { get; private set; }
     public string EnemyName { get; private set; }
     public string EnemyDescription { get; private set; }
-    
+
     public ConditionBar EnemyHP { get; private set; }
     public ConditionBar EnemySP { get; private set; }
 
@@ -19,7 +20,11 @@ public abstract class EnemyBase
         EnemyHP = new ConditionBar(enemyMaxHP, 0);
         EnemySP = new ConditionBar(enemyMaxSP, 0);
     }
-    public abstract void BindDisplayComponent(GameObject gameObject);
+    public virtual void BindDisplayComponent(GameObject enemyModel)
+    {
+        Display = enemyModel.AddComponent<EnemyDisplay>();
+        Display.Bind(enemyModel, this);
+    }
     public void HitBy(CardBase card, out int deltaHP, out int deltaSP)
     {
         deltaHP = card.CardHP;

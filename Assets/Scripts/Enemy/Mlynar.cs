@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Mlynar : EnemyBase
 {
-    public MlynarDisplay Display { get; private set; }
+    public new MlynarDisplay Display { get; private set; }
     public int ThornVal { get; private set; }
     public int ThornInc { get; private set; }
 
@@ -26,17 +26,7 @@ public class Mlynar : EnemyBase
     public override void BindDisplayComponent(GameObject enemyModel)
     {
         Display = enemyModel.AddComponent<MlynarDisplay>();
-        Display.SkelGrap = enemyModel.GetComponent<SkeletonGraphic>();
-        Object CdBarRes = AssetBundleManager.LoadResource<Object>("cdBar", "ui");
-        GameObject cdBar = GameObject.Instantiate(CdBarRes, enemyModel.transform) as GameObject;
-        Display.CdBarObj = cdBar;
-        Display.EnemyNameText = cdBar.transform.Find("EnemyName").GetComponent<TextMeshProUGUI>();
-
-        Display.EnemyNameText.text = EnemyName;
-        Display.SkelGrap.AnimationState.SetAnimation(0, "Start", false);
-        Display.SkelGrap.AnimationState.AddAnimation(0, "Idle", true, 0);
-
-        Display.UpdateDisplayInfo(EnemyHP, EnemySP);
+        Display.Bind(enemyModel, this);
     }
 
     public override void Move1()

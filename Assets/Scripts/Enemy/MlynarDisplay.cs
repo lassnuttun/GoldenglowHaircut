@@ -4,21 +4,7 @@ using UnityEngine;
 
 public class MlynarDisplay : EnemyDisplay
 {
-    public Mlynar GetEnemy()
-    {
-        foreach(var Enemy in FightManager.Instance.EnemyList)
-        {
-            if (Enemy is Mlynar)
-            {
-                var mlynar = Enemy as Mlynar;
-                if (mlynar.Display == this)
-                {
-                    return mlynar;
-                }
-            }
-        }
-        return null;
-    }
+    public new Mlynar Enemy;
 
     public override void Move1()
     {

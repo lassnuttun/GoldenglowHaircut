@@ -9,6 +9,7 @@ using Spine;
 
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
+    public CardBase Card;
     public TextMeshProUGUI CardNameText;
     public TextMeshProUGUI CardDescriptionText;
     public TextMeshProUGUI CardCostText;
@@ -21,18 +22,6 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private bool Check()
     {
         return FightManager.Instance.CurState is FightPlayerTurn;
-    }
-
-    private CardBase GetCard()
-    {
-        foreach (var Card in FightManager.Instance.CardPiles[1])
-        {
-            if (Card.Display == this)
-            {
-                return Card;
-            }
-        }
-        return null;
     }
     
     //private Vector3 originalPosition;
@@ -88,7 +77,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             arrowDisplay.SetStartPos(transform.position);
             // Cursor.visible = false;
             StopAllCoroutines();
-            StartCoroutine(OnMouseRightDown(eventData));
+            arrowDisplay.StartCoroutine(OnMouseRightDown(eventData));
         }
     }
 
@@ -123,15 +112,12 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             {
                 StopAllCoroutines();
                 UIManager.Instance.CloseUI("Arrow");
-                var Enemy = hit.collider.gameObject.GetComponent<MlynarDisplay>().GetEnemy();
-                var Card = GetCard();
+                var Enemy = hit.collider.gameObject.GetComponent<EnemyDisplay>().Enemy;
                 Enemy.ChangeState(Card);
                 FightManager.Instance.RemoveCard(FightManager.Instance.CardPiles[1].IndexOf(Card));
             }
         }
     }
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-    }
+    public void OnPointerUp(PointerEventData eventData) { }
 }

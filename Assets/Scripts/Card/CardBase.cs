@@ -38,5 +38,6 @@ public class CardBase
         Display.CardNameText.text = CardName;
         Display.CardCostText.text = CardCost.ToString();
         Display.CardDescriptionText.text = CardDescription;
+        Display.Card = this;
     }
 }
