@@ -11,7 +11,7 @@ public class ArrowDisplay : UIBase
 
     public void SetEndPos(Vector3 pos) 
     {
-        transform.GetChild(0).position = pos;
+        transform.GetChild(0).position = new Vector3(pos.x, pos.y, 0);
 
         Vector2 startPos = transform.GetChild(transform.childCount - 1).GetComponent<RectTransform>().anchoredPosition;
         Vector2 endPos = transform.GetChild(0).GetComponent<RectTransform>().anchoredPosition;

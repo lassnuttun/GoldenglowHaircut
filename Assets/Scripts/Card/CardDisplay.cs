@@ -90,11 +90,19 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 break;
             }
 
-            Vector3 pos;
-            if (RectTransformUtility.ScreenPointToWorldPointInRectangle(GameObject.Find("Canvas").GetComponent<RectTransform>(), eventData.position, null, out pos))
+            Vector3 pos = Camera.main.ScreenToWorldPoint(eventData.position);
+            UIManager.Instance.GetUI<ArrowDisplay>("Arrow").SetEndPos(pos);
+            RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
+            if (hit.collider)
             {
-                UIManager.Instance.GetUI<ArrowDisplay>("Arrow").SetEndPos(pos);
-                RayCheck();
+                if (Input.GetMouseButtonDown(0))
+                {
+                    StopAllCoroutines();
+                    UIManager.Instance.CloseUI("Arrow");
+                    var Enemy = hit.collider.gameObject.GetComponent<EnemyDisplay>().Enemy;
+                    Enemy.ChangeState(Card);
+                    FightManager.Instance.RemoveCard(FightManager.Instance.CardPiles[1].IndexOf(Card));
+                }
             }
             yield return null;
         }

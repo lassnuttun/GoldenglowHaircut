@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 6930318790630567928}
   - component: {fileID: 6930318790630567935}
   - component: {fileID: 599908846227809602}
+  - component: {fileID: 4631387118182081077}
   m_Layer: 5
   m_Name: deckPile
   m_TagString: Untagged
@@ -226,6 +227,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4631387118182081077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6930318790630567933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a7e801b631e1ee4581ba7a1f86ad507, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6930318790859947676
 GameObject:
   m_ObjectHideFlags: 0

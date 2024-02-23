@@ -4,8 +4,9 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: SkeletonGraphicDefaultOutline
   m_Shader: {fileID: 4800000, guid: 8f5d14d2a7fedb84998c50eb96c8b748, type: 3}
   m_ShaderKeywords: _USE8NEIGHBOURHOOD_ON
@@ -61,6 +62,7 @@ Material:
     m_Floats:
     - PixelSnap: 0
     - _BumpScale: 1
+    - _CanvasGroupCompatible: 0
     - _ColorMask: 15
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -73,7 +75,7 @@ Material:
     - _OutlineMipLevel: 0
     - _OutlineReferenceTexWidth: 1024
     - _OutlineSmoothness: 1
-    - _OutlineWidth: 3
+    - _OutlineWidth: 8
     - _Parallax: 0.02
     - _SrcBlend: 1
     - _Stencil: 0

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -30,6 +31,13 @@ public class FightUI : UIBase
                 }
             }
         );
+        transform.Find("deckPile").GetComponent<Button>().onClick.AddListener
+        (
+            () => 
+            {
+                transform.Find("deckPile").GetComponent<DeckPileDisplay>().ShowDeckPile();
+            }
+        ) ;
         DeckPilePos = transform.Find("deckPile").GetComponent<RectTransform>().position;
         DiscardPilePos = transform.Find("discardPile").GetComponent<RectTransform>().position;
     }
