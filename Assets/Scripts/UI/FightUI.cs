@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
 public class FightUI : UIBase
@@ -35,7 +36,16 @@ public class FightUI : UIBase
         (
             () => 
             {
-                transform.Find("deckPile").GetComponent<DeckPileDisplay>().ShowDeckPile();
+                Camera.main.GetComponent<PostProcessVolume>().enabled = true;
+                var DeckPile = FightManager.Instance.CardPiles[0];
+                Transform canvas = GameObject.Find("CanvasForUpperUI").transform;
+                foreach (var card in DeckPile)
+                {
+                    Object resource = AssetBundleManager.LoadResource<Object>(card.CardID, "card");
+                    GameObject cardObj = Instantiate(resource, canvas) as GameObject;
+                    card.BindDisplayComponent(cardObj);
+                    RectTransform rectTransform = cardObj.GetComponent<RectTransform>();
+                };
             }
         ) ;
         DeckPilePos = transform.Find("deckPile").GetComponent<RectTransform>().position;

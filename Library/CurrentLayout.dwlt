@@ -45,10 +45,10 @@ MonoBehaviour:
     y: 30
     width: 1536
     height: 731
-  m_MinSize: {x: 681, y: 498}
-  m_MaxSize: {x: 14004, y: 14048}
+  m_MinSize: {x: 679, y: 498}
+  m_MaxSize: {x: 14002, y: 14048}
   vertical: 0
-  controlID: 14
+  controlID: 51
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -68,8 +68,8 @@ MonoBehaviour:
     y: 0
     width: 457
     height: 731
-  m_MinSize: {x: 277, y: 74}
-  m_MaxSize: {x: 4002, y: 4024}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_MinSize: {x: 404, y: 498}
   m_MaxSize: {x: 10002, y: 14048}
   vertical: 1
-  controlID: 27
+  controlID: 64
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -245,7 +245,7 @@ MonoBehaviour:
   m_MinSize: {x: 404, y: 224}
   m_MaxSize: {x: 8004, y: 4024}
   vertical: 0
-  controlID: 28
+  controlID: 33
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -532,20 +532,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes/FightDemo_Profiles
+    - Assets/Prefabs/UI
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes/FightDemo_Profiles
+  - Assets/Prefabs/UI
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\unity_projects\Demo
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: f20d0000
-    m_LastClickedID: 3570
-    m_ExpandedIDs: 00000000720c0000e00c00001a0e00002a0e0000ea0e0000120f0000160f0000580f00007a0f00009e0f0000da0f0000561000008e100000d8100000dc100000d6110000e211000008120000121200001c120000b02f000000ca9a3b
+    m_SelectedIDs: d82e0000
+    m_LastClickedID: 11992
+    m_ExpandedIDs: 00000000542a0000b22a0000c42b0000d42b00007e2c0000a02c0000a42c0000dc2c0000f82c0000142d00004c2d0000c42d0000fa2d00003e2e0000422e00000c2f0000182f00003c2f0000462f0000502f00001c30000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -573,7 +573,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000720c0000e00c00001a0e00002a0e0000ea0e0000120f0000160f0000580f00007a0f00009e0f0000da0f0000561000008e100000d6110000e211000008120000121200001c120000b02f0000
+    m_ExpandedIDs: 00000000542a0000b22a0000c42b0000d42b00007e2c0000a02c0000a42c0000dc2c0000f82c0000142d00004c2d0000c42d0000fa2d00003e2e0000422e00000c2f0000182f00003c2f0000462f0000502f00001c300000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -692,9 +692,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: ac120000
-      m_LastClickedID: 4780
-      m_ExpandedIDs: 30d6ffff00e2ffffeee5ffffdefbffff9a120000
+      m_SelectedIDs: d82f0000
+      m_LastClickedID: 12248
+      m_ExpandedIDs: 2afbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
