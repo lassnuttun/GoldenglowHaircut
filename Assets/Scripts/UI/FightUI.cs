@@ -43,11 +43,10 @@ public class FightUI : UIBase
                 RectTransform content = canvas.GetChild(0).GetComponent<ScrollRect>().content;
                 foreach (var card in DeckPile)
                 {
-                    //Object resource = AssetBundleManager.LoadResource<Object>(card.CardID, "card");
-                    //GameObject cardObj = Instantiate(resource, content) as GameObject;
-                    //card.BindDisplayComponent(cardObj);
-                    //RectTransform rectTransform = cardObj.GetComponent<RectTransform>();
-                    //rectTransform.localScale = new Vector3(CardScale, CardScale);
+                    Object resource = AssetBundleManager.LoadResource<Object>(card.CardID, "card");
+                    GameObject cardObj = Instantiate(resource, content) as GameObject;
+                    card.BindDisplayComponent(cardObj);
+                    RectTransform rectTransform = cardObj.GetComponent<RectTransform>();
                 };
             }
         ) ;
