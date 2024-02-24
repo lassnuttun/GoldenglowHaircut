@@ -39,5 +39,6 @@ public class CardBase
         Display.CardCostText.text = CardCost.ToString();
         Display.CardDescriptionText.text = CardDescription;
         Display.Card = this;
+        Display.InHand = FightManager.Instance.CardPiles[1].Contains(this);
     }
 }

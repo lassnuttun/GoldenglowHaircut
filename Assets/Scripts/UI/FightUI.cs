@@ -39,12 +39,15 @@ public class FightUI : UIBase
                 Camera.main.GetComponent<PostProcessVolume>().enabled = true;
                 var DeckPile = FightManager.Instance.CardPiles[0];
                 Transform canvas = GameObject.Find("CanvasForUpperUI").transform;
+                canvas.GetChild(0).gameObject.SetActive(true);
+                RectTransform content = canvas.GetChild(0).GetComponent<ScrollRect>().content;
                 foreach (var card in DeckPile)
                 {
-                    Object resource = AssetBundleManager.LoadResource<Object>(card.CardID, "card");
-                    GameObject cardObj = Instantiate(resource, canvas) as GameObject;
-                    card.BindDisplayComponent(cardObj);
-                    RectTransform rectTransform = cardObj.GetComponent<RectTransform>();
+                    //Object resource = AssetBundleManager.LoadResource<Object>(card.CardID, "card");
+                    //GameObject cardObj = Instantiate(resource, content) as GameObject;
+                    //card.BindDisplayComponent(cardObj);
+                    //RectTransform rectTransform = cardObj.GetComponent<RectTransform>();
+                    //rectTransform.localScale = new Vector3(CardScale, CardScale);
                 };
             }
         ) ;

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using TMPro;
-using Spine;
 
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
@@ -14,6 +13,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public TextMeshProUGUI CardDescriptionText;
     public TextMeshProUGUI CardCostText;
     public Image CardImage;
+    public bool InHand;
 
     void Start() { }
 
@@ -54,23 +54,29 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private Vector3 eulerAngle;
     public void OnPointerEnter(PointerEventData eventData)
     {
-        transform.DOScale(1.3f * FightUI.CardScale, FightUI.CardInterval);
-        eulerAngle = transform.localEulerAngles;
-        transform.localEulerAngles = Vector3.zero;
-        index = transform.GetSiblingIndex();
-        transform.SetAsLastSibling();
+        if (InHand)
+        {
+            transform.DOScale(1.3f * FightUI.CardScale, FightUI.CardInterval);
+            eulerAngle = transform.localEulerAngles;
+            transform.localEulerAngles = Vector3.zero;
+            index = transform.GetSiblingIndex();
+            transform.SetAsLastSibling();
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        transform.DOScale(FightUI.CardScale, FightUI.CardInterval);
-        transform.localEulerAngles = eulerAngle;
-        transform.SetSiblingIndex(index);
+        if (InHand)
+        {
+            transform.DOScale(FightUI.CardScale, FightUI.CardInterval);
+            transform.localEulerAngles = eulerAngle;
+            transform.SetSiblingIndex(index);
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (Check())
+        if (Check() && InHand)
         {
             UIManager.Instance.ShowUI<ArrowDisplay>("Arrow");
             ArrowDisplay arrowDisplay = UIManager.Instance.GetUI<ArrowDisplay>("Arrow");
