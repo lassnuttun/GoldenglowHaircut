@@ -22,34 +22,6 @@ public class FightUI : UIBase
 
     void Awake()
     {
-        transform.Find("endTurn").GetComponent<Button>().onClick.AddListener
-        (
-            () =>
-            {
-                if (FightManager.Instance.CurState is FightPlayerTurn)
-                {
-                    FightManager.Instance.MoveOn(FightUnitType.EnemyTurn);
-                }
-            }
-        );
-        transform.Find("deckPile").GetComponent<Button>().onClick.AddListener
-        (
-            () => 
-            {
-                Camera.main.GetComponent<PostProcessVolume>().enabled = true;
-                var DeckPile = FightManager.Instance.CardPiles[0];
-                Transform canvas = GameObject.Find("CanvasForUpperUI").transform;
-                canvas.GetChild(0).gameObject.SetActive(true);
-                RectTransform content = canvas.GetChild(0).GetComponent<ScrollRect>().content;
-                foreach (var card in DeckPile)
-                {
-                    Object resource = AssetBundleManager.LoadResource<Object>(card.CardID, "card");
-                    GameObject cardObj = Instantiate(resource, content) as GameObject;
-                    card.BindDisplayComponent(cardObj);
-                    RectTransform rectTransform = cardObj.GetComponent<RectTransform>();
-                };
-            }
-        ) ;
         DeckPilePos = transform.Find("deckPile").GetComponent<RectTransform>().position;
         DiscardPilePos = transform.Find("discardPile").GetComponent<RectTransform>().position;
     }
@@ -174,5 +146,35 @@ public class FightUI : UIBase
             rectTransform.DOAnchorPos(CardPosition(rotations[i]), CardInterval);
             rectTransform.DOLocalRotate(new Vector3(0, 0, -rotations[i]), CardInterval);
         }
+    }
+
+    public void BtnOnClickEndTurn()
+    {
+        if (FightManager.Instance.CurState is FightPlayerTurn)
+        {
+            FightManager.Instance.MoveOn(FightUnitType.EnemyTurn);
+        }
+    }
+
+    public void BtnOnClickDeckPile()
+    {
+        Camera.main.GetComponent<PostProcessVolume>().enabled = true;
+        var DeckPile = FightManager.Instance.CardPiles[0];
+        Transform canvas = GameObject.Find("CanvasForUpperUI").transform;
+        canvas.GetChild(0).gameObject.SetActive(true);
+        canvas.GetChild(1).gameObject.SetActive(true);
+        RectTransform content = canvas.GetChild(0).GetComponent<ScrollRect>().content;
+        foreach (var card in DeckPile)
+        {
+            Object resource = AssetBundleManager.LoadResource<Object>(card.CardID, "card");
+            GameObject cardObj = Instantiate(resource, content) as GameObject;
+            card.BindDisplayComponent(cardObj);
+            RectTransform rectTransform = cardObj.GetComponent<RectTransform>();
+        }
+    }
+
+    public void BtnOnClickDiscPile()
+    {
+
     }
 }

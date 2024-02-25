@@ -41,7 +41,11 @@ public class UIManager : MonoBehaviour
             Object resource = AssetBundleManager.LoadResource<Object>(ui_name, "ui");
             GameObject new_ui = Instantiate(resource, CanvasTransTool) as GameObject;
             new_ui.name = ui_name;
-            ui = new_ui.AddComponent<T>();
+            ui = new_ui.GetComponent<T>();
+            if (ui == null)
+            {
+                ui = new_ui.AddComponent<T>();
+            }
             uiLoadedList.Add(ui);
         }
         return ui;

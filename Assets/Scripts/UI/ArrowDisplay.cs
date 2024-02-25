@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ArrowDisplay : UIBase
 {
+    private static Vector3 BaseScale = new Vector3(0.7f, 0.7f, 0);
+    private static float Factor = 0.9f;
+    private static float BaseRotation = 270;
+
     public void SetStartPos(Vector3 pos)
     {
         transform.GetChild(transform.childCount - 1).position = pos;
@@ -23,12 +27,13 @@ public class ArrowDisplay : UIBase
             RectTransform child = transform.GetChild(i).GetComponent<RectTransform>();
             float t = Mathf.Log(1 + (float) i / (float) (transform.childCount - 1), 2);
             child.anchoredPosition = t * t * t * startPos + t * t * (1 - t) * midPos1 + t * (1 - t) * (1 - t) * midPos2 + (1 - t) * (1 - t) * (1 - t) * endPos;
+            child.localScale = BaseScale * Mathf.Pow(Factor, i);
             if (i != 0)
             {
                 RectTransform prev = transform.GetChild(i - 1).GetComponent<RectTransform>();
                 Vector2 delta = prev.anchoredPosition - child.anchoredPosition;
                 float angle = Mathf.Atan2(delta.x, delta.y) * Mathf.Rad2Deg;
-                prev.eulerAngles = new Vector3(0.0f, 0.0f, -angle);
+                prev.eulerAngles = new Vector3(0.0f, 0.0f, -angle + BaseRotation);
             }
             else
             {
