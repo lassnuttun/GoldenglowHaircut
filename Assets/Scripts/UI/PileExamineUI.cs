@@ -12,17 +12,21 @@ public class PileExamineUI : UIBase
     public override void Show()
     {
         Camera.main.GetComponent<PostProcessVolume>().enabled = true;
-        var DeckPile = FightManager.Instance.CardPiles[0];
+        base.Show();
+    }
+
+    public void ShowPile(bool DeckOrDisc)
+    {
+        var Pile = FightManager.Instance.CardPiles[DeckOrDisc ? 0 : 2];
         ScrollViewTrans.gameObject.SetActive(true);
         BtnBackTrans.gameObject.SetActive(true);
         RectTransform content = ScrollViewTrans.GetComponent<ScrollRect>().content;
-        foreach (var card in DeckPile)
+        foreach (var card in Pile)
         {
             Object resource = AssetBundleManager.LoadResource<Object>(card.CardID, "card");
             GameObject cardObj = Instantiate(resource, content) as GameObject;
             card.BindDisplayComponent(cardObj);
         }
-        base.Show();
     }
 
     public override void Close()

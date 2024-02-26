@@ -157,26 +157,14 @@ public class FightUI : UIBase
 
     public void BtnOnClickDeckPile()
     {
-        UIManager.Instance.ShowUI<PileExamineUI>("PileExamineUI", true);
+        PileExamineUI PEUI = UIManager.Instance.ShowUI<PileExamineUI>("PileExamineUI", true) as PileExamineUI;
+        PEUI.ShowPile(true);
 
-        Camera.main.GetComponent<PostProcessVolume>().enabled = true;
-        var DeckPile = FightManager.Instance.CardPiles[0];
-        UIManager.Instance.ShowUI<PileExamineUI>("PileExamineUI", true);
-        var pile = UIManager.Instance.GetUI<PileExamineUI>("PileExamineUI").gameObject.transform;
-        pile.GetChild(0).gameObject.SetActive(true);
-        pile.GetChild(1).gameObject.SetActive(true);
-        RectTransform content = pile.GetChild(0).GetComponent<ScrollRect>().content;
-        foreach (var card in DeckPile)
-        {
-            Object resource = AssetBundleManager.LoadResource<Object>(card.CardID, "card");
-            GameObject cardObj = Instantiate(resource, content) as GameObject;
-            card.BindDisplayComponent(cardObj);
-            // RectTransform rectTransform = cardObj.GetComponent<RectTransform>();
-        }
     }
 
     public void BtnOnClickDiscPile()
     {
-
+        PileExamineUI PEUI = UIManager.Instance.ShowUI<PileExamineUI>("PileExamineUI", true) as PileExamineUI;
+        PEUI.ShowPile(false);
     }
 }
