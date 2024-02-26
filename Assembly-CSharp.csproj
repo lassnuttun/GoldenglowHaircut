@@ -83,6 +83,7 @@
     <Compile Include="Assets\Scripts\Player\PlayerInfoManager.cs" />
     <Compile Include="Assets\Scripts\UI\ArrowDisplay.cs" />
     <Compile Include="Assets\Scripts\UI\FightUI.cs" />
+    <Compile Include="Assets\Scripts\UI\PileExamineUI.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
     <Compile Include="Assets\Scripts\UI\UIEventTrigger.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />

@@ -30,7 +30,7 @@ public class FightUI : UIBase
     {
         // 需要替换成 UIManager 的 api
         Object resource = AssetBundleManager.LoadResource<Object>("Goldenglow", "skeleton");
-        Transform canvas = UIManager.Instance.CanvasTransTool;
+        Transform canvas = UIManager.Instance.LCanvasTransTool;
         GameObject playerModel = Instantiate(resource, canvas) as GameObject;
         Player = playerModel.AddComponent<PlayerDisplay>();
         Player.SkelGrap = playerModel.GetComponent<SkeletonGraphic>();
@@ -160,16 +160,17 @@ public class FightUI : UIBase
     {
         Camera.main.GetComponent<PostProcessVolume>().enabled = true;
         var DeckPile = FightManager.Instance.CardPiles[0];
-        Transform canvas = GameObject.Find("CanvasForUpperUI").transform;
-        canvas.GetChild(0).gameObject.SetActive(true);
-        canvas.GetChild(1).gameObject.SetActive(true);
-        RectTransform content = canvas.GetChild(0).GetComponent<ScrollRect>().content;
+        UIManager.Instance.ShowUI<PileExamineUI>("PileExamineUI", true);
+        var pile = UIManager.Instance.GetUI<PileExamineUI>("PileExamineUI").gameObject.transform;
+        pile.GetChild(0).gameObject.SetActive(true);
+        pile.GetChild(1).gameObject.SetActive(true);
+        RectTransform content = pile.GetChild(0).GetComponent<ScrollRect>().content;
         foreach (var card in DeckPile)
         {
             Object resource = AssetBundleManager.LoadResource<Object>(card.CardID, "card");
             GameObject cardObj = Instantiate(resource, content) as GameObject;
             card.BindDisplayComponent(cardObj);
-            RectTransform rectTransform = cardObj.GetComponent<RectTransform>();
+            // RectTransform rectTransform = cardObj.GetComponent<RectTransform>();
         }
     }
 

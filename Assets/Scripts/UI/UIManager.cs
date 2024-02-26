@@ -7,13 +7,15 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
-    public Transform CanvasTransTool { get; private set; }
+    public Transform LCanvasTransTool { get; private set; }
+    public Transform UCanvasTransTool { get; private set; }
     private List<UIBase> uiLoadedList; // 已加载的 UI
 
     private void Awake()
     {
         Instance = this;
-        CanvasTransTool = GameObject.Find("Canvas").transform;
+        LCanvasTransTool = GameObject.Find("Canvas").transform;
+        UCanvasTransTool = GameObject.Find("CanvasForUpperUI").transform;
         uiLoadedList = new List<UIBase>();
     }
 
@@ -29,7 +31,7 @@ public class UIManager : MonoBehaviour
         return null;
     }
 
-    public UIBase ShowUI<T>(string ui_name) where T : UIBase
+    public UIBase ShowUI<T>(string ui_name, bool isUpper = false) where T : UIBase
     {
         UIBase ui = SearchLoadedUI(ui_name);
         if (ui != null)
@@ -39,7 +41,12 @@ public class UIManager : MonoBehaviour
         else
         {
             Object resource = AssetBundleManager.LoadResource<Object>(ui_name, "ui");
-            GameObject new_ui = Instantiate(resource, CanvasTransTool) as GameObject;
+            Transform canvas = LCanvasTransTool;
+            if (isUpper)
+            {
+                canvas = UCanvasTransTool;
+            }
+            GameObject new_ui = Instantiate(resource, canvas) as GameObject;
             new_ui.name = ui_name;
             ui = new_ui.GetComponent<T>();
             if (ui == null)

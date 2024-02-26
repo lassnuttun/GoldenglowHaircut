@@ -30,7 +30,7 @@ public class PlayerInfoManager
     public void InitPlayerInfo()
     {
         Deck = new List<CardBase>();
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 4; i++)
         {
             Deck.Add(new CardBase("Card0", "长崎素世", "稍作安抚，减少 5 点敏感值", 1, 0, -5));
         }
