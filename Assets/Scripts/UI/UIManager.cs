@@ -6,26 +6,26 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager Instance { get; private set; }
-    public Transform LCanvasTransTool { get; private set; }
-    public Transform UCanvasTransTool { get; private set; }
-    private List<UIBase> uiLoadedList; // 已加载的 UI
+    public static UIManager Instance;
+    public Transform LCanvasTransTool;
+    public Transform UCanvasTransTool;
+    private List<UIBase> UILoadedList; // 已加载的 UI
 
     private void Awake()
     {
         Instance = this;
         LCanvasTransTool = GameObject.Find("Canvas").transform;
         UCanvasTransTool = GameObject.Find("CanvasForUpperUI").transform;
-        uiLoadedList = new List<UIBase>();
+        UILoadedList = new List<UIBase>();
     }
 
     public UIBase SearchLoadedUI(string ui_name)
     {
-        for (int i = 0; i < uiLoadedList.Count; i++)
+        for (int i = 0; i < UILoadedList.Count; i++)
         {
-            if (uiLoadedList[i].name == ui_name)
+            if (UILoadedList[i].name == ui_name)
             {
-                return uiLoadedList[i];
+                return UILoadedList[i];
             }
         }
         return null;
@@ -34,18 +34,10 @@ public class UIManager : MonoBehaviour
     public UIBase ShowUI<T>(string ui_name, bool isUpper = false) where T : UIBase
     {
         UIBase ui = SearchLoadedUI(ui_name);
-        if (ui != null)
-        {
-            ui.Show();
-        }
-        else
+        if (ui == null)
         {
             Object resource = AssetBundleManager.LoadResource<Object>(ui_name, "ui");
-            Transform canvas = LCanvasTransTool;
-            if (isUpper)
-            {
-                canvas = UCanvasTransTool;
-            }
+            Transform canvas = isUpper ? UCanvasTransTool : LCanvasTransTool;
             GameObject new_ui = Instantiate(resource, canvas) as GameObject;
             new_ui.name = ui_name;
             ui = new_ui.GetComponent<T>();
@@ -53,8 +45,9 @@ public class UIManager : MonoBehaviour
             {
                 ui = new_ui.AddComponent<T>();
             }
-            uiLoadedList.Add(ui);
+            UILoadedList.Add(ui);
         }
+        ui.Show();
         return ui;
     }
 
@@ -72,18 +65,18 @@ public class UIManager : MonoBehaviour
         UIBase ui = SearchLoadedUI(ui_name);
         if (ui != null)
         {
-            uiLoadedList.Remove(ui);
+            UILoadedList.Remove(ui);
             Destroy(ui.gameObject);
         }
     }
 
     public void CloseAllUI()
     {
-        for (int i = uiLoadedList.Count - 1; i >= 0; i--)
+        for (int i = UILoadedList.Count - 1; i >= 0; i--)
         {
-            Destroy(uiLoadedList[i].gameObject);
+            Destroy(UILoadedList[i].gameObject);
         }
-        uiLoadedList.Clear();
+        UILoadedList.Clear();
     }
 
     public T GetUI<T>(string ui_name) where T : UIBase

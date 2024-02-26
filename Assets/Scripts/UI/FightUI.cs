@@ -28,7 +28,6 @@ public class FightUI : UIBase
 
     void Start()
     {
-        // 需要替换成 UIManager 的 api
         Object resource = AssetBundleManager.LoadResource<Object>("Goldenglow", "skeleton");
         Transform canvas = UIManager.Instance.LCanvasTransTool;
         GameObject playerModel = Instantiate(resource, canvas) as GameObject;
@@ -107,7 +106,7 @@ public class FightUI : UIBase
 
     public void AddCard()
     {
-        Transform canvas = GameObject.Find("Canvas").transform;
+        Transform canvas = UIManager.Instance.LCanvasTransTool;
         List<CardBase> HandPile = FightManager.Instance.CardPiles[1];
         int count = HandPile.Count;
 
@@ -158,6 +157,8 @@ public class FightUI : UIBase
 
     public void BtnOnClickDeckPile()
     {
+        UIManager.Instance.ShowUI<PileExamineUI>("PileExamineUI", true);
+
         Camera.main.GetComponent<PostProcessVolume>().enabled = true;
         var DeckPile = FightManager.Instance.CardPiles[0];
         UIManager.Instance.ShowUI<PileExamineUI>("PileExamineUI", true);

@@ -5,8 +5,8 @@ using UnityEngine;
 public class ArrowDisplay : UIBase
 {
     private static Vector3 BaseScale = new Vector3(0.7f, 0.7f, 0);
-    private static float Factor = 0.9f;
-    private static float BaseRotation = 270;
+    private static readonly float Factor = 0.9f;
+    private static readonly float BaseRotation = 270;
 
     public void SetStartPos(Vector3 pos)
     {

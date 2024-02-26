@@ -221,6 +221,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec95a4a03cf82647a39541276b61568, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ScrollViewTrans: {fileID: 1856390433072813884}
+  BtnBackTrans: {fileID: 165186211269278384}
 --- !u!1 &1856390432409632218
 GameObject:
   m_ObjectHideFlags: 0
