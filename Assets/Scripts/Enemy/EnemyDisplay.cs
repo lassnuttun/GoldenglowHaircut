@@ -11,6 +11,11 @@ public class EnemyDisplay : MonoBehaviour
     public SkeletonGraphic SkelGrap;
     public GameObject CdBarObj;
 
+    public Image HPFill;
+    public Image SPFill;
+    public TextMeshProUGUI HPText;
+    public TextMeshProUGUI SPText;
+
     void Start() { }
 
     void Update() { }
@@ -30,6 +35,10 @@ public class EnemyDisplay : MonoBehaviour
         GameObject cdBar = Instantiate(CdBarRes, enemyModel.transform) as GameObject;
         CdBarObj = cdBar;
         EnemyNameText = cdBar.transform.Find("EnemyName").GetComponent<TextMeshProUGUI>();
+        HPFill = CdBarObj.transform.Find("hpBar").Find("fill").GetComponent<Image>();
+        SPFill = CdBarObj.transform.Find("spBar").Find("fill").GetComponent<Image>();
+        HPText = CdBarObj.transform.Find("hpText").GetComponent<TextMeshProUGUI>();
+        SPText = CdBarObj.transform.Find("spText").GetComponent<TextMeshProUGUI>();
 
         EnemyNameText.text = Enemy.EnemyName;
         SkelGrap.AnimationState.SetAnimation(0, "Start", false);
@@ -40,14 +49,9 @@ public class EnemyDisplay : MonoBehaviour
 
     public void UpdateDisplayInfo(ConditionBar EnemyHP, ConditionBar EnemySP)
     {
-        Image hpFill = CdBarObj.transform.Find("hpBar").Find("fill").GetComponent<Image>();
-        hpFill.fillAmount = (float)EnemyHP.CurValue / (float)EnemyHP.MaxValue;
-        TextMeshProUGUI hpText = CdBarObj.transform.Find("hpText").GetComponent<TextMeshProUGUI>();
-        hpText.text = EnemyHP.CurValue.ToString() + "/" + EnemyHP.MaxValue.ToString();
-
-        Image spFill = CdBarObj.transform.Find("spBar").Find("fill").GetComponent<Image>();
-        spFill.fillAmount = (float)EnemySP.CurValue / (float)EnemySP.MaxValue;
-        TextMeshProUGUI spText = CdBarObj.transform.Find("spText").GetComponent<TextMeshProUGUI>();
-        spText.text = EnemySP.CurValue.ToString() + "/" + EnemySP.MaxValue.ToString();
+        HPFill.fillAmount = EnemyHP.Percent();
+        HPText.text = EnemyHP.ToString();
+        SPFill.fillAmount = EnemySP.Percent();
+        SPText.text = EnemySP.ToString();
     }
 }

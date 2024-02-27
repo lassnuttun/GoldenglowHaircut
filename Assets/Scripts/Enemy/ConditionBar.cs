@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class ConditionBar
 {
-    public int MaxValue { get; private set; }
-    public int CurValue { get; private set; }
+    public int MaxValue;
+    public int CurValue;
 
     public ConditionBar(int Max, int Cur)
     {
@@ -17,5 +17,15 @@ public class ConditionBar
     public void Inc(int DeltaValue)
     {
         CurValue = Mathf.Min(MaxValue, Mathf.Max(CurValue + DeltaValue, 0));
+    }
+
+    public float Percent()
+    {
+        return (float)CurValue / MaxValue;
+    }
+
+    public override string ToString()
+    {
+        return CurValue.ToString() + "/" + MaxValue.ToString();
     }
 }

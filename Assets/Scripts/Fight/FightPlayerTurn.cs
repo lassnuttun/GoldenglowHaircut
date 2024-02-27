@@ -7,7 +7,7 @@ public class FightPlayerTurn : FightUnit
     public override void Init()
     {
         Debug.Log("Fight Player Turn");
-        FightManager.Instance.CurPW = FightManager.Instance.MaxPW;
+        FightManager.Instance.Power.Inc(FightManager.Instance.Power.MaxValue);
         FightManager.Instance.StartCoroutine(FightManager.Instance.DrawCards(FightManager.Instance.DrawCount));
     }
 

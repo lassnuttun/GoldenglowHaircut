@@ -7,16 +7,14 @@ using UnityEngine;
 public class FightManager : MonoBehaviour
 {
     public static FightManager Instance { get; private set; }
-    public FightUnit CurState { get; private set; }
-
-    public int MaxPW { get; private set; }
-    public int CurPW { get; set; } // 临时
+    public FightUnit CurState;
+    public ConditionBar Power;
 
     public static readonly int MaxHandPileCount = 10;
-    public int DrawCount { get; private set; }
-    public List<List<CardBase>> CardPiles { get; private set; }
+    public int DrawCount;
+    public List<List<CardBase>> CardPiles;
 
-    public List<EnemyBase> EnemyList { get; private set; }
+    public List<EnemyBase> EnemyList;
 
     void Awake()
     {
@@ -31,9 +29,7 @@ public class FightManager : MonoBehaviour
 
     void InitPlayerData()
     {
-        PlayerInfoManager.Instance.InitPlayerInfo();
-        MaxPW = PlayerInfoManager.Instance.MaxPw; 
-        CurPW = MaxPW; 
+        Power = new ConditionBar(PlayerInfoManager.Instance.MaxPw, PlayerInfoManager.Instance.MaxPw);
         DrawCount = PlayerInfoManager.Instance.DrawCount;
         CardPiles = new List<List<CardBase>>(3)
         {
@@ -106,7 +102,7 @@ public class FightManager : MonoBehaviour
         yield break;
     }
 
-    public void RemoveCard(int index)
+    public void RemoveCard(int index, bool isUse = false)
     {
         int count = Instance.CardPiles[1].Count;
         if (index < 0 || index >= count)
@@ -115,6 +111,11 @@ public class FightManager : MonoBehaviour
         }
 
         CardBase card = CardPiles[1][index];
+        if (isUse)
+        {
+            Instance.Power.Inc(-card.CardCost);
+            UIManager.Instance.GetUI<FightUI>("FightUI").transform.Find("power").GetComponent<PowerDisplay>().UpdateDisplayInfo(Power);
+        }
         CardPiles[1].RemoveAt(index);
         CardPiles[2].Add(card);
         UIManager.Instance.GetUI<FightUI>("FightUI").RemoveCard(card.Display);

@@ -107,30 +107,13 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     UIManager.Instance.CloseUI("Arrow");
                     var Enemy = hit.collider.gameObject.GetComponent<EnemyDisplay>().Enemy;
                     Enemy.ChangeState(Card);
-                    FightManager.Instance.RemoveCard(FightManager.Instance.CardPiles[1].IndexOf(Card));
+                    FightManager.Instance.RemoveCard(FightManager.Instance.CardPiles[1].IndexOf(Card), true);
                 }
             }
             yield return null;
         }
         // Cursor.visible = true;
         UIManager.Instance.CloseUI("Arrow");
-    }
-
-    private void RayCheck()
-    {
-        RectTransformUtility.ScreenPointToWorldPointInRectangle(GameObject.Find("Canvas").GetComponent<RectTransform>(), Input.mousePosition, null, out Vector3 pos);
-        RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
-        if (hit.collider)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                StopAllCoroutines();
-                UIManager.Instance.CloseUI("Arrow");
-                var Enemy = hit.collider.gameObject.GetComponent<EnemyDisplay>().Enemy;
-                Enemy.ChangeState(Card);
-                FightManager.Instance.RemoveCard(FightManager.Instance.CardPiles[1].IndexOf(Card));
-            }
-        }
     }
 
     public void OnPointerUp(PointerEventData eventData) { }
