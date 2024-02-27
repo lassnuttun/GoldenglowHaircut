@@ -19,15 +19,13 @@ public class FightUI : UIBase
     private Vector3 DiscardPilePos;
 
     private PlayerDisplay Player;
-
-    void Awake()
-    {
-        DeckPilePos = transform.Find("deckPile").GetComponent<RectTransform>().position;
-        DiscardPilePos = transform.Find("discardPile").GetComponent<RectTransform>().position;
-    }
+    public PowerDisplay Power;
 
     void Start()
     {
+        DeckPilePos = transform.Find("deckPile").GetComponent<RectTransform>().position;
+        DiscardPilePos = transform.Find("discardPile").GetComponent<RectTransform>().position;
+
         Object resource = AssetBundleManager.LoadResource<Object>("Goldenglow", "skeleton");
         Transform canvas = UIManager.Instance.LCanvasTransTool;
         GameObject playerModel = Instantiate(resource, canvas) as GameObject;
@@ -147,6 +145,11 @@ public class FightUI : UIBase
         }
     }
 
+    public void UpdatePower()
+    {
+        Power.UpdateDisplayInfo(FightManager.Instance.Power);
+    }
+
     public void BtnOnClickEndTurn()
     {
         if (FightManager.Instance.CurState is FightPlayerTurn)
@@ -159,7 +162,6 @@ public class FightUI : UIBase
     {
         PileExamineUI PEUI = UIManager.Instance.ShowUI<PileExamineUI>("PileExamineUI", true) as PileExamineUI;
         PEUI.ShowPile(true);
-
     }
 
     public void BtnOnClickDiscPile()

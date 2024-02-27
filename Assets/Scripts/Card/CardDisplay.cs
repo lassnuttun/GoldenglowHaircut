@@ -103,11 +103,15 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             {
                 if (Input.GetMouseButtonDown(0))
                 {
+                    if (!FightManager.Instance.UsableCheckForCard(Card))
+                    {
+                        break;
+                    }
                     StopAllCoroutines();
                     UIManager.Instance.CloseUI("Arrow");
                     var Enemy = hit.collider.gameObject.GetComponent<EnemyDisplay>().Enemy;
                     Enemy.ChangeState(Card);
-                    FightManager.Instance.RemoveCard(FightManager.Instance.CardPiles[1].IndexOf(Card), true);
+                    FightManager.Instance.RemoveCard(Card, true);
                 }
             }
             yield return null;

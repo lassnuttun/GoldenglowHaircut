@@ -102,21 +102,18 @@ public class FightManager : MonoBehaviour
         yield break;
     }
 
-    public void RemoveCard(int index, bool isUse = false)
+    public void RemoveCard(CardBase card, bool isUse = false)
     {
-        int count = Instance.CardPiles[1].Count;
-        if (index < 0 || index >= count)
+        if (!CardPiles[1].Contains(card))
         {
             return;
         }
-
-        CardBase card = CardPiles[1][index];
         if (isUse)
         {
             Instance.Power.Inc(-card.CardCost);
-            UIManager.Instance.GetUI<FightUI>("FightUI").transform.Find("power").GetComponent<PowerDisplay>().UpdateDisplayInfo(Power);
+            UIManager.Instance.GetUI<FightUI>("FightUI").UpdatePower();
         }
-        CardPiles[1].RemoveAt(index);
+        CardPiles[1].Remove(card);
         CardPiles[2].Add(card);
         UIManager.Instance.GetUI<FightUI>("FightUI").RemoveCard(card.Display);
     }
@@ -125,7 +122,7 @@ public class FightManager : MonoBehaviour
     {
         foreach (var card in CardPiles[1].AsEnumerable().Reverse()) 
         {
-            Instance.RemoveCard(CardPiles[1].IndexOf(card));
+            Instance.RemoveCard(card);
             yield return new WaitForSeconds(FightUI.CardInterval);
         }
     }
@@ -166,6 +163,15 @@ public class FightManager : MonoBehaviour
         }
         Instance.MoveOn(FightUnitType.PlayerTurn);
         yield break;
+    }
+
+    public bool UsableCheckForCard(CardBase card)
+    {
+        if (Power.CurValue < card.CardCost)
+        {
+            return false;
+        }
+        return true;
     }
 }
 
