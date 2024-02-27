@@ -109,9 +109,18 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     }
                     StopAllCoroutines();
                     UIManager.Instance.CloseUI("Arrow");
-                    var Enemy = hit.collider.gameObject.GetComponent<EnemyDisplay>().Enemy;
-                    Enemy.ChangeState(Card);
+                    EnemyDisplay enemyDisplay = hit.collider.gameObject.GetComponent<EnemyDisplay>();
+                    EnemyBase enemy = enemyDisplay.Enemy;
+                    enemy.ChangeState(Card);
                     FightManager.Instance.RemoveCard(Card, true);
+                    if (enemy.EnemyHP.ReachMax())
+                    {
+                        enemyDisplay.CutComplete();
+                    }
+                    else if (enemy.EnemySP.ReachMax())
+                    {
+
+                    }
                 }
             }
             yield return null;

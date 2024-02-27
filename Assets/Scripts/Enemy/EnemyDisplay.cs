@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using Spine.Unity;
 using TMPro;
+using Spine;
+using DG.Tweening;
 
 public class EnemyDisplay : MonoBehaviour
 {
@@ -53,5 +55,17 @@ public class EnemyDisplay : MonoBehaviour
         HPText.text = EnemyHP.ToString();
         SPFill.fillAmount = EnemySP.Percent();
         SPText.text = EnemySP.ToString();
+    }
+
+    public virtual void CutComplete()
+    {
+        SkelGrap.AnimationState.SetAnimation(0, "Die", false);
+        SkelGrap.AnimationState.Complete += (TrackEntry trackEntry) => 
+        {
+            if (trackEntry.Animation.Name == "Die")
+            {
+                Destroy(gameObject);
+            }
+        };
     }
 }

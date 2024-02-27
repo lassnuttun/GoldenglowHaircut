@@ -14,6 +14,11 @@ public class ConditionBar
         CurValue = Cur;
     }
 
+    public bool ReachMax()
+    {
+        return CurValue >= MaxValue;
+    }
+
     public void Inc(int DeltaValue)
     {
         CurValue = Mathf.Min(MaxValue, Mathf.Max(CurValue + DeltaValue, 0));
