@@ -59,12 +59,18 @@ public class EnemyDisplay : MonoBehaviour
 
     public virtual void CutComplete()
     {
+        FightManager.Instance.EnemyList.Remove(Enemy);
         SkelGrap.AnimationState.SetAnimation(0, "Die", false);
         SkelGrap.AnimationState.Complete += (TrackEntry trackEntry) => 
         {
             if (trackEntry.Animation.Name == "Die")
             {
                 Destroy(gameObject);
+                if (FightManager.Instance.EnemyList.Count == 0)
+                {
+                    FightManager.Instance.MoveOn(FightUnitType.Win);
+                    UIManager.Instance.ShowUI<WinUI>("WinUI", true);
+                }
             }
         };
     }

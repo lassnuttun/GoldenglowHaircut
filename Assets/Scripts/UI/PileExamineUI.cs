@@ -4,16 +4,10 @@ using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
-public class PileExamineUI : UIBase
+public class PileExamineUI : UpperUI
 {
     public Transform ScrollViewTrans;
     public Transform BtnBackTrans;
-
-    public override void Show()
-    {
-        Camera.main.GetComponent<PostProcessVolume>().enabled = true;
-        base.Show();
-    }
 
     public void ShowPile(bool DeckOrDisc)
     {
@@ -28,12 +22,6 @@ public class PileExamineUI : UIBase
             cardObj.transform.localScale = new Vector3(0.125f, 0.125f, 0);
             card.BindDisplayComponent(cardObj);
         }
-    }
-
-    public override void Close()
-    {
-        Camera.main.GetComponent<PostProcessVolume>().enabled = false;
-        base.Close();
     }
 
     public void BtnOnClickBack()
