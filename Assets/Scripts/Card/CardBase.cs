@@ -35,10 +35,15 @@ public class CardBase
     public void BindDisplayComponent(GameObject cardModel)
     {
         Display = cardModel.GetComponent<CardDisplay>();
-        Display.CardNameText.text = CardName;
-        Display.CardCostText.text = CardCost.ToString();
-        Display.CardDescriptionText.text = CardDescription;
+        // Display.CardNameText.text = CardName;
+        // Display.CardCostText.text = CardCost.ToString();
+        // Display.CardDescriptionText.text = CardDescription;
         Display.Card = this;
         Display.InHand = FightManager.Instance.CardPiles[1].Contains(this);
+    }
+
+    public virtual bool TryUse()
+    {
+        return true;
     }
 }

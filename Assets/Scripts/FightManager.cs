@@ -16,6 +16,9 @@ public class FightManager : MonoBehaviour
 
     public List<EnemyBase> EnemyList;
 
+    public static readonly int MaxEnvCount = 4;
+    public List<EnvironmentBase> EnvList;
+
     void Awake()
     {
         Instance = this;
@@ -172,6 +175,35 @@ public class FightManager : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    public void AddEnv(EnvironmentBase environment)
+    {
+        if (EnvList.Count >= MaxEnvCount)
+        {
+            RemoveEnv(0);
+        }
+        EnvList.Add(environment);
+    }
+
+    public void RemoveEnv(int i)
+    {
+        for (int j = i + 1; j < EnemyList.Count; j++)
+        {
+            EnvList[j - 1] = EnvList[j];
+        }
+        EnvList.RemoveAt(EnvList.Count - 1);
+    }
+
+    public void CountDownEnv()
+    {
+        for (int i = 0; i < EnvList.Count; i++)
+        {
+            if (--EnvList[i].Duration <= 0)
+            {
+                RemoveEnv(i);
+            }
+        }
     }
 }
 

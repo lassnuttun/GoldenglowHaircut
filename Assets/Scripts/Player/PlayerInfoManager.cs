@@ -36,7 +36,7 @@ public class PlayerInfoManager
         }
         for (int i = 0; i < 4; i++)
         {
-            Deck.Add(new CardBase("Card1", "千早爱音", "简单修剪，增加 5 点修剪值", 1, 5, 0));
+            Deck.Add(new CardBase("CardE001", "千早爱音", "简单修剪，增加 5 点修剪值", 1, 5, 0));
         }
         Deck.Add(new CardBase("Card2", "若叶睦", "粗暴修剪，增加 30 点修剪值，增加 5 点敏感值", 1, 30, 5));
 
