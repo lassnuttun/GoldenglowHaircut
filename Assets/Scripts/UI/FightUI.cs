@@ -38,14 +38,14 @@ public class FightUI : UIBase
         switch (Enemies.Count)
         {
             case 1:
-                enemyPos.Add(new Vector2(-385.0f, -90.0f));
+                enemyPos.Add(new Vector2(-385.0f, -110.0f));
                 break;
             case 2:
                 break;
             case 3:
-                enemyPos.Add(new Vector2(-578.0f, -90.0f));
-                enemyPos.Add(new Vector2(-385.0f, -90.0f));
-                enemyPos.Add(new Vector2(-192.0f, -90.0f));
+                enemyPos.Add(new Vector2(-578.0f, -110.0f));
+                enemyPos.Add(new Vector2(-385.0f, -110.0f));
+                enemyPos.Add(new Vector2(-192.0f, -110.0f));
                 break;
         }
         for (int i = 0; i < Enemies.Count; i++)
