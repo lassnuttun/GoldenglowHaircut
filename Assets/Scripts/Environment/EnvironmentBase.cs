@@ -26,6 +26,13 @@ public class EnvironmentBase
     {
         Display = gameObj.GetComponent<EnvSlotDisplay>();
         Display.Environment = this;
+        UpdateDisplayInfo();
+    }
+
+    public virtual void UpdateDisplayInfo()
+    {
+        Display.CurEnvText.text = EnvName;
+        Display.DurationText.text = Duration.ToString();
     }
 
     public virtual void ApplyCalcHP() { }

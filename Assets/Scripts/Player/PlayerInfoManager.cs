@@ -36,7 +36,7 @@ public class PlayerInfoManager
         }
         for (int i = 0; i < 40; i++)
         {
-            Deck.Add(new HypnoticCenser("CardE001", "安眠迷香", "创造一个持续 %d 回合的【安神】环境", 1, 5, 0, 4, "E001", "安神", "玩家回合结束时，所有敌人敏感值减少 %d"));
+            Deck.Add(new HypnoticCenser("CardE001", "安眠迷香", "创造一个持续 {0} 回合的【安神】环境", 1, 5, 0, 4, "E001", "安神", "玩家回合结束时，所有敌人敏感值减少 {0}，持续 {1} 回合"));
         }
         Deck.Add(new CardBase("Card2", "若叶睦", "粗暴修剪，增加 30 点修剪值，增加 5 点敏感值", 1, 30, 5));
 

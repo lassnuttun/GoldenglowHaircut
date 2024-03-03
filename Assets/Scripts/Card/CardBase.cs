@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class CardBase
 {
-    public CardDisplay Display { get; private set; }
-    public string CardID { get; private set; }
-    public string CardName { get; private set; }
-    public string CardDescription { get; private set; }
-    public int CardCost { get; private set; }
-    public int CardHP { get; private set; }
-    public int CardSP { get; private set; }
+    public CardDisplay Display;
+    public string CardID;
+    public string CardName;
+    public string CardDescription;
+    public int CardCost;
+    public int CardHP;
+    public int CardSP;
+    public bool IsEnvCard;
 
     public CardBase()
     {
@@ -22,7 +23,7 @@ public class CardBase
         CardSP = 0;
     }
 
-    public CardBase(string cardID, string cardName, string cardDescription, int cardCost,  int cardHP, int cardSP)
+    public CardBase(string cardID, string cardName, string cardDescription, int cardCost,  int cardHP, int cardSP, bool isEnvCard = false)
     {
         CardID = cardID;
         CardName = cardName;
@@ -30,6 +31,7 @@ public class CardBase
         CardCost = cardCost;
         CardHP = cardHP;
         CardSP = cardSP;
+        IsEnvCard = isEnvCard;
     }
 
     public void BindDisplayComponent(GameObject cardModel)
@@ -45,5 +47,10 @@ public class CardBase
     public virtual bool TryUse()
     {
         return true;
+    }
+
+    public virtual EnvironmentBase GetEnv()
+    {
+        return null;
     }
 }

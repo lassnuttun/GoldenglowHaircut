@@ -103,29 +103,24 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             {
                 // 使用的逻辑之后需要移到卡牌逻辑类中
                 GameObject gameObj = hit.collider.gameObject;
-                if (Card is EnvCreateCard)
+                if (Card.IsEnvCard)
                 {
-                    var envCard = Card as EnvCreateCard;
                     PlayerDisplay playerDisplay = gameObj.GetComponent<PlayerDisplay>();
                     if (Input.GetMouseButtonDown(0))
                     {
-                        if (playerDisplay == null || FightManager.Instance.UsableCheckForCard(envCard) == false)
+                        if (playerDisplay == null || FightManager.Instance.UsableCheckForCard(Card) == false)
                         {
                             break;
                         }
                         StopAllCoroutines();
                         UIManager.Instance.CloseUI("Arrow");
                         // 需要细化插入环境时的机制，如果已经存在相同的环境，应该如何处理？
-                        if (envCard is HypnoticCenser)
+                        if (Card is HypnoticCenser)
                         {
-                            FightManager.Instance.AddEnv((envCard as HypnoticCenser).Environment);
-                        }
-                        else
-                        {
-                            FightManager.Instance.AddEnv(envCard.Environment);
+                            FightManager.Instance.AddEnv(Card.GetEnv());
                         }
                         // 需要细化实现环境卡进入弃牌堆的机制
-                        FightManager.Instance.RemoveCard(envCard, true);
+                        FightManager.Instance.RemoveCard(Card, true);
                     }
                 }
                 else
