@@ -12,6 +12,8 @@ public class EnvironmentBase
 
     public CardBase EnvCard;
 
+    public EnvSlotDisplay Display;
+
     public EnvironmentBase(string envID, string envName, string envDescription, int duration)
     {
         EnvID = envID;

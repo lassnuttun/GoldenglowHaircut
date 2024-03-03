@@ -1,14 +1,7 @@
 ﻿using DG.Tweening;
-using Newtonsoft.Json;
 using Spine.Unity;
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
-using UnityEngine.UI;
 
 public class FightUI : UIBase
 {
@@ -18,81 +11,81 @@ public class FightUI : UIBase
     private Vector3 DeckPilePos;
     private Vector3 DiscardPilePos;
 
+    private Transform Canvas;
+    private Transform EnvSlots;
     private PlayerDisplay Player;
-    public PowerDisplay Power;
+    private PowerDisplay Power;
 
-    void Start()
+    private static readonly float EnemyPosY = -110.0f;
+    private static readonly List<List<Vector2>> EnemyPosLists = new List<List<Vector2>>
+    {
+        new List<Vector2> { },
+        new List<Vector2> { new Vector2(-385.0f, EnemyPosY) },
+        new List<Vector2> { new Vector2(-481.5f, EnemyPosY), new Vector2(-288.5f, EnemyPosY) },
+        new List<Vector2> { new Vector2(-578.0f, EnemyPosY), new Vector2(-385.0f, EnemyPosY), new Vector2(-192.0f, EnemyPosY) }
+    };
+    // 不可以直接通过 CardRotateLists 访问数据，要通过 CardRotation()
+    private static List<List<float>> CardRotateLists = new List<List<float>>
+    {
+        new List<float> { },
+        new List<float> { 0 },
+        new List<float> { 5, -5 },
+        new List<float> { 10, 0, -10 },
+        new List<float> { 15, 5, -5, -15 },
+        new List<float> { 20, 10, 0, -10, -20 },
+        new List<float> { 25, 15, 5, -5, -15, -25 }
+    };
+    private static readonly float SlotPosY = 0;
+    private static readonly float SlotPosX = 131;
+    private static readonly List<List<Vector2>> SlotPosLists = new List<List<Vector2>>
+    {
+        new List<Vector2> { },
+        new List<Vector2> { new Vector2(SlotPosX *  0, SlotPosY) },
+        new List<Vector2> { new Vector2(SlotPosX * -1, SlotPosY), new Vector2(SlotPosX * 1, SlotPosY) },
+        new List<Vector2> { new Vector2(SlotPosX * -2, SlotPosY), new Vector2(SlotPosX * 0, SlotPosY), new Vector2(SlotPosX * 2, SlotPosY) },
+        new List<Vector2> { new Vector2(SlotPosX * -3, SlotPosY), new Vector2(SlotPosX * -1, SlotPosY), new Vector2(SlotPosX * 1, SlotPosY), new Vector2(SlotPosX * -3, SlotPosY) }
+    };
+
+    void Awake()
     {
         DeckPilePos = transform.Find("deckPile").GetComponent<RectTransform>().position;
         DiscardPilePos = transform.Find("discardPile").GetComponent<RectTransform>().position;
+        Canvas = UIManager.Instance.LCanvasTransTool;
+        EnvSlots = transform.Find("envSlots");
+        Power = transform.Find("power").GetComponent<PowerDisplay>();
+    }
 
+    void Start()
+    {
         Object resource = AssetBundleManager.LoadResource<Object>("Goldenglow", "skeleton");
-        Transform canvas = UIManager.Instance.LCanvasTransTool;
-        GameObject playerModel = Instantiate(resource, canvas) as GameObject;
+        GameObject playerModel = Instantiate(resource, Canvas) as GameObject;
         Player = playerModel.AddComponent<PlayerDisplay>();
         Player.SkelGrap = playerModel.GetComponent<SkeletonGraphic>();
 
         List<EnemyBase> Enemies = FightManager.Instance.EnemyList;
-        List<Vector2> enemyPos = new List<Vector2>();
-        // case 2 的位置需要修改
-        switch (Enemies.Count)
-        {
-            case 1:
-                enemyPos.Add(new Vector2(-385.0f, -110.0f));
-                break;
-            case 2:
-                break;
-            case 3:
-                enemyPos.Add(new Vector2(-578.0f, -110.0f));
-                enemyPos.Add(new Vector2(-385.0f, -110.0f));
-                enemyPos.Add(new Vector2(-192.0f, -110.0f));
-                break;
-        }
-        for (int i = 0; i < Enemies.Count; i++)
+        int count = Enemies.Count;
+        for (int i = 0; i < count; i++)
         {
             resource = AssetBundleManager.LoadResource<Object>(Enemies[i].EnemyID, "skeleton");
-            GameObject enemyModel = Instantiate(resource, canvas) as GameObject;
-            enemyModel.GetComponent<RectTransform>().anchoredPosition = enemyPos[i];
+            GameObject enemyModel = Instantiate(resource, Canvas) as GameObject;
+            enemyModel.GetComponent<RectTransform>().anchoredPosition = EnemyPosLists[count][i];
             Enemies[i].BindDisplayComponent(enemyModel);
         }
     }
 
-    void Update() { }
-
     private List<float> CardRotation(int count)
     {
-        int countLimit = 6;
-        float angleSpace = 10;
-
-        List<float> rotations = new List<float>();
-
-        if (count < countLimit)
+        for (int i =  CardRotateLists.Count; i <= count; i++) 
         {
-            if (count % 2 == 0)
+            List<float> rotations = new List<float>();
+            float totalAngle = 50;
+            for (int j = 0; j < count; j++)
             {
-                for (int i = 0; i < count; i++)
-                {
-                    rotations.Add(-angleSpace / 2 + angleSpace * (count / 2 - i));
-                }
+                rotations.Add(totalAngle / 2 - totalAngle / (count - 1) * j);
             }
-            else
-            {
-                for (int i = 0; i < count; i++)
-                {
-                    rotations.Add(angleSpace * (count / 2 - i));
-                }
-            }
+            CardRotateLists.Add(rotations);
         }
-        else
-        {
-            for (int i = 0; i < count; i++)
-            {
-                float totalAngle = angleSpace * (countLimit - 1);
-                rotations.Add(totalAngle / 2 - totalAngle / (count - 1) * i);
-            }
-        }
-
-        return rotations;
+        return CardRotateLists[count];
     }
 
     private Vector3 CardPosition(float rotation)
@@ -104,14 +97,13 @@ public class FightUI : UIBase
 
     public void AddCard()
     {
-        Transform canvas = UIManager.Instance.LCanvasTransTool;
         List<CardBase> HandPile = FightManager.Instance.CardPiles[1];
         int count = HandPile.Count;
 
         List<float> rotations = CardRotation(count);
 
         Object resource = AssetBundleManager.LoadResource<Object>(HandPile[count - 1].CardID, "card");
-        GameObject cardObj = Instantiate(resource, canvas) as GameObject;
+        GameObject cardObj = Instantiate(resource, Canvas) as GameObject;
         HandPile[count - 1].BindDisplayComponent(cardObj);
         RectTransform rectTransform = cardObj.GetComponent<RectTransform>();
         rectTransform.localScale = new Vector3(0, 0, 0);
@@ -148,6 +140,29 @@ public class FightUI : UIBase
     public void UpdatePower()
     {
         Power.UpdateDisplayInfo(FightManager.Instance.Power);
+    }
+
+    public void AddEnv()
+    {
+        List<EnvironmentBase> EnvList = FightManager.Instance.EnvList;
+        int count = EnvList.Count;
+
+        Object resource = AssetBundleManager.LoadResource<Object>(EnvList[count - 1].EnvID, "env");
+        GameObject gameObj = Instantiate(resource, Canvas) as GameObject;
+        EnvList[count - 1].Display = gameObj.GetComponent<EnvSlotDisplay>();
+        RectTransform rectTransform = gameObj.GetComponent<RectTransform>();
+        rectTransform.anchoredPosition = new Vector2(1000, 0);
+
+        for (int i = 0; i < count; i++)
+        {
+            rectTransform = EnvList[i].Display.GetComponent<RectTransform>();
+            rectTransform.DOAnchorPos(SlotPosLists[count][i], CardInterval);
+        }
+    }
+
+    public void RemoveEnv()
+    {
+
     }
 
     public void BtnOnClickEndTurn()

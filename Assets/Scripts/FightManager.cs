@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 public class FightManager : MonoBehaviour
@@ -184,6 +185,7 @@ public class FightManager : MonoBehaviour
             RemoveEnv(0);
         }
         EnvList.Add(environment);
+        UIManager.Instance.GetUI<FightUI>("FightUI").AddEnv();
     }
 
     public void RemoveEnv(int i)
