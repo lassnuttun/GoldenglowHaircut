@@ -43,7 +43,7 @@ public class FightUI : UIBase
         new List<Vector2> { new Vector2(SlotPosX *  0, SlotPosY) },
         new List<Vector2> { new Vector2(SlotPosX * -1, SlotPosY), new Vector2(SlotPosX * 1, SlotPosY) },
         new List<Vector2> { new Vector2(SlotPosX * -2, SlotPosY), new Vector2(SlotPosX * 0, SlotPosY), new Vector2(SlotPosX * 2, SlotPosY) },
-        new List<Vector2> { new Vector2(SlotPosX * -3, SlotPosY), new Vector2(SlotPosX * -1, SlotPosY), new Vector2(SlotPosX * 1, SlotPosY), new Vector2(SlotPosX * -3, SlotPosY) }
+        new List<Vector2> { new Vector2(SlotPosX * -3, SlotPosY), new Vector2(SlotPosX * -1, SlotPosY), new Vector2(SlotPosX * 1, SlotPosY), new Vector2(SlotPosX * 3, SlotPosY) }
     };
 
     void Awake()
@@ -147,9 +147,9 @@ public class FightUI : UIBase
         List<EnvironmentBase> EnvList = FightManager.Instance.EnvList;
         int count = EnvList.Count;
 
-        Object resource = AssetBundleManager.LoadResource<Object>(EnvList[count - 1].EnvID, "env");
-        GameObject gameObj = Instantiate(resource, Canvas) as GameObject;
-        EnvList[count - 1].Display = gameObj.GetComponent<EnvSlotDisplay>();
+        Object resource = AssetBundleManager.LoadResource<Object>("EnvSlot", "env");
+        GameObject gameObj = Instantiate(resource, EnvSlots) as GameObject;
+        EnvList[count - 1].BindDisplayComponent(gameObj);
         RectTransform rectTransform = gameObj.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = new Vector2(1000, 0);
 

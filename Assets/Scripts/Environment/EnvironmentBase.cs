@@ -22,6 +22,12 @@ public class EnvironmentBase
         Duration = duration;
     }
 
+    public void BindDisplayComponent(GameObject gameObj)
+    {
+        Display = gameObj.GetComponent<EnvSlotDisplay>();
+        Display.Environment = this;
+    }
+
     public virtual void ApplyCalcHP() { }
 
     public virtual void ApplyCalcSP() { }

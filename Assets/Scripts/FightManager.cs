@@ -29,6 +29,7 @@ public class FightManager : MonoBehaviour
     {
         InitPlayerData();
         InitEnemyData(gameID);
+        InitEnvironment();
     }
 
     void InitPlayerData()
@@ -59,6 +60,11 @@ public class FightManager : MonoBehaviour
                 EnemyList.Add(new Mlynar(enemyConfig.enemyID, enemyConfig.enemyName, "NULL", enemyConfig.enemyHP, enemyConfig.enemySP));
             }
         }
+    }
+
+    void InitEnvironment()
+    {
+        EnvList = new List<EnvironmentBase>();
     }
 
     void Shuffle()
@@ -190,7 +196,7 @@ public class FightManager : MonoBehaviour
 
     public void RemoveEnv(int i)
     {
-        for (int j = i + 1; j < EnemyList.Count; j++)
+        for (int j = i + 1; j < EnvList.Count; j++)
         {
             EnvList[j - 1] = EnvList[j];
         }

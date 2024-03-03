@@ -101,25 +101,55 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
             if (hit.collider)
             {
-                if (Input.GetMouseButtonDown(0))
+                // 使用的逻辑之后需要移到卡牌逻辑类中
+                GameObject gameObj = hit.collider.gameObject;
+                if (Card is EnvCreateCard)
                 {
-                    if (!FightManager.Instance.UsableCheckForCard(Card))
+                    var envCard = Card as EnvCreateCard;
+                    PlayerDisplay playerDisplay = gameObj.GetComponent<PlayerDisplay>();
+                    if (Input.GetMouseButtonDown(0))
                     {
-                        break;
+                        if (playerDisplay == null || FightManager.Instance.UsableCheckForCard(envCard) == false)
+                        {
+                            break;
+                        }
+                        StopAllCoroutines();
+                        UIManager.Instance.CloseUI("Arrow");
+                        // 需要细化插入环境时的机制，如果已经存在相同的环境，应该如何处理？
+                        if (envCard is HypnoticCenser)
+                        {
+                            FightManager.Instance.AddEnv((envCard as HypnoticCenser).Environment);
+                        }
+                        else
+                        {
+                            FightManager.Instance.AddEnv(envCard.Environment);
+                        }
+                        // 需要细化实现环境卡进入弃牌堆的机制
+                        FightManager.Instance.RemoveCard(envCard, true);
                     }
-                    StopAllCoroutines();
-                    UIManager.Instance.CloseUI("Arrow");
-                    EnemyDisplay enemyDisplay = hit.collider.gameObject.GetComponent<EnemyDisplay>();
-                    EnemyBase enemy = enemyDisplay.Enemy;
-                    enemy.ChangeState(Card);
-                    FightManager.Instance.RemoveCard(Card, true);
-                    if (enemy.EnemyHP.ReachMax())
+                }
+                else
+                {
+                    EnemyDisplay enemyDisplay = gameObj.GetComponent<EnemyDisplay>();
+                    if (Input.GetMouseButtonDown(0))
                     {
-                        enemyDisplay.CutComplete();
-                    }
-                    else if (enemy.EnemySP.ReachMax())
-                    {
+                        if (enemyDisplay == null || FightManager.Instance.UsableCheckForCard(Card) == false)
+                        {
+                            break;
+                        }
+                        StopAllCoroutines();
+                        UIManager.Instance.CloseUI("Arrow");
+                        EnemyBase enemy = enemyDisplay.Enemy;
+                        enemy.ChangeState(Card);
+                        FightManager.Instance.RemoveCard(Card, true);
+                        if (enemy.EnemyHP.ReachMax())
+                        {
+                            enemyDisplay.CutComplete();
+                        }
+                        else if (enemy.EnemySP.ReachMax())
+                        {
 
+                        }
                     }
                 }
             }
