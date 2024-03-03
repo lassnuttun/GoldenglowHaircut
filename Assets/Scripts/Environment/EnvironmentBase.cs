@@ -29,15 +29,14 @@ public class EnvironmentBase
         UpdateDisplayInfo();
     }
 
-    public virtual void UpdateDisplayInfo()
-    {
-        Display.CurEnvText.text = EnvName;
-        Display.DurationText.text = Duration.ToString();
-    }
+    public virtual void UpdateDisplayInfo() { }
 
     public virtual void ApplyCalcHP() { }
 
     public virtual void ApplyCalcSP() { }
 
-    public virtual void ApplyEndTurn() { }
+    public virtual void ApplyEndTurn() 
+    {
+        Duration--;
+    }
 }

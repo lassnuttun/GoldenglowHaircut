@@ -5,7 +5,7 @@ using TMPro;
 using Spine;
 using DG.Tweening;
 
-public class EnemyDisplay : MonoBehaviour
+public class EnemyDisplay: MonoBehaviour
 {
     public EnemyBase Enemy;
     public TextMeshProUGUI EnemyNameText;
@@ -46,15 +46,15 @@ public class EnemyDisplay : MonoBehaviour
         SkelGrap.AnimationState.SetAnimation(0, "Start", false);
         SkelGrap.AnimationState.AddAnimation(0, "Idle", true, 0);
 
-        UpdateDisplayInfo(Enemy.EnemyHP, Enemy.EnemySP);
+        UpdateDisplayInfo();
     }
 
-    public void UpdateDisplayInfo(ConditionBar EnemyHP, ConditionBar EnemySP)
+    public void UpdateDisplayInfo()
     {
-        HPFill.fillAmount = EnemyHP.Percent();
-        HPText.text = EnemyHP.ToString();
-        SPFill.fillAmount = EnemySP.Percent();
-        SPText.text = EnemySP.ToString();
+        HPFill.fillAmount = Enemy.EnemyHP.Percent();
+        HPText.text = Enemy.EnemyHP.ToString();
+        SPFill.fillAmount = Enemy.EnemySP.Percent();
+        SPText.text = Enemy.EnemySP.ToString();
     }
 
     public virtual void CutComplete()

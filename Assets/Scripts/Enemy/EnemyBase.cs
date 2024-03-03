@@ -36,6 +36,10 @@ public abstract class EnemyBase
         EnemyHP.Inc(deltaHP);
         EnemySP.Inc(deltaSP);
     }
+    public virtual void UpdateDisplayInfo()
+    {
+        Display.UpdateDisplayInfo();
+    }
 
     public abstract void Move1();
     public abstract void Move2();

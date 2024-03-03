@@ -20,7 +20,7 @@ public class Mlynar : EnemyBase
     public override void ChangeState(CardBase card)
     {
         base.ChangeState(card);
-        Display.UpdateDisplayInfo(EnemyHP, EnemySP);
+        Display.UpdateDisplayInfo();
     }
 
     public override void BindDisplayComponent(GameObject enemyModel)
@@ -29,12 +29,17 @@ public class Mlynar : EnemyBase
         Display.Bind(enemyModel, this);
     }
 
+    public override void UpdateDisplayInfo()
+    {
+        Display.UpdateDisplayInfo();
+    }
+
     public override void Move1()
     {
         ThornVal += ThornInc;
         EnemySP.Inc(10);
         Display.Move1();
-        Display.UpdateDisplayInfo(EnemyHP, EnemySP);
+        Display.UpdateDisplayInfo();
     }
 
     public override void Move2()

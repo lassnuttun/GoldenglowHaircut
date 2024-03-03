@@ -7,5 +7,5 @@ public class EnvSlotDisplay : MonoBehaviour
 {
     public EnvironmentBase Environment;
     public TextMeshProUGUI CurEnvText;
-    public TextMeshProUGUI DurationText;
+    public TextMeshProUGUI DescripText;
 }
