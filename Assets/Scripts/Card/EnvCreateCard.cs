@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnvCreateCard : CardBase
 {
-    public virtual EnvironmentBase Environment { get; set; }
+    public EnvironmentBase Environment;
     public int InitDuration;
 
     public EnvCreateCard(string cardID, string cardName, string cardDescription, int cardCost, int cardHP, int cardSP, int duration,
