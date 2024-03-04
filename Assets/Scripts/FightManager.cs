@@ -125,12 +125,12 @@ public class FightManager : MonoBehaviour
         }
         CardPiles[1].Remove(card);
         CardPiles[2].Add(card);
-        UIManager.Instance.GetUI<FightUI>("FightUI").RemoveCard(card.Display);
+        UIManager.Instance.GetUI<FightUI>("FightUI").RemoveCard(card.Get());
     }
 
     public IEnumerator RemoveAllCard()
     {
-        foreach (var card in CardPiles[1].AsEnumerable().Reverse()) 
+        foreach (var card in CardPiles[1].AsEnumerable().Reverse())
         {
             Instance.RemoveCard(card);
             yield return new WaitForSeconds(FightUI.CardInterval);

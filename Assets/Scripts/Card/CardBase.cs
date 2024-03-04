@@ -2,15 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardBase
+public abstract class CardBase : IProperty<CardDisplay>
 {
-    public CardDisplay Display;
     public string CardID;
     public string CardName;
     public string CardDescription;
     public int CardCost;
     public int CardHP;
     public int CardSP;
+
+    public virtual CardDisplay Get()
+    {
+        return null;
+    }
+
+    public virtual void Set(CardDisplay obj)
+    {
+    }
 
     public CardBase()
     {
@@ -22,7 +30,7 @@ public class CardBase
         CardSP = 0;
     }
 
-    public CardBase(string cardID, string cardName, string cardDescription, int cardCost,  int cardHP, int cardSP)
+    public CardBase(string cardID, string cardName, string cardDescription, int cardCost, int cardHP, int cardSP)
     {
         CardID = cardID;
         CardName = cardName;
@@ -34,21 +42,17 @@ public class CardBase
 
     public virtual void BindDisplayComponent(GameObject cardModel)
     {
-        Display = cardModel.GetComponent<CardDisplay>();
+        CardDisplay display = Get();
+        display = cardModel.GetComponent<CardDisplay>();
         // Display.CardNameText.text = CardName;
         // Display.CardCostText.text = CardCost.ToString();
         // Display.CardDescriptionText.text = CardDescription;
-        Display.SetCard(this);
-        Display.InHand = FightManager.Instance.CardPiles[1].Contains(this);
+        display.Set(this);
+        display.InHand = FightManager.Instance.CardPiles[1].Contains(this);
     }
 
     public virtual bool TryUse()
     {
         return true;
-    }
-
-    public virtual EnvironmentBase GetEnv()
-    {
-        return null;
     }
 }

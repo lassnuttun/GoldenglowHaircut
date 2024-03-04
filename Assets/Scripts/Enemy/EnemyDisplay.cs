@@ -5,9 +5,8 @@ using TMPro;
 using Spine;
 using DG.Tweening;
 
-public class EnemyDisplay: MonoBehaviour
+public abstract class EnemyDisplay : MonoBehaviour, IProperty<EnemyBase>
 {
-    public EnemyBase Enemy;
     public TextMeshProUGUI EnemyNameText;
     // public TextMeshProUGUI EnemyDescriptionText;
     public SkeletonGraphic SkelGrap;
@@ -18,9 +17,13 @@ public class EnemyDisplay: MonoBehaviour
     public TextMeshProUGUI HPText;
     public TextMeshProUGUI SPText;
 
-    void Start() { }
-
-    void Update() { }
+    public virtual EnemyBase Get()
+    {
+        return null;
+    }
+    public virtual void Set(EnemyBase obj)
+    {
+    }
 
     public virtual void Move1() { }
     public virtual void Move2() { }
@@ -30,8 +33,7 @@ public class EnemyDisplay: MonoBehaviour
 
     public virtual void Bind(GameObject enemyModel, EnemyBase enemy)
     {
-        Enemy = enemy;
-
+        Set(enemy);
         SkelGrap = enemyModel.GetComponent<SkeletonGraphic>();
         Object CdBarRes = AssetBundleManager.LoadResource<Object>("cdBar", "ui");
         GameObject cdBar = Instantiate(CdBarRes, enemyModel.transform) as GameObject;
@@ -42,7 +44,7 @@ public class EnemyDisplay: MonoBehaviour
         HPText = CdBarObj.transform.Find("hpText").GetComponent<TextMeshProUGUI>();
         SPText = CdBarObj.transform.Find("spText").GetComponent<TextMeshProUGUI>();
 
-        EnemyNameText.text = Enemy.EnemyName;
+        EnemyNameText.text = enemy.EnemyName;
         SkelGrap.AnimationState.SetAnimation(0, "Start", false);
         SkelGrap.AnimationState.AddAnimation(0, "Idle", true, 0);
 
@@ -51,17 +53,18 @@ public class EnemyDisplay: MonoBehaviour
 
     public void UpdateDisplayInfo()
     {
-        HPFill.fillAmount = Enemy.EnemyHP.Percent();
-        HPText.text = Enemy.EnemyHP.ToString();
-        SPFill.fillAmount = Enemy.EnemySP.Percent();
-        SPText.text = Enemy.EnemySP.ToString();
+        EnemyBase enemy = Get();
+        HPFill.fillAmount = enemy.EnemyHP.Percent();
+        HPText.text = enemy.EnemyHP.ToString();
+        SPFill.fillAmount = enemy.EnemySP.Percent();
+        SPText.text = enemy.EnemySP.ToString();
     }
 
     public virtual void CutComplete()
     {
-        FightManager.Instance.EnemyList.Remove(Enemy);
+        FightManager.Instance.EnemyList.Remove(Get());
         SkelGrap.AnimationState.SetAnimation(0, "Die", false);
-        SkelGrap.AnimationState.Complete += (TrackEntry trackEntry) => 
+        SkelGrap.AnimationState.Complete += (TrackEntry trackEntry) =>
         {
             if (trackEntry.Animation.Name == "Die")
             {

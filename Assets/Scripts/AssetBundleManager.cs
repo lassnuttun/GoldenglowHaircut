@@ -15,7 +15,7 @@ public class AssetBundleManager
             return default(T);
         }
 
-        if (!DicAssetBundle.TryGetValue(assetBundleGroupName, out assetBundle)) 
+        if (!DicAssetBundle.TryGetValue(assetBundleGroupName, out assetBundle))
         {
             assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/" + assetBundleGroupName);
             DicAssetBundle.Add(assetBundleGroupName, assetBundle);

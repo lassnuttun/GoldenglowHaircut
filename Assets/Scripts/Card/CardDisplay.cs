@@ -6,18 +6,22 @@ using UnityEngine.EventSystems;
 using DG.Tweening;
 using TMPro;
 
-public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
+public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, IProperty<CardBase>
 {
-    protected CardBase Card;
     public TextMeshProUGUI CardNameText;
     public TextMeshProUGUI CardDescriptionText;
     public TextMeshProUGUI CardCostText;
     public Image CardImage;
     public bool InHand;
 
-    public virtual CardBase GetCard() { return Card; }
+    public virtual CardBase Get()
+    {
+        return null;
+    }
 
-    public virtual void SetCard(CardBase card) {  Card = card; }
+    public virtual void Set(CardBase obj)
+    {
+    }
 
     private bool Check()
     {
@@ -80,13 +84,14 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 EnemyDisplay enemyDisplay = gameObj.GetComponent<EnemyDisplay>();
                 if (Input.GetMouseButtonDown(0))
                 {
+                    CardBase Card = Get();
                     if (enemyDisplay == null || FightManager.Instance.UsableCheckForCard(Card) == false)
                     {
                         break;
                     }
                     StopAllCoroutines();
                     UIManager.Instance.CloseUI("Arrow");
-                    EnemyBase enemy = enemyDisplay.Enemy;
+                    EnemyBase enemy = enemyDisplay.Get();
                     enemy.ChangeState(Card);
                     FightManager.Instance.RemoveCard(Card, true);
                     if (enemy.EnemyHP.ReachMax())
@@ -106,5 +111,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         yield break;
     }
 
-    public void OnPointerUp(PointerEventData eventData) { }
+    public void OnPointerUp(PointerEventData eventData)
+    {
+    }
 }

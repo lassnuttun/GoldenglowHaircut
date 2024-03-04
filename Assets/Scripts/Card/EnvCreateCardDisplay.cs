@@ -6,15 +6,18 @@ using UnityEngine.EventSystems;
 
 public class EnvCreateCardDisplay<TEnv> : CardDisplay where TEnv : EnvironmentBase
 {
-    public new EnvCreateCard<TEnv> Card;
+    public EnvCreateCard<TEnv> Card;
 
-    public override CardBase GetCard() { return Card; }
-
-    public override void SetCard(CardBase card)
+    public override CardBase Get()
     {
-        if (card is EnvCreateCard<TEnv>)
+        return Card;
+    }
+
+    public override void Set(CardBase obj)
+    {
+        if (obj is EnvCreateCard<TEnv>)
         {
-            Card = card as EnvCreateCard<TEnv>;
+            Card = obj as EnvCreateCard<TEnv>;
         }
     }
 
@@ -46,7 +49,7 @@ public class EnvCreateCardDisplay<TEnv> : CardDisplay where TEnv : EnvironmentBa
                     // 需要细化插入环境时的机制，如果已经存在相同的环境，应该如何处理？
                     if (Card is HypnoticCenser)
                     {
-                        FightManager.Instance.AddEnv(Card.GetEnv());
+                        FightManager.Instance.AddEnv(Card.Environment);
                     }
                     // 需要细化实现环境卡进入弃牌堆的机制
                     FightManager.Instance.RemoveCard(Card, true);

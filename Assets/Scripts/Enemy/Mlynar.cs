@@ -7,11 +7,20 @@ using UnityEngine.UI;
 
 public class Mlynar : EnemyBase
 {
-    public new MlynarDisplay Display { get; private set; }
-    public int ThornVal { get; private set; }
-    public int ThornInc { get; private set; }
+    public MlynarDisplay Display;
+    public int ThornVal;
+    public int ThornInc;
 
-    public Mlynar(string enemyID, string enemyName, string enemyDescription, int enemyMaxHP, int enemyMaxSP) : base(enemyID, enemyName, enemyDescription, enemyMaxHP, enemyMaxSP) 
+    public override EnemyDisplay Get() { return Display; }
+    public override void Set(EnemyDisplay obj)
+    {
+        if (obj is MlynarDisplay)
+        {
+            Display = obj as MlynarDisplay;
+        }
+    }
+
+    public Mlynar(string enemyID, string enemyName, string enemyDescription, int enemyMaxHP, int enemyMaxSP) : base(enemyID, enemyName, enemyDescription, enemyMaxHP, enemyMaxSP)
     {
         ThornVal = 1;
         ThornInc = 3;
@@ -26,12 +35,7 @@ public class Mlynar : EnemyBase
     public override void BindDisplayComponent(GameObject enemyModel)
     {
         Display = enemyModel.AddComponent<MlynarDisplay>();
-        Display.Bind(enemyModel, this);
-    }
-
-    public override void UpdateDisplayInfo()
-    {
-        Display.UpdateDisplayInfo();
+        base.BindDisplayComponent(enemyModel);
     }
 
     public override void Move1()

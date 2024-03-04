@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class MlynarDisplay : EnemyDisplay
 {
-    public new Mlynar Enemy;
+    public Mlynar Enemy;
+
+    public override EnemyBase Get() { return Enemy; }
+
+    public override void Set(EnemyBase obj)
+    {
+        if (obj is Mlynar)
+        {
+            Enemy = obj as Mlynar;
+        }
+    }
 
     public override void Move1()
     {

@@ -75,7 +75,7 @@ public class FightUI : UIBase
 
     private List<float> CardRotation(int count)
     {
-        for (int i =  CardRotateLists.Count; i <= count; i++) 
+        for (int i = CardRotateLists.Count; i <= count; i++)
         {
             List<float> rotations = new List<float>();
             float totalAngle = 50;
@@ -111,7 +111,7 @@ public class FightUI : UIBase
 
         for (int i = count - 1; i >= 0; i--)
         {
-            rectTransform = HandPile[i].Display.GetComponent<RectTransform>();
+            rectTransform = HandPile[i].Get().GetComponent<RectTransform>();
             rectTransform.DOAnchorPos(CardPosition(rotations[i]), CardInterval);
             rectTransform.DOScale(CardScale, CardInterval);
             rectTransform.DOLocalRotate(new Vector3(0, 0, -rotations[i]), CardInterval);
@@ -131,7 +131,7 @@ public class FightUI : UIBase
 
         for (int i = 0; i < count; i++)
         {
-            rectTransform = HandPile[i].Display.GetComponent<RectTransform>();
+            rectTransform = HandPile[i].Get().GetComponent<RectTransform>();
             rectTransform.DOAnchorPos(CardPosition(rotations[i]), CardInterval);
             rectTransform.DOLocalRotate(new Vector3(0, 0, -rotations[i]), CardInterval);
         }

@@ -68,8 +68,8 @@
     <Compile Include="Assets\Scripts\Card\CardDisplay.cs" />
     <Compile Include="Assets\Scripts\Card\EnvCreateCard.cs" />
     <Compile Include="Assets\Scripts\Card\EnvCreateCardDisplay.cs" />
-    <Compile Include="Assets\Scripts\Card\HynoticCensorDisplay.cs" />
     <Compile Include="Assets\Scripts\Card\HypnoticCenser.cs" />
+    <Compile Include="Assets\Scripts\Card\HypnoticCenserDisplay.cs" />
     <Compile Include="Assets\Scripts\DemoStart.cs" />
     <Compile Include="Assets\Scripts\Enemy\ConditionBar.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyBase.cs" />
@@ -78,6 +78,7 @@
     <Compile Include="Assets\Scripts\Enemy\MlynarDisplay.cs" />
     <Compile Include="Assets\Scripts\Environment\CalmEnv.cs" />
     <Compile Include="Assets\Scripts\Environment\EnvironmentBase.cs" />
+    <Compile Include="Assets\Scripts\Environment\EnvSlotDisplay.cs" />
     <Compile Include="Assets\Scripts\Fight\FightEnemyTurn.cs" />
     <Compile Include="Assets\Scripts\Fight\FightInit.cs" />
     <Compile Include="Assets\Scripts\Fight\FightLose.cs" />
@@ -85,10 +86,10 @@
     <Compile Include="Assets\Scripts\Fight\FightUnit.cs" />
     <Compile Include="Assets\Scripts\Fight\FightWin.cs" />
     <Compile Include="Assets\Scripts\FightManager.cs" />
+    <Compile Include="Assets\Scripts\IProperty.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerDisplay.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInfoManager.cs" />
     <Compile Include="Assets\Scripts\UI\ArrowDisplay.cs" />
-    <Compile Include="Assets\Scripts\UI\EnvSlotDisplay.cs" />
     <Compile Include="Assets\Scripts\UI\FightUI.cs" />
     <Compile Include="Assets\Scripts\UI\PileExamineUI.cs" />
     <Compile Include="Assets\Scripts\UI\PowerDisplay.cs" />
