@@ -11,7 +11,6 @@ public class CardBase
     public int CardCost;
     public int CardHP;
     public int CardSP;
-    public bool IsEnvCard;
 
     public CardBase()
     {
@@ -23,7 +22,7 @@ public class CardBase
         CardSP = 0;
     }
 
-    public CardBase(string cardID, string cardName, string cardDescription, int cardCost,  int cardHP, int cardSP, bool isEnvCard = false)
+    public CardBase(string cardID, string cardName, string cardDescription, int cardCost,  int cardHP, int cardSP)
     {
         CardID = cardID;
         CardName = cardName;
@@ -31,16 +30,15 @@ public class CardBase
         CardCost = cardCost;
         CardHP = cardHP;
         CardSP = cardSP;
-        IsEnvCard = isEnvCard;
     }
 
-    public void BindDisplayComponent(GameObject cardModel)
+    public virtual void BindDisplayComponent(GameObject cardModel)
     {
         Display = cardModel.GetComponent<CardDisplay>();
         // Display.CardNameText.text = CardName;
         // Display.CardCostText.text = CardCost.ToString();
         // Display.CardDescriptionText.text = CardDescription;
-        Display.Card = this;
+        Display.SetCard(this);
         Display.InHand = FightManager.Instance.CardPiles[1].Contains(this);
     }
 

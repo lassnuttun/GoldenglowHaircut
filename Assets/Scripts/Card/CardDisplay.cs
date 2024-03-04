@@ -8,47 +8,21 @@ using TMPro;
 
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
-    public CardBase Card;
+    protected CardBase Card;
     public TextMeshProUGUI CardNameText;
     public TextMeshProUGUI CardDescriptionText;
     public TextMeshProUGUI CardCostText;
     public Image CardImage;
     public bool InHand;
 
-    void Start() { }
+    public virtual CardBase GetCard() { return Card; }
 
-    void Update() { }
+    public virtual void SetCard(CardBase card) {  Card = card; }
 
     private bool Check()
     {
         return FightManager.Instance.CurState is FightPlayerTurn;
     }
-    
-    //private Vector3 originalPosition;
-    //public void OnBeginDrag(PointerEventData eventData)
-    //{
-    //    if (Check())
-    //    {
-    //        originalPosition = transform.position;
-    //        transform.position = eventData.position;
-    //    }
-    //}
-
-    //public void OnDrag(PointerEventData eventData)
-    //{
-    //    if (Check())
-    //    {
-    //        transform.position = eventData.position;
-    //    }
-    //}
-
-    //public void OnEndDrag(PointerEventData eventData)
-    //{
-    //    if (Check())
-    //    {
-    //        transform.position = originalPosition;
-    //    }
-    //}
 
     private int index;
     private Vector3 eulerAngle;
@@ -87,7 +61,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
-    private IEnumerator OnMouseRightDown(PointerEventData eventData)
+    public virtual IEnumerator OnMouseRightDown(PointerEventData eventData)
     {
         while (true)
         {
@@ -103,48 +77,25 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             {
                 // 使用的逻辑之后需要移到卡牌逻辑类中
                 GameObject gameObj = hit.collider.gameObject;
-                if (Card.IsEnvCard)
+                EnemyDisplay enemyDisplay = gameObj.GetComponent<EnemyDisplay>();
+                if (Input.GetMouseButtonDown(0))
                 {
-                    PlayerDisplay playerDisplay = gameObj.GetComponent<PlayerDisplay>();
-                    if (Input.GetMouseButtonDown(0))
+                    if (enemyDisplay == null || FightManager.Instance.UsableCheckForCard(Card) == false)
                     {
-                        if (playerDisplay == null || FightManager.Instance.UsableCheckForCard(Card) == false)
-                        {
-                            break;
-                        }
-                        StopAllCoroutines();
-                        UIManager.Instance.CloseUI("Arrow");
-                        // 需要细化插入环境时的机制，如果已经存在相同的环境，应该如何处理？
-                        if (Card is HypnoticCenser)
-                        {
-                            FightManager.Instance.AddEnv(Card.GetEnv());
-                        }
-                        // 需要细化实现环境卡进入弃牌堆的机制
-                        FightManager.Instance.RemoveCard(Card, true);
+                        break;
                     }
-                }
-                else
-                {
-                    EnemyDisplay enemyDisplay = gameObj.GetComponent<EnemyDisplay>();
-                    if (Input.GetMouseButtonDown(0))
+                    StopAllCoroutines();
+                    UIManager.Instance.CloseUI("Arrow");
+                    EnemyBase enemy = enemyDisplay.Enemy;
+                    enemy.ChangeState(Card);
+                    FightManager.Instance.RemoveCard(Card, true);
+                    if (enemy.EnemyHP.ReachMax())
                     {
-                        if (enemyDisplay == null || FightManager.Instance.UsableCheckForCard(Card) == false)
-                        {
-                            break;
-                        }
-                        StopAllCoroutines();
-                        UIManager.Instance.CloseUI("Arrow");
-                        EnemyBase enemy = enemyDisplay.Enemy;
-                        enemy.ChangeState(Card);
-                        FightManager.Instance.RemoveCard(Card, true);
-                        if (enemy.EnemyHP.ReachMax())
-                        {
-                            enemyDisplay.CutComplete();
-                        }
-                        else if (enemy.EnemySP.ReachMax())
-                        {
+                        enemyDisplay.CutComplete();
+                    }
+                    else if (enemy.EnemySP.ReachMax())
+                    {
 
-                        }
                     }
                 }
             }
@@ -152,6 +103,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
         // Cursor.visible = true;
         UIManager.Instance.CloseUI("Arrow");
+        yield break;
     }
 
     public void OnPointerUp(PointerEventData eventData) { }
