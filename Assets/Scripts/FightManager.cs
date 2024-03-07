@@ -77,6 +77,7 @@ public class FightManager : MonoBehaviour
         }
     }
 
+    // 需要重构
     public IEnumerator DrawCards(int count)
     {
         count = Mathf.Min(count, MaxHandPileCount - CardPiles[1].Count);
@@ -84,17 +85,14 @@ public class FightManager : MonoBehaviour
         {
             yield break;
         }
-        FightUI fightUI = UIManager.Instance.GetUI<FightUI>("FightUI");
         if (count >= CardPiles[0].Count)
         {
             for (int i = CardPiles[0].Count - 1; i >= 0; i--)
             {
-                CardPiles[1].Add(CardPiles[0][i]);
-                fightUI.AddCard();
-                yield return new WaitForSeconds(FightUI.CardInterval);
+                CardPiles[0][i].DrawFromDeckPile();
                 count--;
+                yield return new WaitForSeconds(FightUI.CardInterval);
             }
-            CardPiles[0].Clear();
             CardPiles[0].AddRange(CardPiles[2]);
             CardPiles[2].Clear();
             Shuffle();
@@ -104,35 +102,17 @@ public class FightManager : MonoBehaviour
         int len = CardPiles[0].Count;
         for (int i = 0; i < count; i++)
         {
-            CardPiles[1].Add(CardPiles[0][len - i - 1]);
-            fightUI.AddCard();
+            CardPiles[0][len - i - 1].DrawFromDeckPile();
             yield return new WaitForSeconds(FightUI.CardInterval);
         }
-        CardPiles[0].RemoveRange(len - count, count);
         yield break;
-    }
-
-    public void RemoveCard(CardBase card, bool isUse = false)
-    {
-        if (!CardPiles[1].Contains(card))
-        {
-            return;
-        }
-        if (isUse)
-        {
-            Instance.Power.Inc(-card.CardCost);
-            UIManager.Instance.GetUI<FightUI>("FightUI").UpdatePower();
-        }
-        CardPiles[1].Remove(card);
-        CardPiles[2].Add(card);
-        UIManager.Instance.GetUI<FightUI>("FightUI").RemoveCard(card.Get());
     }
 
     public IEnumerator RemoveAllCard()
     {
         foreach (var card in CardPiles[1].AsEnumerable().Reverse())
         {
-            Instance.RemoveCard(card);
+            card.DiscardFromHandPile();
             yield return new WaitForSeconds(FightUI.CardInterval);
         }
     }
@@ -184,34 +164,8 @@ public class FightManager : MonoBehaviour
         return true;
     }
 
-    public void AddEnv(EnvironmentBase environment)
-    {
-        if (EnvList.Count >= MaxEnvCount)
-        {
-            RemoveEnv(0);
-        }
-        EnvList.Add(environment);
-        UIManager.Instance.GetUI<FightUI>("FightUI").AddEnv();
-    }
-
-    public void RemoveEnv(int i)
-    {
-        for (int j = i + 1; j < EnvList.Count; j++)
-        {
-            EnvList[j - 1] = EnvList[j];
-        }
-        EnvList.RemoveAt(EnvList.Count - 1);
-    }
-
     public void CountDownEnv()
     {
-        for (int i = 0; i < EnvList.Count; i++)
-        {
-            if (--EnvList[i].Duration <= 0)
-            {
-                RemoveEnv(i);
-            }
-        }
     }
 }
 

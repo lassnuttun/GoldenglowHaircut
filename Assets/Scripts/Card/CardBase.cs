@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 public abstract class CardBase : IProperty<CardDisplay>
@@ -11,14 +12,11 @@ public abstract class CardBase : IProperty<CardDisplay>
     public int CardHP;
     public int CardSP;
 
-    public virtual CardDisplay Get()
-    {
-        return null;
-    }
+    protected abstract void LoadCardModel();
 
-    public virtual void Set(CardDisplay obj)
-    {
-    }
+    public virtual CardDisplay Get() { return null; }
+
+    public virtual void Set(CardDisplay obj) { }
 
     public CardBase()
     {
@@ -40,19 +38,44 @@ public abstract class CardBase : IProperty<CardDisplay>
         CardSP = cardSP;
     }
 
-    public virtual void BindDisplayComponent(GameObject cardModel)
+    public void Use(EnemyBase target = null)
     {
-        CardDisplay display = Get();
-        display = cardModel.GetComponent<CardDisplay>();
-        // Display.CardNameText.text = CardName;
-        // Display.CardCostText.text = CardCost.ToString();
-        // Display.CardDescriptionText.text = CardDescription;
-        display.Set(this);
-        display.InHand = FightManager.Instance.CardPiles[1].Contains(this);
+        UseStep1();
+        UseStep2(target);
+        UseStep3();
     }
 
-    public virtual bool TryUse()
+    public void UseStep1()
     {
-        return true;
+        FightManager.Instance.Power.Inc(-CardCost);
+        UIManager.Instance.GetUI<FightUI>("FightUI").UpdatePower();
+    }
+
+    public virtual void UseStep2(EnemyBase target = null)
+    {
+        target.ChangeState(this);
+        target.Get().UpdateDisplayInfo();
+    }
+
+    public virtual void UseStep3()
+    {
+        DiscardFromHandPile();
+    }
+
+    public void DrawFromDeckPile()
+    {
+        List<List<CardBase>> cards = FightManager.Instance.CardPiles;
+        cards[0].Remove(this);
+        cards[1].Add(this);
+        LoadCardModel();
+        Get().MoveFromDeckToHand();
+    }
+
+    public void DiscardFromHandPile()
+    {
+        List<List<CardBase>> cards = FightManager.Instance.CardPiles;
+        cards[1].Remove(this);
+        cards[2].Add(this);
+        Get().MoveFromHandToDiscard();
     }
 }

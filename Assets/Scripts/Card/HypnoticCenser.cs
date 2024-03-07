@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class HypnoticCenser : EnvCreateCard<CalmEnv>
@@ -23,12 +24,16 @@ public class HypnoticCenser : EnvCreateCard<CalmEnv>
     string envID, string envName, string envDescription)
     : base(cardID, cardName, cardDescription, cardCost, cardHP, cardSP, duration, envID, envName, envDescription)
     {
-        Environment = new CalmEnv(envID, envName, envDescription, InitDuration);
+        Environment = new CalmEnv(envID, envName, envDescription, InitDuration, this);
     }
 
-    public override void BindDisplayComponent(GameObject cardModel)
+    protected override void LoadCardModel()
     {
-        Display = cardModel.GetComponent<HypnoticCenserDisplay>();
+        FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
+        Object resource = AssetBundleManager.LoadResource<Object>(CardID, "card");
+        GameObject cardObj = GameObject.Instantiate(resource, ui.Canvas) as GameObject;
+
+        Display = cardObj.GetComponent<HypnoticCenserDisplay>();
         Display.Set(this);
         Display.InHand = FightManager.Instance.CardPiles[1].Contains(this);
     }

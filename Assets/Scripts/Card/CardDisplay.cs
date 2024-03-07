@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using TMPro;
+using System.Drawing;
+using System.Threading;
 
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, IProperty<CardBase>
 {
@@ -77,41 +79,66 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             Vector3 pos = Camera.main.ScreenToWorldPoint(eventData.position);
             UIManager.Instance.GetUI<ArrowDisplay>("Arrow").SetEndPos(pos);
             RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
-            if (hit.collider)
+            if (hit.collider && Input.GetMouseButtonDown(0))
             {
-                // 使用的逻辑之后需要移到卡牌逻辑类中
-                GameObject gameObj = hit.collider.gameObject;
-                EnemyDisplay enemyDisplay = gameObj.GetComponent<EnemyDisplay>();
-                if (Input.GetMouseButtonDown(0))
+                CardBase Card = Get();
+                EnemyDisplay enemyDisplay = hit.collider.gameObject.GetComponent<EnemyDisplay>();
+                if (enemyDisplay == null || FightManager.Instance.UsableCheckForCard(Card) == false)
                 {
-                    CardBase Card = Get();
-                    if (enemyDisplay == null || FightManager.Instance.UsableCheckForCard(Card) == false)
-                    {
-                        break;
-                    }
-                    StopAllCoroutines();
-                    UIManager.Instance.CloseUI("Arrow");
-                    EnemyBase enemy = enemyDisplay.Get();
-                    enemy.ChangeState(Card);
-                    FightManager.Instance.RemoveCard(Card, true);
-                    if (enemy.EnemyHP.ReachMax())
-                    {
-                        enemyDisplay.CutComplete();
-                    }
-                    else if (enemy.EnemySP.ReachMax())
-                    {
-
-                    }
+                    break;
                 }
+                StopAllCoroutines();
+                UIManager.Instance.CloseUI("Arrow");
+                Card.Use(enemyDisplay.Get());
             }
             yield return null;
         }
-        // Cursor.visible = true;
         UIManager.Instance.CloseUI("Arrow");
         yield break;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
+    }
+
+    public void MoveFromDeckToHand()
+    {
+        FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
+
+        RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
+        rectTransform.localScale = new Vector3(0, 0, 0);
+        rectTransform.position = ui.DeckPilePos;
+
+        ui.UpdateCardPos();
+    }
+
+    public void MoveFromHandToDiscard()
+    {
+        FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
+
+        RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
+        rectTransform.DOMove(ui.DiscardPilePos, FightUI.CardInterval);
+        rectTransform.DOScale(0, FightUI.CardInterval).OnComplete(() => { Destroy(gameObject, 1); });
+
+        ui.UpdateCardPos();
+    }
+
+    public void MoveFromHandToSlot()
+    {
+        FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
+
+        List<EnvironmentBase> list = FightManager.Instance.EnvList;
+        int count = list.Count;
+        RectTransform rectTransform = list[count - 1].Get().GetComponent<RectTransform>();
+        rectTransform.DOAnchorPos(FightUI.SlotPosLists[count][count - 1], FightUI.CardInterval).OnComplete(
+            () =>
+            {
+                FightManager.Instance.CardPiles[1].Remove(Get());
+                GetComponent<RectTransform>().DOMove(rectTransform.position, FightUI.CardInterval);
+                GetComponent<RectTransform>().DOScale(0, FightUI.CardInterval).OnComplete(() => { Destroy(gameObject, 1); });
+                FightManager.Instance.CardPiles[1].Remove(Get());
+                ui.UpdateCardPos();
+            }
+        );
     }
 }

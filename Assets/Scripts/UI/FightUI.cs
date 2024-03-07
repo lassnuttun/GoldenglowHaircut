@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using Spine.Unity;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class FightUI : UIBase
@@ -8,10 +9,11 @@ public class FightUI : UIBase
     public static readonly float CardScale = 0.12f;
     public static readonly float CardInterval = 0.25f;
 
-    private Vector3 DeckPilePos;
-    private Vector3 DiscardPilePos;
+    public Vector3 DeckPilePos;
+    public Vector3 DiscardPilePos;
+    public Vector3 EnvSlotPos;
 
-    private Transform Canvas;
+    public Transform Canvas;
     private Transform EnvSlots;
     private PlayerDisplay Player;
     private PowerDisplay Power;
@@ -37,7 +39,7 @@ public class FightUI : UIBase
     };
     private static readonly float SlotPosY = 0;
     private static readonly float SlotPosX = 131;
-    private static readonly List<List<Vector2>> SlotPosLists = new List<List<Vector2>>
+    public static readonly List<List<Vector2>> SlotPosLists = new List<List<Vector2>>
     {
         new List<Vector2> { },
         new List<Vector2> { new Vector2(SlotPosX *  0, SlotPosY) },
@@ -50,6 +52,7 @@ public class FightUI : UIBase
     {
         DeckPilePos = transform.Find("deckPile").GetComponent<RectTransform>().position;
         DiscardPilePos = transform.Find("discardPile").GetComponent<RectTransform>().position;
+        EnvSlotPos = transform.Find("envSlots").GetComponent<RectTransform>().position;
         Canvas = UIManager.Instance.LCanvasTransTool;
         EnvSlots = transform.Find("envSlots");
         Power = transform.Find("power").GetComponent<PowerDisplay>();
@@ -95,46 +98,23 @@ public class FightUI : UIBase
         return new Vector3(Mathf.Sin(rotation * Mathf.Deg2Rad) * r, Mathf.Cos(rotation * Mathf.Deg2Rad) * r + y);
     }
 
-    public void AddCard()
+    public void UpdateCardPos()
     {
         List<CardBase> HandPile = FightManager.Instance.CardPiles[1];
         int count = HandPile.Count;
-
         List<float> rotations = CardRotation(count);
-
-        Object resource = AssetBundleManager.LoadResource<Object>(HandPile[count - 1].CardID, "card");
-        GameObject cardObj = Instantiate(resource, Canvas) as GameObject;
-        HandPile[count - 1].BindDisplayComponent(cardObj);
-        RectTransform rectTransform = cardObj.GetComponent<RectTransform>();
-        rectTransform.localScale = new Vector3(0, 0, 0);
-        rectTransform.position = DeckPilePos;
-
         for (int i = count - 1; i >= 0; i--)
         {
-            rectTransform = HandPile[i].Get().GetComponent<RectTransform>();
+            RectTransform rectTransform = HandPile[i].Get().GetComponent<RectTransform>();
             rectTransform.DOAnchorPos(CardPosition(rotations[i]), CardInterval);
             rectTransform.DOScale(CardScale, CardInterval);
             rectTransform.DOLocalRotate(new Vector3(0, 0, -rotations[i]), CardInterval);
         }
     }
 
-    public void RemoveCard(CardDisplay card)
+    public void UpdateEnvPos()
     {
-        card.enabled = false;
-        RectTransform rectTransform = card.GetComponent<RectTransform>();
-        rectTransform.DOMove(DiscardPilePos, CardInterval);
-        rectTransform.DOScale(0, CardInterval).OnComplete(() => { Destroy(card.gameObject, 1); });
 
-        List<CardBase> HandPile = FightManager.Instance.CardPiles[1];
-        int count = HandPile.Count;
-        List<float> rotations = CardRotation(count);
-
-        for (int i = 0; i < count; i++)
-        {
-            rectTransform = HandPile[i].Get().GetComponent<RectTransform>();
-            rectTransform.DOAnchorPos(CardPosition(rotations[i]), CardInterval);
-            rectTransform.DOLocalRotate(new Vector3(0, 0, -rotations[i]), CardInterval);
-        }
     }
 
     public void UpdatePower()
@@ -147,7 +127,7 @@ public class FightUI : UIBase
         List<EnvironmentBase> EnvList = FightManager.Instance.EnvList;
         int count = EnvList.Count;
 
-        Object resource = AssetBundleManager.LoadResource<Object>("EnvSlot", "env");
+        Object resource = AssetBundleManager.LoadResource<Object>("CalmEnv", "env");
         GameObject gameObj = Instantiate(resource, EnvSlots) as GameObject;
         EnvList[count - 1].BindDisplayComponent(gameObj);
         RectTransform rectTransform = gameObj.GetComponent<RectTransform>();
@@ -155,14 +135,31 @@ public class FightUI : UIBase
 
         for (int i = 0; i < count; i++)
         {
-            rectTransform = EnvList[i].Display.GetComponent<RectTransform>();
-            rectTransform.DOAnchorPos(SlotPosLists[count][i], CardInterval);
+            rectTransform = EnvList[i].Get().GetComponent<RectTransform>();
+            if (i == count - 1)
+            {
+                EnvList[i].Origin.Get().MoveFromHandToSlot();
+            }
+            else
+            {
+                rectTransform.DOAnchorPos(SlotPosLists[count][i], CardInterval);
+            }
         }
     }
 
-    public void RemoveEnv()
+    public void RemoveEnv(EnvironmentDisplay environment)
     {
+        RectTransform rectTransform = environment.GetComponent<RectTransform>();
+        rectTransform.DOScale(0, CardInterval).OnComplete(() => { Destroy(environment.gameObject, 1); });
 
+        List<EnvironmentBase> EnvList = FightManager.Instance.EnvList;
+        int count = EnvList.Count;
+
+        for (int i = 0; i < count; i++)
+        {
+            rectTransform = EnvList[i].Get().GetComponent<RectTransform>();
+            rectTransform.DOAnchorPos(SlotPosLists[count][i], CardInterval);
+        }
     }
 
     public void BtnOnClickEndTurn()

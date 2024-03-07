@@ -77,8 +77,9 @@
     <Compile Include="Assets\Scripts\Enemy\Mlynar.cs" />
     <Compile Include="Assets\Scripts\Enemy\MlynarDisplay.cs" />
     <Compile Include="Assets\Scripts\Environment\CalmEnv.cs" />
+    <Compile Include="Assets\Scripts\Environment\CalmEnvDisplay.cs" />
     <Compile Include="Assets\Scripts\Environment\EnvironmentBase.cs" />
-    <Compile Include="Assets\Scripts\Environment\EnvSlotDisplay.cs" />
+    <Compile Include="Assets\Scripts\Environment\EnvironmentDisplay.cs" />
     <Compile Include="Assets\Scripts\Fight\FightEnemyTurn.cs" />
     <Compile Include="Assets\Scripts\Fight\FightInit.cs" />
     <Compile Include="Assets\Scripts\Fight\FightLose.cs" />

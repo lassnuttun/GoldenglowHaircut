@@ -21,6 +21,7 @@ public class EnvCreateCardDisplay<TEnv> : CardDisplay where TEnv : EnvironmentBa
         }
     }
 
+    // 需要和父类的函数重新组合一下
     public override IEnumerator OnMouseRightDown(PointerEventData eventData)
     {
         while (true)
@@ -35,9 +36,7 @@ public class EnvCreateCardDisplay<TEnv> : CardDisplay where TEnv : EnvironmentBa
             RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
             if (hit.collider)
             {
-                // 使用的逻辑之后需要移到卡牌逻辑类中
-                GameObject gameObj = hit.collider.gameObject;
-                PlayerDisplay playerDisplay = gameObj.GetComponent<PlayerDisplay>();
+                PlayerDisplay playerDisplay = hit.collider.gameObject.GetComponent<PlayerDisplay>();
                 if (Input.GetMouseButtonDown(0))
                 {
                     if (playerDisplay == null || FightManager.Instance.UsableCheckForCard(Card) == false)
@@ -46,13 +45,7 @@ public class EnvCreateCardDisplay<TEnv> : CardDisplay where TEnv : EnvironmentBa
                     }
                     StopAllCoroutines();
                     UIManager.Instance.CloseUI("Arrow");
-                    // 需要细化插入环境时的机制，如果已经存在相同的环境，应该如何处理？
-                    if (Card is HypnoticCenser)
-                    {
-                        FightManager.Instance.AddEnv(Card.Environment);
-                    }
-                    // 需要细化实现环境卡进入弃牌堆的机制
-                    FightManager.Instance.RemoveCard(Card, true);
+                    Card.Use();
                 }
             }
             yield return null;

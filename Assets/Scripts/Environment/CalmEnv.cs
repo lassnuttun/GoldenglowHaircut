@@ -1,18 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CalmEnv : EnvironmentBase
 {
+    public CalmEnvDisplay Display;
     public int SPDecPerTurn = 3;
 
-    public CalmEnv(string envID, string envName, string envDescription, int duration)
-        : base(envID, envName, envDescription, duration) { }
-
-    public override void UpdateDisplayInfo()
+    public override EnvironmentDisplay Get()
     {
-        Display.CurEnvText.text = string.Format("【{0}】：剩余 {1} 回合", EnvName, Duration.ToString());
-        Display.DescripText.text = string.Format(EnvDescription, SPDecPerTurn.ToString(), Duration.ToString());
+        return Display;
+    }
+
+    public override void Set(EnvironmentDisplay obj)
+    {
+        if (obj is CalmEnvDisplay)
+        {
+            Display = obj as CalmEnvDisplay;
+        }
+    }
+
+    public CalmEnv(string envID, string envName, string envDescription, int duration, CardBase origin)
+        : base(envID, envName, envDescription, duration, origin) { }
+
+    public override void BindDisplayComponent(GameObject gameObj)
+    {
+        Display = gameObj.AddComponent<CalmEnvDisplay>();
+        base.BindDisplayComponent(gameObj);
     }
 
     public override void ApplyEndTurn()

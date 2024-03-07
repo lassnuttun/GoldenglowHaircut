@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnvCreateCard<T> : CardBase where T : EnvironmentBase
+public abstract class EnvCreateCard<T> : CardBase where T : EnvironmentBase
 {
     public T Environment;
     public int InitDuration;
@@ -12,5 +13,15 @@ public class EnvCreateCard<T> : CardBase where T : EnvironmentBase
         : base(cardID, cardName, cardDescription, cardCost, cardHP, cardSP)
     {
         InitDuration = duration;
+    }
+
+    public override void UseStep2(EnemyBase target = null)
+    {
+        Environment.AddToEnvSlot();
+    }
+
+    public override void UseStep3()
+    {
+
     }
 }
