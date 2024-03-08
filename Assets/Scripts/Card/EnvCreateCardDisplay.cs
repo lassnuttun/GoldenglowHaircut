@@ -21,37 +21,14 @@ public class EnvCreateCardDisplay<TEnv> : CardDisplay where TEnv : EnvironmentBa
         }
     }
 
-    // 需要和父类的函数重新组合一下
-    public override IEnumerator OnMouseRightDown(PointerEventData eventData)
+    public override bool TargetExist(RaycastHit2D hit, out EnemyBase enemy)
     {
-        while (true)
+        enemy = null;
+        PlayerDisplay playerDisplay = hit.collider.gameObject.GetComponent<PlayerDisplay>();
+        if (playerDisplay == null)
         {
-            if (Input.GetMouseButton(1))
-            {
-                break;
-            }
-
-            Vector3 pos = Camera.main.ScreenToWorldPoint(eventData.position);
-            UIManager.Instance.GetUI<ArrowDisplay>("Arrow").SetEndPos(pos);
-            RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
-            if (hit.collider)
-            {
-                PlayerDisplay playerDisplay = hit.collider.gameObject.GetComponent<PlayerDisplay>();
-                if (Input.GetMouseButtonDown(0))
-                {
-                    if (playerDisplay == null || FightManager.Instance.UsableCheckForCard(Card) == false)
-                    {
-                        break;
-                    }
-                    StopAllCoroutines();
-                    UIManager.Instance.CloseUI("Arrow");
-                    Card.Use();
-                }
-            }
-            yield return null;
+            return false;
         }
-        // Cursor.visible = true;
-        UIManager.Instance.CloseUI("Arrow");
-        yield break;
+        return true;
     }
 }

@@ -67,7 +67,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
-    public virtual IEnumerator OnMouseRightDown(PointerEventData eventData)
+    public IEnumerator OnMouseRightDown(PointerEventData eventData)
     {
         while (true)
         {
@@ -82,14 +82,13 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             if (hit.collider && Input.GetMouseButtonDown(0))
             {
                 CardBase Card = Get();
-                EnemyDisplay enemyDisplay = hit.collider.gameObject.GetComponent<EnemyDisplay>();
-                if (enemyDisplay == null || FightManager.Instance.UsableCheckForCard(Card) == false)
+                if (TargetExist(hit, out EnemyBase enemy) == false || FightManager.Instance.UsableCheckForCard(Card) == false)
                 {
                     break;
                 }
                 StopAllCoroutines();
                 UIManager.Instance.CloseUI("Arrow");
-                Card.Use(enemyDisplay.Get());
+                Card.Use(enemy);
             }
             yield return null;
         }
@@ -97,9 +96,19 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         yield break;
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public virtual bool TargetExist(RaycastHit2D hit, out EnemyBase enemy)
     {
+        EnemyDisplay enemyDisplay = hit.collider.gameObject.GetComponent<EnemyDisplay>();
+        if (enemyDisplay == null)
+        {
+            enemy = null;
+            return false;
+        }
+        enemy = enemyDisplay.Get();
+        return true;
     }
+
+    public void OnPointerUp(PointerEventData eventData) { }
 
     public void MoveFromDeckToHand()
     {
@@ -130,15 +139,9 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         List<EnvironmentBase> list = FightManager.Instance.EnvList;
         int count = list.Count;
         RectTransform rectTransform = list[count - 1].Get().GetComponent<RectTransform>();
-        rectTransform.DOAnchorPos(FightUI.SlotPosLists[count][count - 1], FightUI.CardInterval).OnComplete(
-            () =>
-            {
-                FightManager.Instance.CardPiles[1].Remove(Get());
-                GetComponent<RectTransform>().DOMove(rectTransform.position, FightUI.CardInterval);
-                GetComponent<RectTransform>().DOScale(0, FightUI.CardInterval).OnComplete(() => { Destroy(gameObject, 1); });
-                FightManager.Instance.CardPiles[1].Remove(Get());
-                ui.UpdateCardPos();
-            }
-        );
+        transform.DOMove(rectTransform.position, FightUI.CardInterval);
+        transform.DOScale(0, FightUI.CardInterval).OnComplete(() => { Destroy(gameObject, 1); });
+        FightManager.Instance.CardPiles[1].Remove(Get());
+        ui.UpdateCardPos();
     }
 }

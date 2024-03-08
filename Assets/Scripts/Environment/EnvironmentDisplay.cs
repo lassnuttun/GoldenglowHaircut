@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -29,5 +31,19 @@ public class EnvironmentDisplay : MonoBehaviour, IProperty<EnvironmentBase>
     {
         EnvironmentBase environment = Get();
         CurEnvText.text = string.Format("【{0}】：剩余 {1} 回合", environment.EnvName, environment.Duration.ToString());
+    }
+
+    public void AddToEnvSlot()
+    {
+        FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
+        ui.UpdateEnvPos(Get().Origin.Get().MoveFromHandToSlot);
+    }
+
+    public void RemoveFromEnvSlot()
+    {
+        FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
+        RectTransform rectTransform = GetComponent<RectTransform>();
+        rectTransform.DOScale(0, FightUI.CardInterval).OnComplete(() => { Destroy(gameObject, 1); });
+        ui.UpdateEnvPos();
     }
 }

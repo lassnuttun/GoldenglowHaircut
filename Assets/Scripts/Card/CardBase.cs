@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 public abstract class CardBase : IProperty<CardDisplay>
@@ -12,11 +11,19 @@ public abstract class CardBase : IProperty<CardDisplay>
     public int CardHP;
     public int CardSP;
 
-    protected abstract void LoadCardModel();
+    protected void LoadModel()
+    {
+        FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
+        Object resource = AssetBundleManager.LoadResource<Object>(CardID, "card");
+        GameObject cardObj = GameObject.Instantiate(resource, ui.Canvas) as GameObject;
+        BindDisplayComponent(cardObj);
+    }
 
     public virtual CardDisplay Get() { return null; }
 
     public virtual void Set(CardDisplay obj) { }
+
+    public virtual void BindDisplayComponent(GameObject gameObj) { }
 
     public CardBase()
     {
@@ -67,7 +74,7 @@ public abstract class CardBase : IProperty<CardDisplay>
         List<List<CardBase>> cards = FightManager.Instance.CardPiles;
         cards[0].Remove(this);
         cards[1].Add(this);
-        LoadCardModel();
+        LoadModel();
         Get().MoveFromDeckToHand();
     }
 

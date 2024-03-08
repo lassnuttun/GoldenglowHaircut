@@ -11,15 +11,14 @@ public class FightUI : UIBase
 
     public Vector3 DeckPilePos;
     public Vector3 DiscardPilePos;
-    public Vector3 EnvSlotPos;
 
     public Transform Canvas;
-    private Transform EnvSlots;
-    private PlayerDisplay Player;
-    private PowerDisplay Power;
+    public Transform EnvSlots;
+    public PlayerDisplay Player;
+    public PowerDisplay Power;
 
-    private static readonly float EnemyPosY = -110.0f;
-    private static readonly List<List<Vector2>> EnemyPosLists = new List<List<Vector2>>
+    public static readonly float EnemyPosY = -110.0f;
+    public static readonly List<List<Vector2>> EnemyPosLists = new List<List<Vector2>>
     {
         new List<Vector2> { },
         new List<Vector2> { new Vector2(-385.0f, EnemyPosY) },
@@ -27,7 +26,7 @@ public class FightUI : UIBase
         new List<Vector2> { new Vector2(-578.0f, EnemyPosY), new Vector2(-385.0f, EnemyPosY), new Vector2(-192.0f, EnemyPosY) }
     };
     // 不可以直接通过 CardRotateLists 访问数据，要通过 CardRotation()
-    private static List<List<float>> CardRotateLists = new List<List<float>>
+    public static List<List<float>> CardRotateLists = new List<List<float>>
     {
         new List<float> { },
         new List<float> { 0 },
@@ -37,8 +36,8 @@ public class FightUI : UIBase
         new List<float> { 20, 10, 0, -10, -20 },
         new List<float> { 25, 15, 5, -5, -15, -25 }
     };
-    private static readonly float SlotPosY = 0;
-    private static readonly float SlotPosX = 131;
+    public static readonly float SlotPosY = 0;
+    public static readonly float SlotPosX = 131;
     public static readonly List<List<Vector2>> SlotPosLists = new List<List<Vector2>>
     {
         new List<Vector2> { },
@@ -52,7 +51,6 @@ public class FightUI : UIBase
     {
         DeckPilePos = transform.Find("deckPile").GetComponent<RectTransform>().position;
         DiscardPilePos = transform.Find("discardPile").GetComponent<RectTransform>().position;
-        EnvSlotPos = transform.Find("envSlots").GetComponent<RectTransform>().position;
         Canvas = UIManager.Instance.LCanvasTransTool;
         EnvSlots = transform.Find("envSlots");
         Power = transform.Find("power").GetComponent<PowerDisplay>();
@@ -112,33 +110,16 @@ public class FightUI : UIBase
         }
     }
 
-    public void UpdateEnvPos()
-    {
-
-    }
-
-    public void UpdatePower()
-    {
-        Power.UpdateDisplayInfo(FightManager.Instance.Power);
-    }
-
-    public void AddEnv()
+    public void UpdateEnvPos(TweenCallback tweenCallback = null)
     {
         List<EnvironmentBase> EnvList = FightManager.Instance.EnvList;
         int count = EnvList.Count;
-
-        Object resource = AssetBundleManager.LoadResource<Object>("CalmEnv", "env");
-        GameObject gameObj = Instantiate(resource, EnvSlots) as GameObject;
-        EnvList[count - 1].BindDisplayComponent(gameObj);
-        RectTransform rectTransform = gameObj.GetComponent<RectTransform>();
-        rectTransform.anchoredPosition = new Vector2(1000, 0);
-
         for (int i = 0; i < count; i++)
         {
-            rectTransform = EnvList[i].Get().GetComponent<RectTransform>();
-            if (i == count - 1)
+            RectTransform rectTransform = EnvList[i].Get().GetComponent<RectTransform>();
+            if (i == count - 1 && tweenCallback != null)
             {
-                EnvList[i].Origin.Get().MoveFromHandToSlot();
+                rectTransform.DOAnchorPos(SlotPosLists[count][i], CardInterval).OnComplete(tweenCallback);
             }
             else
             {
@@ -147,19 +128,9 @@ public class FightUI : UIBase
         }
     }
 
-    public void RemoveEnv(EnvironmentDisplay environment)
+    public void UpdatePower()
     {
-        RectTransform rectTransform = environment.GetComponent<RectTransform>();
-        rectTransform.DOScale(0, CardInterval).OnComplete(() => { Destroy(environment.gameObject, 1); });
-
-        List<EnvironmentBase> EnvList = FightManager.Instance.EnvList;
-        int count = EnvList.Count;
-
-        for (int i = 0; i < count; i++)
-        {
-            rectTransform = EnvList[i].Get().GetComponent<RectTransform>();
-            rectTransform.DOAnchorPos(SlotPosLists[count][i], CardInterval);
-        }
+        Power.UpdateDisplayInfo(FightManager.Instance.Power);
     }
 
     public void BtnOnClickEndTurn()

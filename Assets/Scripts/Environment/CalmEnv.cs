@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using TMPro;
 using UnityEngine;
 
@@ -21,14 +22,14 @@ public class CalmEnv : EnvironmentBase
         }
     }
 
-    public CalmEnv(string envID, string envName, string envDescription, int duration, CardBase origin)
-        : base(envID, envName, envDescription, duration, origin) { }
-
     public override void BindDisplayComponent(GameObject gameObj)
     {
         Display = gameObj.AddComponent<CalmEnvDisplay>();
         base.BindDisplayComponent(gameObj);
     }
+
+    public CalmEnv(string envID, string envName, string envDescription, int duration, CardBase origin)
+        : base(envID, envName, envDescription, duration, origin) { }
 
     public override void ApplyEndTurn()
     {

@@ -20,21 +20,17 @@ public class HypnoticCenser : EnvCreateCard<CalmEnv>
         }
     }
 
+    public override void BindDisplayComponent(GameObject gameObj)
+    {
+        Display = gameObj.GetComponent<HypnoticCenserDisplay>();
+        Display.Set(this);
+        Display.InHand = FightManager.Instance.CardPiles[1].Contains(this);
+    }
+
     public HypnoticCenser(string cardID, string cardName, string cardDescription, int cardCost, int cardHP, int cardSP, int duration,
     string envID, string envName, string envDescription)
     : base(cardID, cardName, cardDescription, cardCost, cardHP, cardSP, duration, envID, envName, envDescription)
     {
         Environment = new CalmEnv(envID, envName, envDescription, InitDuration, this);
-    }
-
-    protected override void LoadCardModel()
-    {
-        FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
-        Object resource = AssetBundleManager.LoadResource<Object>(CardID, "card");
-        GameObject cardObj = GameObject.Instantiate(resource, ui.Canvas) as GameObject;
-
-        Display = cardObj.GetComponent<HypnoticCenserDisplay>();
-        Display.Set(this);
-        Display.InHand = FightManager.Instance.CardPiles[1].Contains(this);
     }
 }

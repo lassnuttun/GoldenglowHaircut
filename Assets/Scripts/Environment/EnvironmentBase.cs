@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,8 +9,17 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
     public string EnvDescription;
 
     public int Duration;
-
     public CardBase Origin;
+
+    protected void LoadModel()
+    {
+        FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
+        Object resource = AssetBundleManager.LoadResource<Object>(EnvID, "env");
+        GameObject gameObj = GameObject.Instantiate(resource, ui.EnvSlots) as GameObject;
+        BindDisplayComponent(gameObj);
+        RectTransform rectTransform = gameObj.GetComponent<RectTransform>();
+        rectTransform.anchoredPosition = new Vector2(1000, 0);
+    }
 
     public virtual EnvironmentDisplay Get()
     {
@@ -20,6 +28,11 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
 
     public virtual void Set(EnvironmentDisplay obj) { }
 
+    public virtual void BindDisplayComponent(GameObject gameObj)
+    {
+        Get().Bind(gameObj, this);
+    }
+
     public EnvironmentBase(string envID, string envName, string envDescription, int duration, CardBase origin)
     {
         EnvID = envID;
@@ -27,11 +40,6 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
         EnvDescription = envDescription;
         Duration = duration;
         Origin = origin;
-    }
-
-    public virtual void BindDisplayComponent(GameObject gameObj)
-    {
-        Get().Bind(gameObj, this);
     }
 
     public virtual void ApplyCalcHP() { }
@@ -51,8 +59,8 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
             list[0].RemoveFromEnvSlot();
         }
         list.Add(this);
-
-        UIManager.Instance.GetUI<FightUI>("FightUI").AddEnv();
+        LoadModel();
+        Get().AddToEnvSlot();
     }
 
     public virtual void RemoveFromEnvSlot()
@@ -63,6 +71,6 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
             list[j - 1] = list[j];
         }
         list.RemoveAt(list.Count - 1);
-        UIManager.Instance.GetUI<FightUI>("FightUI").RemoveEnv(Get());
+        Get().RemoveFromEnvSlot();
     }
 }

@@ -77,7 +77,6 @@ public class FightManager : MonoBehaviour
         }
     }
 
-    // 需要重构
     public IEnumerator DrawCards(int count)
     {
         count = Mathf.Min(count, MaxHandPileCount - CardPiles[1].Count);
