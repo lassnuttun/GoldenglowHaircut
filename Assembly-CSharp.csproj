@@ -84,6 +84,7 @@
     <Compile Include="Assets\Scripts\Fight\FightInit.cs" />
     <Compile Include="Assets\Scripts\Fight\FightLose.cs" />
     <Compile Include="Assets\Scripts\Fight\FightPlayerTurn.cs" />
+    <Compile Include="Assets\Scripts\Fight\FightPrePlayerTurn.cs" />
     <Compile Include="Assets\Scripts\Fight\FightUnit.cs" />
     <Compile Include="Assets\Scripts\Fight\FightWin.cs" />
     <Compile Include="Assets\Scripts\FightManager.cs" />

@@ -9,10 +9,9 @@ public class FightPlayerTurn : FightUnit
         Debug.Log("Fight Player Turn");
         FightManager.Instance.Power.Inc(FightManager.Instance.Power.MaxValue);
         UIManager.Instance.GetUI<FightUI>("FightUI").UpdatePower();
-        FightManager.Instance.StartCoroutine(FightManager.Instance.DrawCards(FightManager.Instance.DrawCount));
     }
 
-    public override void OnUpdate() 
+    public override void OnUpdate()
     {
         base.OnUpdate();
     }

@@ -5,8 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using TMPro;
-using System.Drawing;
-using System.Threading;
 
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, IProperty<CardBase>
 {
@@ -140,7 +138,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         int count = list.Count;
         RectTransform rectTransform = list[count - 1].Get().GetComponent<RectTransform>();
         transform.DOMove(rectTransform.position, FightUI.CardInterval);
-        transform.DOScale(0, FightUI.CardInterval).OnComplete(() => { Destroy(gameObject, 1); });
+        transform.DOScale(0, FightUI.CardInterval);
         FightManager.Instance.CardPiles[1].Remove(Get());
         ui.UpdateCardPos();
     }

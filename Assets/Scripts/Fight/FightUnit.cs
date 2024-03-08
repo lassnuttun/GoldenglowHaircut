@@ -6,6 +6,7 @@ public enum FightUnitType
 {
     None,
     Init,
+    PrePlayerTurn,
     PlayerTurn,
     EnemyTurn,
     Win,

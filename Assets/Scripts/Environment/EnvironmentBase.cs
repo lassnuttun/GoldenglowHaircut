@@ -46,10 +46,7 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
 
     public virtual void ApplyCalcSP() { }
 
-    public virtual void ApplyEndTurn()
-    {
-        Duration--;
-    }
+    public virtual void ApplyEndTurn() { }
 
     public virtual void AddToEnvSlot()
     {
@@ -71,6 +68,7 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
             list[j - 1] = list[j];
         }
         list.RemoveAt(list.Count - 1);
+        FightManager.Instance.CardPiles[2].Add(Origin);
         Get().RemoveFromEnvSlot();
     }
 }

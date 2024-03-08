@@ -42,8 +42,8 @@ public class EnvironmentDisplay : MonoBehaviour, IProperty<EnvironmentBase>
     public void RemoveFromEnvSlot()
     {
         FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
-        RectTransform rectTransform = GetComponent<RectTransform>();
-        rectTransform.DOScale(0, FightUI.CardInterval).OnComplete(() => { Destroy(gameObject, 1); });
+        transform.DOScale(0, FightUI.CardInterval).OnComplete(() => { Destroy(gameObject, 1); });
+        // 环境卡进入弃牌堆的特效还没想好怎么加
         ui.UpdateEnvPos();
     }
 }

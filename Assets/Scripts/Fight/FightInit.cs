@@ -9,7 +9,7 @@ public class FightInit : FightUnit
         Debug.Log("Fight Init");
         FightManager.Instance.InitFight("DemoGame");
         UIManager.Instance.ShowUI<FightUI>("FightUI");
-        FightManager.Instance.MoveOn(FightUnitType.PlayerTurn);
+        FightManager.Instance.MoveOn(FightUnitType.PrePlayerTurn);
     }
 
     public override void OnUpdate()

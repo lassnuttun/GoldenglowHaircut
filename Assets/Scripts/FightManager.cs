@@ -104,6 +104,7 @@ public class FightManager : MonoBehaviour
             CardPiles[0][len - i - 1].DrawFromDeckPile();
             yield return new WaitForSeconds(FightUI.CardInterval);
         }
+        Instance.MoveOn(FightUnitType.PlayerTurn);
         yield break;
     }
 
@@ -123,6 +124,8 @@ public class FightManager : MonoBehaviour
             case FightUnitType.None: break;
             case FightUnitType.Init:
                 CurState = new FightInit(); break;
+            case FightUnitType.PrePlayerTurn:
+                CurState = new FightPrePlayerTurn(); break;
             case FightUnitType.PlayerTurn:
                 CurState = new FightPlayerTurn(); break;
             case FightUnitType.EnemyTurn:
@@ -150,7 +153,7 @@ public class FightManager : MonoBehaviour
             enemy.Move1();
             yield return new WaitForSeconds(1.5f);
         }
-        Instance.MoveOn(FightUnitType.PlayerTurn);
+        Instance.MoveOn(FightUnitType.PrePlayerTurn);
         yield break;
     }
 
@@ -163,8 +166,23 @@ public class FightManager : MonoBehaviour
         return true;
     }
 
-    public void CountDownEnv()
+    public IEnumerator CountDownEnv()
     {
+        for (int i = 0; i < EnvList.Count;)
+        {
+            EnvList[i].ApplyEndTurn();
+            EnvList[i].Duration--;
+            EnvList[i].Get().UpdateDisplayInfo();
+            if (EnvList[i].Duration <= 0)
+            {
+                EnvList[i].RemoveFromEnvSlot();
+            }
+            else
+            {
+                i++;
+            }
+            yield return new WaitForSeconds(FightUI.CardInterval);
+        }
     }
 }
 

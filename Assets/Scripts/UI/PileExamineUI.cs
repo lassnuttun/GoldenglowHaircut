@@ -20,7 +20,7 @@ public class PileExamineUI : UpperUI
             Object resource = AssetBundleManager.LoadResource<Object>(card.CardID, "card");
             GameObject cardObj = Instantiate(resource, content) as GameObject;
             cardObj.transform.localScale = new Vector3(0.125f, 0.125f, 0);
-            // card.BindDisplayComponent(cardObj);
+            card.BindDisplayComponent(cardObj);
         }
     }
 
