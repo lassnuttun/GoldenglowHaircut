@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using Spine.Unity;
 using TMPro;
 using Spine;
-using DG.Tweening;
 
 public abstract class EnemyDisplay : MonoBehaviour, IProperty<EnemyBase>
 {

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2164797423
+CRC: 1748817266
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 2b48c4b13d032138a42455b72f932fa9
+    Hash: 3877cc901ddb191a4f6ffe81d075c656
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -14,6 +14,7 @@ ClassTypes:
 Assets:
 - Assets/GameConfig/EnemyConfig/Nearl2.json
 - Assets/GameConfig/SubGameConfig/DemoGame.json
+- Assets/GameConfig/CardConfig/CardE001.json
 - Assets/GameConfig/EnemyConfig/Mlynar.json
 - Assets/GameConfig/EnemyConfig/Blemishine.json
 Dependencies: []

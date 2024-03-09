@@ -23,26 +23,22 @@ public abstract class CardBase : IProperty<CardDisplay>
 
     public virtual void Set(CardDisplay obj) { }
 
-    public virtual void BindDisplayComponent(GameObject gameObj) { }
-
-    public CardBase()
+    public virtual void BindDisplayComponent(GameObject gameObj)
     {
-        CardID = "NULL";
-        CardName = "NULL";
-        CardDescription = "NULL";
-        CardCost = 0;
-        CardHP = 0;
-        CardSP = 0;
+        CardDisplay display = Get();
+        display.Set(this);
+        display.InHand = FightManager.Instance.CardPiles[1].Contains(this);
+        display.UpdateDisplayInfo();
     }
 
-    public CardBase(string cardID, string cardName, string cardDescription, int cardCost, int cardHP, int cardSP)
+    public CardBase(CardConfigInfo info)
     {
-        CardID = cardID;
-        CardName = cardName;
-        CardDescription = cardDescription;
-        CardCost = cardCost;
-        CardHP = cardHP;
-        CardSP = cardSP;
+        CardID = info.id;
+        CardName = info.name;
+        CardDescription = info.desc;
+        CardCost = info.cost;
+        CardHP = info.hp;
+        CardSP = info.sp;
     }
 
     public void Use(EnemyBase target = null)

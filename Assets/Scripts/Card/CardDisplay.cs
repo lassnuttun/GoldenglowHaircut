@@ -28,6 +28,13 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         return FightManager.Instance.CurState is FightPlayerTurn;
     }
 
+    public virtual void UpdateDisplayInfo()
+    {
+        CardBase card = Get();
+        CardNameText.text = card.CardName;
+        CardCostText.text = card.CardCost.ToString();
+    }
+
     private int index;
     private Vector3 eulerAngle;
     public void OnPointerEnter(PointerEventData eventData)

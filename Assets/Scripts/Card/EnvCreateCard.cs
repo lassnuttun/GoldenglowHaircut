@@ -8,11 +8,9 @@ public abstract class EnvCreateCard<T> : CardBase where T : EnvironmentBase
     public T Environment;
     public int InitDuration;
 
-    public EnvCreateCard(string cardID, string cardName, string cardDescription, int cardCost, int cardHP, int cardSP, int duration,
-        string envID, string envName, string envDescription)
-        : base(cardID, cardName, cardDescription, cardCost, cardHP, cardSP)
+    public EnvCreateCard(CardConfigInfo info) : base(info)
     {
-        InitDuration = duration;
+        InitDuration = info.dura;
     }
 
     public override void UseStep2(EnemyBase target = null)

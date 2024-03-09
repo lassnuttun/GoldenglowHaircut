@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1186684319
+CRC: 2569497068
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 422ae5cf6a00549f309a82400805e56b
+    Hash: 16335992ae0c3a06756074f066ff758f
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9c6e4a6de88ec12b85765902646dd1d0
@@ -36,6 +36,7 @@ ClassTypes:
 Assets:
 - Assets/Prefabs/Card/Card2.prefab
 - Assets/Prefabs/Card/CardE001.prefab
+- Assets/Prefabs/Card/CardExample.prefab
 - Assets/Prefabs/Card/Card0.prefab
 Dependencies:
 - D:/unity_projects/Demo/AssetBundles/StandaloneWindows/font

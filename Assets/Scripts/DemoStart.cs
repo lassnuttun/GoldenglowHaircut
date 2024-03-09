@@ -1,9 +1,7 @@
-﻿using Spine.Unity;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
 using UnityEngine;
 
 public class DemoStart : MonoBehaviour

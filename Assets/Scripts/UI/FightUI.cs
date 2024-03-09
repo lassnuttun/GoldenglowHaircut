@@ -1,7 +1,6 @@
 ﻿using DG.Tweening;
 using Spine.Unity;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 
 public class FightUI : UIBase

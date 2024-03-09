@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class EnvCreateCardDisplay<TEnv> : CardDisplay where TEnv : EnvironmentBase
 {
@@ -19,6 +17,12 @@ public class EnvCreateCardDisplay<TEnv> : CardDisplay where TEnv : EnvironmentBa
         {
             Card = obj as EnvCreateCard<TEnv>;
         }
+    }
+
+    public override void UpdateDisplayInfo()
+    {
+        CardDescriptionText.text = string.Format(Card.CardDescription, Card.InitDuration);
+        base.UpdateDisplayInfo();
     }
 
     public override bool TargetExist(RaycastHit2D hit, out EnemyBase enemy)
