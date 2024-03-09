@@ -19,11 +19,11 @@ public class PlayerInfoManager
         }
     }
 
-    public List<CardBase> Deck { get; private set; }
-    public Random.State RandState { get; private set; }
-    public int MaxPw { get; private set; }
-    public int Money { get; private set; }
-    public int DrawCount { get; private set; }
+    public List<CardBase> Deck;
+    public Random.State RandState;
+    public int MaxPw;
+    public int Money;
+    public int DrawCount;
 
     public void InitPlayerInfo()
     {
@@ -41,7 +41,14 @@ public class PlayerInfoManager
                     Deck.Add(new BasicCutCard(cardConfigInfo));
                 }
             }
-            else
+            else if (card.id == "CardA001")
+            {
+                for (int i = 0; i < card.cnt; i++)
+                {
+                    Deck.Add(new BasicSootheCard(cardConfigInfo));
+                }
+            }
+            else if (card.id == "CardE001")
             {
                 for (int i = 0; i < card.cnt; i++)
                 {

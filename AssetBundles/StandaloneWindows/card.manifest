@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1332654972
+CRC: 685044243
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 91f4cee1bc084a3e3370bc8c39bf5399
+    Hash: 5e39b84cd50c7bac170d8a4d7d057b0f
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 2a65b5c8bc9c2193a738e101d1577852
+    Hash: d1ce352dc690eeb948d5c70c15872c70
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -22,9 +22,11 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 2ac161cc38b175a4689fe77948a88065, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: bfde789ec94afc44896e84928e624037, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 2ac161cc38b175a4689fe77948a88065, type: 3}
+  Script: {fileID: 11500000, guid: d6cd9a74e342a1142bd381a7d60f68f4, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 213
@@ -34,6 +36,7 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
+- Assets/Prefabs/Card/CardA001.prefab
 - Assets/Prefabs/Card/CardE001.prefab
 - Assets/Prefabs/Card/CardA000.prefab
 Dependencies:

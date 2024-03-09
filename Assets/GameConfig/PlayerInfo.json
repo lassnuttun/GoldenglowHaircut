@@ -2,11 +2,15 @@
   "cards": [
     {
       "id": "CardA000",
-      "cnt": 10
+      "cnt": 5
+    },
+    {
+      "id": "CardA001",
+      "cnt": 5
     },
     {
       "id": "CardE001",
-      "cnt": 10
+      "cnt": 1
     }
   ]
 }
