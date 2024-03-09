@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 112686092
+CRC: 105263247
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 923975701ce646f5fde834eb15ec184a
+    Hash: 824e5287197b1337e9f72a8b14068401
   TypeTreeHash:
     serializedVersion: 2
     Hash: 41727ca6ccdd7808836b94ce96200493
@@ -23,4 +23,13 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/Fonts/SourceHanSansCN/SubsetOTF/CN/SourceHanSansCN-Normal SDF.asset
+- Assets/Fonts/SourceHanSansCN/SubsetOTF/CN/SourceHanSansCN-Medium.otf
+- Assets/Fonts/SourceHanSansCN/SubsetOTF/CN/SourceHanSansCN-Heavy.otf
+- Assets/Fonts/SourceHanSansCN/SubsetOTF/CN/SourceHanSansCN-ExtraLight.otf
+- Assets/Fonts/SourceHanSansCN/SubsetOTF/CN/SourceHanSansCN-Bold.otf
+- Assets/Fonts/SourceHanSansCN/SubsetOTF/CN/SourceHanSansCN-Normal.otf
+- Assets/Fonts/SourceHanSansCN/SubsetOTF/CN/SourceHanSansCN-Regular.otf
+- Assets/Fonts/SourceHanSansCN/SubsetOTF/CN/SourceHanSansCN-Light.otf
+- Assets/TextMesh Pro/Resources/Shaders/TMP_SDF.shader
+- Assets/TextMesh Pro/Resources/Shaders/TMP_SDF-Mobile.shader
 Dependencies: []
