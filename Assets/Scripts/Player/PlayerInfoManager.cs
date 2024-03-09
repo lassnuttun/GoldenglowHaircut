@@ -28,11 +28,26 @@ public class PlayerInfoManager
     public void InitPlayerInfo()
     {
         Deck = new List<CardBase>();
-        string file = AssetBundleManager.LoadResource<Object>("CardE001", "config").ToString();
-        CardConfigInfo cardConfigInfo = JsonConvert.DeserializeObject<CardConfigInfo>(file);
-        for (int i = 0; i < 40; i++)
+        string file = AssetBundleManager.LoadResource<Object>("PlayerInfo", "config").ToString();
+        PlayerInfo playerInfo = JsonConvert.DeserializeObject<PlayerInfo>(file);
+        foreach (var card in playerInfo.cards)
         {
-            Deck.Add(new HypnoticCenser(cardConfigInfo));
+            file = AssetBundleManager.LoadResource<Object>(card.id, "config").ToString();
+            CardConfigInfo cardConfigInfo = JsonConvert.DeserializeObject<CardConfigInfo>(file);
+            if (card.id == "CardA000")
+            {
+                for (int i = 0; i < card.cnt; i++)
+                {
+                    Deck.Add(new BasicCutCard(cardConfigInfo));
+                }
+            }
+            else
+            {
+                for (int i = 0; i < card.cnt; i++)
+                {
+                    Deck.Add(new HypnoticCenser(cardConfigInfo));
+                }
+            }
         }
 
         MaxPw = 3;
@@ -51,4 +66,15 @@ public class CardConfigInfo
     public int sp;
     public int dura;
     public string env;
+}
+
+public class CardCount
+{
+    public string id;
+    public int cnt;
+}
+
+public class PlayerInfo
+{
+    public List<CardCount> cards;
 }

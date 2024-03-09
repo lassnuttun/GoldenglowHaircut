@@ -64,6 +64,8 @@
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Scripts\AssetBundleManager.cs" />
+    <Compile Include="Assets\Scripts\Card\BasicCutCard.cs" />
+    <Compile Include="Assets\Scripts\Card\BasicCutDisplay.cs" />
     <Compile Include="Assets\Scripts\Card\CardBase.cs" />
     <Compile Include="Assets\Scripts\Card\CardDisplay.cs" />
     <Compile Include="Assets\Scripts\Card\EnvCreateCard.cs" />
