@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3955581137903357862}
   m_Layer: 5
-  m_Name: EnvSlot
+  m_Name: E001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -366,7 +366,7 @@ GameObject:
   - component: {fileID: 9206111252425834354}
   - component: {fileID: 8389365422364613311}
   m_Layer: 5
-  m_Name: DefTend
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -19,13 +19,13 @@ public abstract class EnemyBase : IProperty<EnemyDisplay>
     {
     }
 
-    public EnemyBase(string enemyID, string enemyName, string enemyDescription, int enemyMaxHP, int enemyMaxSP)
+    public EnemyBase(EnemyConfigInfo enemyConfig)
     {
-        EnemyID = enemyID;
-        EnemyName = enemyName;
-        EnemyDescription = enemyDescription;
-        EnemyHP = new ConditionBar(enemyMaxHP, 0);
-        EnemySP = new ConditionBar(enemyMaxSP, 0);
+        EnemyID = enemyConfig.id;
+        EnemyName = enemyConfig.name;
+        EnemyDescription = enemyConfig.desc;
+        EnemyHP = new ConditionBar(enemyConfig.hp, 0);
+        EnemySP = new ConditionBar(enemyConfig.sp, 0);
     }
 
     public virtual void BindDisplayComponent(GameObject enemyModel)
@@ -39,16 +39,19 @@ public abstract class EnemyBase : IProperty<EnemyDisplay>
         deltaSP = card.CardSP;
     }
 
+    // 需要加入环境卡对应的接口吗？
     public virtual void ChangeState(CardBase card)
     {
         HitBy(card, out int deltaHP, out int deltaSP);
         EnemyHP.Inc(deltaHP);
         EnemySP.Inc(deltaSP);
+        Get().UpdateDisplayInfo();
     }
 
-    public abstract void Move1();
-    public abstract void Move2();
-    public abstract void Move3();
-    public abstract void Move4();
-    public abstract void Move5();
+    // 后续需要把这个移到具体子类内部 用状态机维护下一次该采取什么行动
+    public virtual void Move1() { }
+    public virtual void Move2() { }
+    public virtual void Move3() { }
+    public virtual void Move4() { }
+    public virtual void Move5() { }
 }

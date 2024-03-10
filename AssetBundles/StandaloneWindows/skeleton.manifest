@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1964377133
+CRC: 1582617367
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: df75762bfca17a8527f19f376511b7e2
+    Hash: 38ba376b9ce5990026519c75ade84b69
   TypeTreeHash:
     serializedVersion: 2
     Hash: df902e95aaf388e9df9c81c90dc49aa9
@@ -35,6 +35,7 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/Prefabs/Skeleton/Goldenglow.prefab
+- Assets/Prefabs/Skeleton/W.prefab
 - Assets/Prefabs/Skeleton/Nearl2.prefab
 - Assets/Prefabs/Skeleton/Mlynar.prefab
 - Assets/Prefabs/Skeleton/Blemishine.prefab

@@ -29,13 +29,21 @@ public class EnvironmentDisplay : MonoBehaviour, IProperty<EnvironmentBase>
     public virtual void UpdateDisplayInfo()
     {
         EnvironmentBase environment = Get();
-        CurEnvText.text = string.Format("【{0}】：剩余 {1} 回合", environment.EnvName, environment.Duration.ToString());
+        CurEnvText.text = string.Format("{0}：剩余{1}回合", environment.EnvName, environment.Duration.ToString());
     }
 
     public void AddToEnvSlot()
     {
         FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
-        ui.UpdateEnvPos(Get().Origin.Get().MoveFromHandToSlot);
+        CardBase origin = Get().Origin;
+        if (origin != null)
+        {
+            ui.UpdateEnvPos(origin.Get().MoveFromHandToSlot);
+        }
+        else
+        {
+            ui.UpdateEnvPos();
+        }
     }
 
     public void RemoveFromEnvSlot()

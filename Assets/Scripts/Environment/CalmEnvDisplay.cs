@@ -22,6 +22,6 @@ public class CalmEnvDisplay : EnvironmentDisplay
     public override void UpdateDisplayInfo()
     {
         base.UpdateDisplayInfo();
-        DescripText.text = string.Format(Environment.EnvDescription, Environment.SPDecPerTurn.ToString(), Environment.Duration.ToString());
+        DescripText.text = string.Format(Environment.EnvDescription, Environment.SPDecPerTurn.ToString());
     }
 }

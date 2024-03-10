@@ -11,7 +11,11 @@ public class Mlynar : EnemyBase
     public int ThornVal;
     public int ThornInc;
 
-    public override EnemyDisplay Get() { return Display; }
+    public override EnemyDisplay Get()
+    {
+        return Display;
+    }
+
     public override void Set(EnemyDisplay obj)
     {
         if (obj is MlynarDisplay)
@@ -20,16 +24,10 @@ public class Mlynar : EnemyBase
         }
     }
 
-    public Mlynar(string enemyID, string enemyName, string enemyDescription, int enemyMaxHP, int enemyMaxSP) : base(enemyID, enemyName, enemyDescription, enemyMaxHP, enemyMaxSP)
+    public Mlynar(EnemyConfigInfo enemyConfig) : base(enemyConfig)
     {
         ThornVal = 1;
         ThornInc = 3;
-    }
-
-    public override void ChangeState(CardBase card)
-    {
-        base.ChangeState(card);
-        Display.UpdateDisplayInfo();
     }
 
     public override void BindDisplayComponent(GameObject enemyModel)
@@ -44,25 +42,5 @@ public class Mlynar : EnemyBase
         EnemySP.Inc(10);
         Display.Move1();
         Display.UpdateDisplayInfo();
-    }
-
-    public override void Move2()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void Move3()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void Move4()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void Move5()
-    {
-        throw new System.NotImplementedException();
     }
 }

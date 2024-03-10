@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Spine.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,6 +31,7 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
 
     public virtual void BindDisplayComponent(GameObject gameObj)
     {
+        Debug.Log(Get().GetType().Name);
         Get().Bind(gameObj, this);
     }
 
@@ -50,6 +52,7 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
 
     public virtual void AddToEnvSlot()
     {
+        Debug.Log(1);
         List<EnvironmentBase> list = FightManager.Instance.EnvList;
         if (list.Count >= FightManager.MaxEnvCount)
         {

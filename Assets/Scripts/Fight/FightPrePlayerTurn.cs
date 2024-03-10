@@ -8,6 +8,7 @@ public class FightPrePlayerTurn : FightUnit
     {
         Debug.Log("Fight Pre Player Turn");
         FightManager.Instance.StartCoroutine(FightManager.Instance.DrawCards(FightManager.Instance.DrawCount));
+        FightManager.Instance.StartCoroutine(FightManager.Instance.CountDownEnv());
     }
 
     public override void OnUpdate()

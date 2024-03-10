@@ -54,9 +54,13 @@ public class FightManager : MonoBehaviour
         {
             file = AssetBundleManager.LoadResource<Object>(gameConfig.enemies[i], "config").ToString();
             EnemyConfigInfo enemyConfig = JsonConvert.DeserializeObject<EnemyConfigInfo>(file);
-            if (enemyConfig.enemyID == "Mlynar")
+            if (enemyConfig.id == "Mlynar")
             {
-                EnemyList.Add(new Mlynar(enemyConfig.enemyID, enemyConfig.enemyName, "NULL", enemyConfig.enemyHP, enemyConfig.enemySP));
+                EnemyList.Add(new Mlynar(enemyConfig));
+            }
+            else if (enemyConfig.id == "W")
+            {
+                EnemyList.Add(new W(enemyConfig));
             }
         }
     }
@@ -185,7 +189,7 @@ public class FightManager : MonoBehaviour
     }
 }
 
-sealed class SubgameConfigInfo
+public class SubgameConfigInfo
 {
     public string subgameID;
 
@@ -194,13 +198,11 @@ sealed class SubgameConfigInfo
     public string[] enemies;
 }
 
-sealed class EnemyConfigInfo
+public class EnemyConfigInfo
 {
-    public string enemyID;
-
-    public string enemyName;
-
-    public int enemyHP;
-
-    public int enemySP;
+    public string id;
+    public string name;
+    public string desc;
+    public int hp;
+    public int sp;
 }
