@@ -27,7 +27,6 @@ public abstract class CardBase : IProperty<CardDisplay>
     {
         CardDisplay display = Get();
         display.Set(this);
-        display.InHand = FightManager.Instance.CardPiles[1].Contains(this);
         display.UpdateDisplayInfo();
     }
 

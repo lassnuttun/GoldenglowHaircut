@@ -12,7 +12,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public TextMeshProUGUI CardDescriptionText;
     public TextMeshProUGUI CardCostText;
     public Image CardImage;
-    public bool InHand;
+    private bool InHand;
 
     public virtual CardBase Get()
     {
@@ -117,6 +117,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void MoveFromDeckToHand()
     {
+        InHand = true;
         FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
 
         RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
@@ -128,6 +129,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void MoveFromHandToDiscard()
     {
+        InHand = false;
         FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
 
         RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
@@ -139,6 +141,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void MoveFromHandToSlot()
     {
+        InHand = false;
         FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
 
         List<EnvironmentBase> list = FightManager.Instance.EnvList;
