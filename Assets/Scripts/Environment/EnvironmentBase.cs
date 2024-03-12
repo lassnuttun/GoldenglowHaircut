@@ -31,7 +31,6 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
 
     public virtual void BindDisplayComponent(GameObject gameObj)
     {
-        Debug.Log(Get().GetType().Name);
         Get().Bind(gameObj, this);
     }
 
@@ -52,7 +51,6 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
 
     public virtual void AddToEnvSlot()
     {
-        Debug.Log(1);
         List<EnvironmentBase> list = FightManager.Instance.EnvList;
         if (list.Count >= FightManager.MaxEnvCount)
         {
@@ -71,7 +69,10 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
             list[j - 1] = list[j];
         }
         list.RemoveAt(list.Count - 1);
-        FightManager.Instance.CardPiles[2].Add(Origin);
+        if (Origin != null)
+        {
+            FightManager.Instance.CardPiles[2].Add(Origin);
+        }
         Get().RemoveFromEnvSlot();
     }
 }

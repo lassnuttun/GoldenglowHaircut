@@ -51,6 +51,11 @@ public class EnvironmentDisplay : MonoBehaviour, IProperty<EnvironmentBase>
         FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
         transform.DOScale(0, FightUI.CardInterval).OnComplete(() => { Destroy(gameObject, 1); });
         // 环境卡进入弃牌堆的特效还没想好怎么加
+        CardBase card = Get().Origin;
+        if (card != null)
+        {
+            Destroy(card.Get().gameObject, 1);
+        }
         ui.UpdateEnvPos();
     }
 }

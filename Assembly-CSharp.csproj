@@ -74,6 +74,8 @@
     <Compile Include="Assets\Scripts\Card\EnvCreateCardDisplay.cs" />
     <Compile Include="Assets\Scripts\Card\HypnoticCenser.cs" />
     <Compile Include="Assets\Scripts\Card\HypnoticCenserDisplay.cs" />
+    <Compile Include="Assets\Scripts\Card\SuperCutCard.cs" />
+    <Compile Include="Assets\Scripts\Card\SuperCutDisplay.cs" />
     <Compile Include="Assets\Scripts\DemoStart.cs" />
     <Compile Include="Assets\Scripts\Enemy\ConditionBar.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyBase.cs" />

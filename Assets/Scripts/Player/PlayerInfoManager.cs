@@ -48,6 +48,13 @@ public class PlayerInfoManager
                     Deck.Add(new BasicSootheCard(cardConfigInfo));
                 }
             }
+            else if (card.id == "CardA002")
+            {
+                for (int i = 0; i < card.cnt; i++)
+                {
+                    Deck.Add(new SuperCutCard(cardConfigInfo));
+                }
+            }
             else if (card.id == "CardE001")
             {
                 for (int i = 0; i < card.cnt; i++)

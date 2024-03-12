@@ -32,9 +32,14 @@ public class W : EnemyBase
         AddPotato();
     }
 
-    public virtual void AddPotato()
+    public void AddPotato()
     {
         PotatoEnv potatoEnv = new PotatoEnv("E000", "奇怪的土豆", "", 100, null);
         potatoEnv.AddToEnvSlot();
+    }
+
+    public void MarkAsBomb()
+    {
+
     }
 }

@@ -55,8 +55,10 @@ public abstract class CardBase : IProperty<CardDisplay>
 
     public virtual void UseStep2(EnemyBase target = null)
     {
-        target.ChangeState(this);
-        target.Get().UpdateDisplayInfo();
+        if (target != null)
+        {
+            target.ChangeState(this);
+        }
     }
 
     public virtual void UseStep3()

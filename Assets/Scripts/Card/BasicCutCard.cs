@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BasicCutCard : CardBase
 {
-    BasicCutDisplay Display;
+    public BasicCutDisplay Display;
 
     public override CardDisplay Get()
     {
