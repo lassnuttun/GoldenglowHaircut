@@ -27,6 +27,6 @@ public class HypnoticCenser : EnvCreateCard<CalmEnv>
 
     public HypnoticCenser(CardConfigInfo info) : base(info)
     {
-        Environment = new CalmEnv("E001", "安神", "回合结束时，所有顾客SP减 {0}", InitDuration, this);
+        Environment = new CalmEnv("E001", "安神", "使所有顾客SP减少 {0} 点", InitDuration, this);
     }
 }

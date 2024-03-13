@@ -1,5 +1,4 @@
-﻿using Spine.Unity;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +10,9 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
 
     public int Duration;
     public CardBase Origin;
+
+    // 如果 Tag 类内容更加频繁得出现的话需要更加独立的实现机制
+    public bool BombTag;
 
     protected void LoadModel()
     {
@@ -74,5 +76,11 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
             FightManager.Instance.CardPiles[2].Add(Origin);
         }
         Get().RemoveFromEnvSlot();
+    }
+
+    public void MarkAsBomb()
+    {
+        BombTag = true;
+        Get().MarkAsBomb();
     }
 }

@@ -37,15 +37,22 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private int index;
     private Vector3 eulerAngle;
+    private Vector2 anchoredPosition;
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (InHand)
         {
-            transform.DOScale(1.3f * FightUI.CardScale, FightUI.CardInterval);
+            RectTransform rectTransform = transform.GetComponent<RectTransform>();
+            rectTransform.DOScale(1.3f * FightUI.CardScale, FightUI.CardInterval);
+
             eulerAngle = transform.localEulerAngles;
-            transform.localEulerAngles = Vector3.zero;
+            rectTransform.DORotate(Vector3.zero, FightUI.CardInterval);
+
+            anchoredPosition = rectTransform.anchoredPosition;
+            rectTransform.DOAnchorPosY(145, FightUI.CardInterval);
+
             index = transform.GetSiblingIndex();
-            transform.SetAsLastSibling();
+            rectTransform.SetAsLastSibling();
         }
     }
 
@@ -53,9 +60,11 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (InHand)
         {
-            transform.DOScale(FightUI.CardScale, FightUI.CardInterval);
-            transform.localEulerAngles = eulerAngle;
-            transform.SetSiblingIndex(index);
+            RectTransform rectTransform = transform.GetComponent<RectTransform>();
+            rectTransform.DOScale(FightUI.CardScale, FightUI.CardInterval);
+            rectTransform.DORotate(eulerAngle, FightUI.CardInterval);
+            rectTransform.DOAnchorPos(anchoredPosition, FightUI.CardInterval);
+            rectTransform.SetSiblingIndex(index);
         }
     }
 

@@ -29,7 +29,8 @@ public class W : EnemyBase
 
     public override void Move1()
     {
-        AddPotato();
+        // AddPotato();
+        MarkAsBomb(0);
     }
 
     public void AddPotato()
@@ -38,8 +39,13 @@ public class W : EnemyBase
         potatoEnv.AddToEnvSlot();
     }
 
-    public void MarkAsBomb()
+    public void MarkAsBomb(int index)
     {
-
+        List<EnvironmentBase> list = FightManager.Instance.EnvList;
+        if (index >= list.Count || list[index].BombTag)
+        {
+            return;
+        }
+        list[index].MarkAsBomb();
     }
 }

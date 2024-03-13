@@ -29,7 +29,7 @@ public class EnvironmentDisplay : MonoBehaviour, IProperty<EnvironmentBase>
     public virtual void UpdateDisplayInfo()
     {
         EnvironmentBase environment = Get();
-        CurEnvText.text = string.Format("{0}：剩余{1}回合", environment.EnvName, environment.Duration.ToString());
+        CurEnvText.text = string.Format("{0}：{1}回合", environment.EnvName, environment.Duration.ToString());
     }
 
     public void AddToEnvSlot()
@@ -57,5 +57,13 @@ public class EnvironmentDisplay : MonoBehaviour, IProperty<EnvironmentBase>
             Destroy(card.Get().gameObject, 1);
         }
         ui.UpdateEnvPos();
+    }
+
+    public void MarkAsBomb()
+    {
+        Object resource = AssetBundleManager.LoadResource<Object>("BombTag", "env");
+        GameObject gameObj = GameObject.Instantiate(resource, transform) as GameObject;
+        gameObj.transform.localPosition = new Vector3(100, 0, 0);
+        gameObj.transform.SetSiblingIndex(1);
     }
 }
