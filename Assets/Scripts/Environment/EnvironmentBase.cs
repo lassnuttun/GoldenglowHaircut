@@ -75,7 +75,7 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
         Get().RemoveFromEnvSlot();
     }
 
-    public void DestroyByBomb()
+    public void Explode()
     {
         List<EnvironmentBase> list = FightManager.Instance.EnvList;
         for (int j = list.IndexOf(this) + 1; j < list.Count; j++)
@@ -83,6 +83,5 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
             list[j - 1] = list[j];
         }
         list.RemoveAt(list.Count - 1);
-        Get().Explode();
     }
 }

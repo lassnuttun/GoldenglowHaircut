@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using UnityEngine;
 
@@ -45,6 +44,7 @@ public class W : EnemyBase
     {
         PotatoEnv potatoEnv = new PotatoEnv("E000", "奇怪的土豆", "", 100, null);
         potatoEnv.AddToEnvSlot();
+        Display.AddPotato();
     }
 
     public void MarkAsBomb(int index)
@@ -60,6 +60,7 @@ public class W : EnemyBase
         }
         EnvToExplode.Add(list[index], 2);
         list[index].Get().MarkAsBomb();
+        Display.MarkAsBomb();
     }
 
     public void ExplodeBomb()
@@ -71,7 +72,9 @@ public class W : EnemyBase
             {
                 if (--EnvToExplode[item.Key] <= 0)
                 {
-                    item.Key.DestroyByBomb();
+                    item.Key.Explode();
+                    EnvToExplode.Remove(item.Key);
+                    Display.ExplodeBomb(item.Key.Get());
                 }
             }
             else
