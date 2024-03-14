@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using UnityEngine;
 
 public class W : EnemyBase
 {
     public WDisplay Display;
+
+    private Dictionary<EnvironmentBase, int> EnvToExplode;
 
     public override EnemyDisplay Get()
     {
@@ -19,7 +23,10 @@ public class W : EnemyBase
         }
     }
 
-    public W(EnemyConfigInfo enemyConfig) : base(enemyConfig) { }
+    public W(EnemyConfigInfo enemyConfig) : base(enemyConfig)
+    {
+        EnvToExplode = new Dictionary<EnvironmentBase, int>();
+    }
 
     public override void BindDisplayComponent(GameObject enemyModel)
     {
@@ -31,6 +38,7 @@ public class W : EnemyBase
     {
         // AddPotato();
         MarkAsBomb(0);
+        ExplodeBomb();
     }
 
     public void AddPotato()
@@ -42,10 +50,34 @@ public class W : EnemyBase
     public void MarkAsBomb(int index)
     {
         List<EnvironmentBase> list = FightManager.Instance.EnvList;
-        if (index >= list.Count || list[index].BombTag)
+        if (index >= list.Count)
         {
             return;
         }
-        list[index].MarkAsBomb();
+        if (EnvToExplode.TryGetValue(list[index], out _))
+        {
+            return;
+        }
+        EnvToExplode.Add(list[index], 2);
+        list[index].Get().MarkAsBomb();
+    }
+
+    public void ExplodeBomb()
+    {
+        List<EnvironmentBase> list = FightManager.Instance.EnvList;
+        foreach (var item in EnvToExplode.AsEnumerable().Reverse())
+        {
+            if (list.Contains(item.Key))
+            {
+                if (--EnvToExplode[item.Key] <= 0)
+                {
+                    item.Key.DestroyByBomb();
+                }
+            }
+            else
+            {
+                EnvToExplode.Remove(item.Key);
+            }
+        }
     }
 }

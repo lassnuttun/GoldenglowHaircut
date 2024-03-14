@@ -66,4 +66,21 @@ public class EnvironmentDisplay : MonoBehaviour, IProperty<EnvironmentBase>
         gameObj.transform.localPosition = new Vector3(100, 0, 0);
         gameObj.transform.SetSiblingIndex(1);
     }
+
+    public void Explode()
+    {
+        FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
+
+        Object resource = AssetBundleManager.LoadResource<Object>("Explosion", "particle");
+        GameObject gameObj = GameObject.Instantiate(resource, transform) as GameObject;
+        gameObj.transform.GetComponent<ParticleSystem>().Play();
+
+        transform.DOScale(0, FightUI.CardInterval).OnComplete(() => { Destroy(gameObject, 1); });
+        CardBase card = Get().Origin;
+        if (card != null)
+        {
+            Destroy(card.Get().gameObject, 1);
+        }
+        ui.UpdateEnvPos();
+    }
 }

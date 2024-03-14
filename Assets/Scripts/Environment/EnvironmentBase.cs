@@ -11,9 +11,6 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
     public int Duration;
     public CardBase Origin;
 
-    // 如果 Tag 类内容更加频繁得出现的话需要更加独立的实现机制
-    public bool BombTag;
-
     protected void LoadModel()
     {
         FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
@@ -78,9 +75,14 @@ public abstract class EnvironmentBase : IProperty<EnvironmentDisplay>
         Get().RemoveFromEnvSlot();
     }
 
-    public void MarkAsBomb()
+    public void DestroyByBomb()
     {
-        BombTag = true;
-        Get().MarkAsBomb();
+        List<EnvironmentBase> list = FightManager.Instance.EnvList;
+        for (int j = list.IndexOf(this) + 1; j < list.Count; j++)
+        {
+            list[j - 1] = list[j];
+        }
+        list.RemoveAt(list.Count - 1);
+        Get().Explode();
     }
 }

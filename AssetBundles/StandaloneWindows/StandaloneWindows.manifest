@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3028502030
+CRC: 3354337566
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -23,3 +23,6 @@ AssetBundleManifest:
       Name: env
       Dependencies:
         Dependency_0: font
+    Info_6:
+      Name: particle
+      Dependencies: {}

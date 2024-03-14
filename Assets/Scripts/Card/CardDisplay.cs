@@ -38,6 +38,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private int index;
     private Vector3 eulerAngle;
     private Vector2 anchoredPosition;
+    // 需要在抽取手牌动画播放时禁用，尚未实现
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (InHand)
