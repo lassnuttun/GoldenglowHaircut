@@ -62,7 +62,7 @@ public class EnvironmentDisplay : MonoBehaviour, IProperty<EnvironmentBase>
         gameObj.transform.SetSiblingIndex(1);
     }
 
-    public void Explode()
+    public void ExplodeBomb()
     {
         FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
 
@@ -70,7 +70,6 @@ public class EnvironmentDisplay : MonoBehaviour, IProperty<EnvironmentBase>
         GameObject gameObj = GameObject.Instantiate(resource, transform) as GameObject;
         gameObj.transform.GetComponent<ParticleSystem>().Play();
 
-        // transform.DOScale(0, FightUI.CardInterval);
         transform.DOScale(0, FightUI.CardInterval).OnComplete(() => { Destroy(gameObject, 1); });
         ui.UpdateEnvPos();
     }

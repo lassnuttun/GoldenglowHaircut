@@ -36,7 +36,7 @@ public class Mlynar : EnemyBase
         base.BindDisplayComponent(enemyModel);
     }
 
-    public override void Move1()
+    public override void TakeAction()
     {
         ThornVal += ThornInc;
         EnemySP.Inc(10);

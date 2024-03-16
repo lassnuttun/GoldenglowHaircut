@@ -20,14 +20,19 @@ public class WDisplay : EnemyDisplay
 
     public void AddPotato()
     {
-        SkelGrap.AnimationState.SetAnimation(0, "Skill_1", false);
+        SkelGrap.AnimationState.SetAnimation(0, "Skill_1", false).End += (TrackEntry trackEntry) =>
+        {
+
+        };
         SkelGrap.AnimationState.AddAnimation(0, "Idle", true, 0);
     }
 
-    // 需要像 ExplodeBomb 一样，结束完骨骼动画之后再加上炸弹标签
-    public void MarkAsBomb()
+    public void MarkAsBomb(EnvironmentDisplay display)
     {
-        SkelGrap.AnimationState.SetAnimation(0, "Skill_2", false);
+        SkelGrap.AnimationState.SetAnimation(0, "Skill_2", false).End += (TrackEntry trackEntry) =>
+        {
+            display.MarkAsBomb();
+        };
         SkelGrap.AnimationState.AddAnimation(0, "Idle", true, 0);
     }
 
@@ -35,7 +40,12 @@ public class WDisplay : EnemyDisplay
     {
         SkelGrap.AnimationState.SetAnimation(0, "Skill_3", false).End += (TrackEntry trackEntry) =>
         {
-            display.Explode();
+            display.ExplodeBomb();
+            // 需要移动到敌人的脚本逻辑里
+            foreach (var enemy in FightManager.Instance.EnemyList)
+            {
+                enemy.ModifySP(30);
+            }
         };
         SkelGrap.AnimationState.AddAnimation(0, "Idle", true, 0);
     }

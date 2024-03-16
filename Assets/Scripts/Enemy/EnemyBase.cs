@@ -43,15 +43,23 @@ public abstract class EnemyBase : IProperty<EnemyDisplay>
     public virtual void ChangeState(CardBase card)
     {
         HitBy(card, out int deltaHP, out int deltaSP);
+        ModifyHP(deltaHP);
+        ModifySP(deltaSP);
+    }
+
+    public void ModifyHP(int deltaHP)
+    {
         EnemyHP.Inc(deltaHP);
+        Get().UpdateDisplayInfo();
+    }
+
+    public void ModifySP(int deltaSP)
+    {
         EnemySP.Inc(deltaSP);
         Get().UpdateDisplayInfo();
     }
 
-    // 后续需要把这个移到具体子类内部 用状态机维护下一次该采取什么行动
-    public virtual void Move1() { }
-    public virtual void Move2() { }
-    public virtual void Move3() { }
-    public virtual void Move4() { }
-    public virtual void Move5() { }
+    public virtual void TakeAction()
+    {
+    }
 }

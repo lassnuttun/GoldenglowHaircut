@@ -153,7 +153,7 @@ public class FightManager : MonoBehaviour
     {
         foreach (var enemy in EnemyList)
         {
-            enemy.Move1();
+            enemy.TakeAction();
             yield return new WaitForSeconds(1.5f);
         }
         Instance.MoveOn(FightUnitType.PrePlayerTurn);

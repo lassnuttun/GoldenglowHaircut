@@ -6,7 +6,7 @@ using UnityEngine;
 public class W : EnemyBase
 {
     public WDisplay Display;
-
+    public int StepCnt;
     private Dictionary<EnvironmentBase, int> EnvToExplode;
 
     public override EnemyDisplay Get()
@@ -24,6 +24,7 @@ public class W : EnemyBase
 
     public W(EnemyConfigInfo enemyConfig) : base(enemyConfig)
     {
+        StepCnt = 1;
         EnvToExplode = new Dictionary<EnvironmentBase, int>();
     }
 
@@ -31,13 +32,48 @@ public class W : EnemyBase
     {
         Display = enemyModel.AddComponent<WDisplay>();
         base.BindDisplayComponent(enemyModel);
+        AddPotato();
     }
 
-    public override void Move1()
+    public override void TakeAction()
     {
-        // AddPotato();
-        MarkAsBomb(0);
+        switch (StepCnt)
+        {
+            case 1:
+                MarkAsBomb(0);
+                break;
+            case 2:
+                ModifySP(15);
+                // 危险环境还没写
+                break;
+            case 3:
+                MarkAsBomb(0);
+                MarkAsBomb(1);
+                break;
+            case 4:
+                // 将所有环境卡变成土豆还没写
+                break;
+            case 5:
+                MarkAsBomb(0);
+                MarkAsBomb(1);
+                MarkAsBomb(2);
+                break;
+            case 6:
+                MarkAsBomb(0);
+                break;
+            case 7:
+                ModifySP(30);
+                break;
+            default:
+                ModifySP(10);
+                MarkAsBomb(0);
+                MarkAsBomb(1);
+                MarkAsBomb(2);
+                MarkAsBomb(3);
+                break;
+        }
         ExplodeBomb();
+        StepCnt++;
     }
 
     public void AddPotato()
@@ -59,8 +95,7 @@ public class W : EnemyBase
             return;
         }
         EnvToExplode.Add(list[index], 2);
-        list[index].Get().MarkAsBomb();
-        Display.MarkAsBomb();
+        Display.MarkAsBomb(list[index].Get());
     }
 
     public void ExplodeBomb()
@@ -72,7 +107,7 @@ public class W : EnemyBase
             {
                 if (--EnvToExplode[item.Key] <= 0)
                 {
-                    item.Key.Explode();
+                    item.Key.ExplodeBomb();
                     EnvToExplode.Remove(item.Key);
                     Display.ExplodeBomb(item.Key.Get());
                 }
@@ -82,5 +117,10 @@ public class W : EnemyBase
                 EnvToExplode.Remove(item.Key);
             }
         }
+    }
+
+    public void TransformAllEnv()
+    {
+
     }
 }
