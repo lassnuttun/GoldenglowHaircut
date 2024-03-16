@@ -158,7 +158,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         int count = list.Count;
         RectTransform rectTransform = list[count - 1].Get().GetComponent<RectTransform>();
         transform.DOMove(rectTransform.position, FightUI.CardInterval);
-        transform.DOScale(0, FightUI.CardInterval);
+        transform.DOScale(0, FightUI.CardInterval).OnComplete(() => { Destroy(gameObject, 1); });
         FightManager.Instance.CardPiles[1].Remove(Get());
         ui.UpdateCardPos();
     }

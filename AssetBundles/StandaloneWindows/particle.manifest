@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2962959798
+CRC: 2122897910
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d03f3ff8faea55194225f0855fe6c850
+    Hash: 519ca8fe8846c41dc6c28286351e3819
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 8a96719d08deabf26c5f3587f61f3745
+    Hash: 8e7a9a5bc260fb3cb7f278e39396d550
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -15,6 +15,8 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 21
   Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
 - Class: 48
   Script: {instanceID: 0}
 - Class: 198
@@ -22,5 +24,6 @@ ClassTypes:
 - Class: 199
   Script: {instanceID: 0}
 Assets:
+- Assets/Prefabs/ParticleSystem/ExplsionMat.mat
 - Assets/Prefabs/ParticleSystem/Explosion.prefab
 Dependencies: []
