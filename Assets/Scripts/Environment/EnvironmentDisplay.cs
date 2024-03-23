@@ -46,7 +46,7 @@ public class EnvironmentDisplay : MonoBehaviour, IProperty<EnvironmentBase>
         }
     }
 
-    public void RemoveFromEnvSlot()
+    public void RemoveFromEnvSlot(bool toDiscardPile = true)
     {
         FightUI ui = UIManager.Instance.GetUI<FightUI>("FightUI");
         transform.DOScale(0, FightUI.CardInterval).OnComplete(() => { Destroy(gameObject, 1); });

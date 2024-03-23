@@ -39,6 +39,15 @@ public class WDisplay : EnemyDisplay
         SkelGrap.AnimationState.AddAnimation(0, "Idle", true, 0);
     }
 
+    public void AddDangerEnv()
+    {
+        SkelGrap.AnimationState.SetAnimation(0, "Skill_1", false).End += (TrackEntry trackEntry) =>
+        {
+            Enemy.ExplodeBomb();
+        };
+        SkelGrap.AnimationState.AddAnimation(0, "Idle", true, 0);
+    }
+
     public void ExplodeBomb(List<EnvironmentDisplay> displays)
     {
         if (displays.Count == 0)
@@ -57,6 +66,15 @@ public class WDisplay : EnemyDisplay
                     enemy.ModifySP(30);
                 }
             }
+        };
+        SkelGrap.AnimationState.AddAnimation(0, "Idle", true, 0);
+    }
+
+    public void PotatoMagic()
+    {
+        SkelGrap.AnimationState.SetAnimation(0, "Die", false).End += (TrackEntry trackEntry) =>
+        {
+            Enemy.ExplodeBomb();
         };
         SkelGrap.AnimationState.AddAnimation(0, "Idle", true, 0);
     }

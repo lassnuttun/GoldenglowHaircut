@@ -26,5 +26,5 @@ public class PotatoEnv : EnvironmentBase
     }
 
     public PotatoEnv(string envID, string envName, string envDescription, int duration, CardBase origin)
-        : base(envID, envName, envDescription, duration, origin) { }
+        : base(envID, envName, envDescription, duration, null) { }
 }

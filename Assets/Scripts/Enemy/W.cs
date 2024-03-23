@@ -32,7 +32,7 @@ public class W : EnemyBase
     {
         Display = enemyModel.AddComponent<WDisplay>();
         base.BindDisplayComponent(enemyModel);
-        AddPotato();
+        AddPotato(1);
     }
 
     public override void TakeAction()
@@ -44,15 +44,13 @@ public class W : EnemyBase
                 break;
             case 2:
                 ModifySP(15);
-                ExplodeBomb();
-                // 危险环境还没写
+                AddDangerEnv();
                 break;
             case 3:
                 MarkAsBomb(new List<int> { 0, 1 });
                 break;
             case 4:
-                // 将所有环境卡变成土豆还没写
-                ExplodeBomb();
+                PotatoMagic();
                 break;
             case 5:
                 MarkAsBomb(new List<int> { 0, 1, 2 });
@@ -69,14 +67,20 @@ public class W : EnemyBase
                 MarkAsBomb(new List<int> { 0, 1, 2, 3 });
                 break;
         }
-        // ExplodeBomb();
         StepCnt++;
     }
 
-    public void AddPotato()
+    public void AddPotato(int cnt)
     {
-        PotatoEnv potatoEnv = new PotatoEnv("E000", "奇怪的土豆", "", 100, null);
-        potatoEnv.AddToEnvSlot();
+        if (cnt <= 0)
+        {
+            return;
+        }
+        for (int i = 0; i < cnt; i++)
+        {
+            PotatoEnv potatoEnv = new PotatoEnv("E000", "奇怪的土豆", "", 100, null);
+            potatoEnv.AddToEnvSlot();
+        }
         Display.AddPotato();
     }
 
@@ -94,6 +98,13 @@ public class W : EnemyBase
             displays.Add(list[index].Get());
         }
         Display.MarkAsBomb(displays);
+    }
+
+    public void AddDangerEnv()
+    {
+        DangerousEnv dangerEnv = new DangerousEnv("E004", "危险环境", "造成的修剪值减半", 2, null);
+        dangerEnv.AddToEnvSlot();
+        Display.AddDangerEnv();
     }
 
     public void ExplodeBomb()
@@ -124,5 +135,25 @@ public class W : EnemyBase
         }
 
         Display.ExplodeBomb(bomb);
+    }
+
+    public void PotatoMagic()
+    {
+        var list = FightManager.Instance.EnvList;
+        int cnt = list.Count;
+        
+        foreach (var env in list.AsEnumerable().Reverse())
+        {
+            env.ExplodeBomb();
+            env.Get().RemoveFromEnvSlot(false);
+        }
+
+        for (int i = 0; i < cnt; i++)
+        {
+            PotatoEnv potatoEnv = new PotatoEnv("E000", "奇怪的土豆", "", 100, null);
+            potatoEnv.AddToEnvSlot();
+        }
+
+        Display.PotatoMagic();
     }
 }
