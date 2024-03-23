@@ -15,6 +15,7 @@ public abstract class EnvCreateCard<T> : CardBase where T : EnvironmentBase
 
     public override void UseStep2(EnemyBase target = null)
     {
+        Environment.Duration = InitDuration;
         Environment.AddToEnvSlot();
     }
 

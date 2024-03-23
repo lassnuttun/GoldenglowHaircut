@@ -125,9 +125,4 @@ public class W : EnemyBase
 
         Display.ExplodeBomb(bomb);
     }
-
-    public void TransformAllEnv()
-    {
-
-    }
 }
