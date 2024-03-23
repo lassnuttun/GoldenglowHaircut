@@ -22,29 +22,40 @@ public class WDisplay : EnemyDisplay
     {
         SkelGrap.AnimationState.SetAnimation(0, "Skill_1", false).End += (TrackEntry trackEntry) =>
         {
-
         };
         SkelGrap.AnimationState.AddAnimation(0, "Idle", true, 0);
     }
 
-    public void MarkAsBomb(EnvironmentDisplay display)
+    public void MarkAsBomb(List<EnvironmentDisplay> displays)
     {
         SkelGrap.AnimationState.SetAnimation(0, "Skill_2", false).End += (TrackEntry trackEntry) =>
         {
-            display.MarkAsBomb();
+            foreach (var display in displays)
+            {
+                display.MarkAsBomb();
+            }
+            Enemy.ExplodeBomb();
         };
         SkelGrap.AnimationState.AddAnimation(0, "Idle", true, 0);
     }
 
-    public void ExplodeBomb(EnvironmentDisplay display)
+    public void ExplodeBomb(List<EnvironmentDisplay> displays)
     {
+        if (displays.Count == 0)
+        {
+            SkelGrap.AnimationState.AddAnimation(0, "Idle", true, 0);
+            return;
+        }
         SkelGrap.AnimationState.SetAnimation(0, "Skill_3", false).End += (TrackEntry trackEntry) =>
         {
-            display.ExplodeBomb();
-            // 需要移动到敌人的脚本逻辑里
-            foreach (var enemy in FightManager.Instance.EnemyList)
+            foreach (var display in displays)
             {
-                enemy.ModifySP(30);
+                display.ExplodeBomb();
+                // 需要移动到敌人的脚本逻辑里
+                foreach (var enemy in FightManager.Instance.EnemyList)
+                {
+                    enemy.ModifySP(30);
+                }
             }
         };
         SkelGrap.AnimationState.AddAnimation(0, "Idle", true, 0);

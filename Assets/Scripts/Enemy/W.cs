@@ -40,39 +40,36 @@ public class W : EnemyBase
         switch (StepCnt)
         {
             case 1:
-                MarkAsBomb(0);
+                MarkAsBomb(new List<int> { 0 });
                 break;
             case 2:
                 ModifySP(15);
+                ExplodeBomb();
                 // 危险环境还没写
                 break;
             case 3:
-                MarkAsBomb(0);
-                MarkAsBomb(1);
+                MarkAsBomb(new List<int> { 0, 1 });
                 break;
             case 4:
                 // 将所有环境卡变成土豆还没写
+                ExplodeBomb();
                 break;
             case 5:
-                MarkAsBomb(0);
-                MarkAsBomb(1);
-                MarkAsBomb(2);
+                MarkAsBomb(new List<int> { 0, 1, 2 });
                 break;
             case 6:
-                MarkAsBomb(0);
+                MarkAsBomb(new List<int> { 0 });
                 break;
             case 7:
                 ModifySP(30);
+                ExplodeBomb();
                 break;
             default:
                 ModifySP(10);
-                MarkAsBomb(0);
-                MarkAsBomb(1);
-                MarkAsBomb(2);
-                MarkAsBomb(3);
+                MarkAsBomb(new List<int> { 0, 1, 2, 3 });
                 break;
         }
-        ExplodeBomb();
+        // ExplodeBomb();
         StepCnt++;
     }
 
@@ -83,40 +80,50 @@ public class W : EnemyBase
         Display.AddPotato();
     }
 
-    public void MarkAsBomb(int index)
+    public void MarkAsBomb(List<int> indices)
     {
-        List<EnvironmentBase> list = FightManager.Instance.EnvList;
-        if (index >= list.Count)
+        var list = FightManager.Instance.EnvList;
+        var displays = new List<EnvironmentDisplay>();
+        foreach (var index in indices)
         {
-            return;
+            if (EnvToExplode.TryGetValue(list[index], out _))
+            {
+                continue;
+            }
+            EnvToExplode.Add(list[index], 2);
+            displays.Add(list[index].Get());
         }
-        if (EnvToExplode.TryGetValue(list[index], out _))
-        {
-            return;
-        }
-        EnvToExplode.Add(list[index], 2);
-        Display.MarkAsBomb(list[index].Get());
+        Display.MarkAsBomb(displays);
     }
 
     public void ExplodeBomb()
     {
-        List<EnvironmentBase> list = FightManager.Instance.EnvList;
-        foreach (var item in EnvToExplode.AsEnumerable().Reverse())
+        var list = FightManager.Instance.EnvList;
+        var bomb = new List<EnvironmentDisplay>();
+        var trash = new List<EnvironmentBase>();
+        foreach (var env in EnvToExplode.Keys.ToList())
         {
-            if (list.Contains(item.Key))
+            if (list.Contains(env))
             {
-                if (--EnvToExplode[item.Key] <= 0)
+                if (--EnvToExplode[env] <= 0)
                 {
-                    item.Key.ExplodeBomb();
-                    EnvToExplode.Remove(item.Key);
-                    Display.ExplodeBomb(item.Key.Get());
+                    env.ExplodeBomb();
+                    bomb.Add(env.Get());
+                    trash.Add(env);
                 }
             }
             else
             {
-                EnvToExplode.Remove(item.Key);
+                trash.Add(env);
             }
         }
+
+        foreach (var env in trash)
+        {
+            EnvToExplode.Remove(env);
+        }
+
+        Display.ExplodeBomb(bomb);
     }
 
     public void TransformAllEnv()
