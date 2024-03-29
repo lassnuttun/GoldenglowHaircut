@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2959225633
+CRC: 1465558835
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: eb39e8fc10a80c3624ff81e8d2b04a6b
+    Hash: b7f0a76d932a87b90d73057b0a3a3b46
   TypeTreeHash:
     serializedVersion: 2
-    Hash: c615ba6a02caf4719fed1409a3c3d558
+    Hash: d78e01c8a9041188c051d9c3c43fa0ab
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -29,6 +29,10 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 8b76de7deec417e488d6216316dfe485, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: bfde789ec94afc44896e84928e624037, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7c866f0274c1bc847a716b8308ff9d52, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 73888c07c5e5e194cb5e09ee36296f07, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 213
@@ -39,8 +43,10 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/Prefabs/Card/CardA002.prefab
+- Assets/Prefabs/Card/CardA004.prefab
 - Assets/Prefabs/Card/CardA001.prefab
 - Assets/Prefabs/Card/CardE001.prefab
+- Assets/Prefabs/Card/CardA003.prefab
 - Assets/Prefabs/Card/CardA000.prefab
 Dependencies:
-- D:/unity_projects/Demo/AssetBundles/StandaloneWindows/font
+- C:/Users/Lenovo/Desktop/ai/GoldenglowHaircut/AssetBundles/StandaloneWindows/font

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4200927486
+CRC: 1651515297
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: eb8b6f7a85ab0956fdd337ad180ea5d2
+    Hash: 82396338f8aac9bbe7794e63a975a805
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -13,8 +13,10 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/GameConfig/EnemyConfig/Nearl2.json
+- Assets/GameConfig/CardConfig/CardA004.json
 - Assets/GameConfig/SubGameConfig/DemoGame.json
 - Assets/GameConfig/CardConfig/CardA000.json
+- Assets/GameConfig/CardConfig/CardA003.json
 - Assets/GameConfig/CardConfig/CardE001.json
 - Assets/GameConfig/EnemyConfig/Mlynar.json
 - Assets/GameConfig/CardConfig/CardA002.json

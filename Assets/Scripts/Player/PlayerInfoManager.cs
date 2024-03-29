@@ -55,6 +55,20 @@ public class PlayerInfoManager
                     Deck.Add(new SuperCutCard(cardConfigInfo));
                 }
             }
+            else if (card.id == "CardA003")
+            {
+                for (int i = 0; i < card.cnt; i++)
+                {
+                    Deck.Add(new QXJJCard(cardConfigInfo));
+                }
+            }
+            else if (card.id == "CardA004")
+            {
+                for (int i = 0; i < card.cnt; i++)
+                {
+                    Deck.Add(new JZDLCard(cardConfigInfo));
+                }
+            }
             else if (card.id == "CardE001")
             {
                 for (int i = 0; i < card.cnt; i++)
