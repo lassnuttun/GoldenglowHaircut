@@ -40,29 +40,37 @@ public class W : EnemyBase
         switch (StepCnt)
         {
             case 1:
+                Debug.Log("将第一个环境标记为炸弹");
                 MarkAsBomb(new List<int> { 0 });
                 break;
             case 2:
+                Debug.Log("SP+15,加入危险环境");
                 ModifySP(15);
                 AddDangerEnv();
                 break;
             case 3:
+                Debug.Log("将前两个环境标记为炸弹");
                 MarkAsBomb(new List<int> { 0, 1 });
                 break;
             case 4:
+                Debug.Log("将所有环境变为土豆");
                 PotatoMagic();
                 break;
             case 5:
+                Debug.Log("将前三个环境标记为炸弹");
                 MarkAsBomb(new List<int> { 0, 1, 2 });
                 break;
             case 6:
+                Debug.Log("将第一个环境标记为炸弹");
                 MarkAsBomb(new List<int> { 0 });
                 break;
             case 7:
+                Debug.Log("SP+30");
                 ModifySP(30);
                 ExplodeBomb();
                 break;
             default:
+                Debug.Log("SP+10,将前四个环境标记为炸弹");
                 ModifySP(10);
                 MarkAsBomb(new List<int> { 0, 1, 2, 3 });
                 break;
@@ -88,9 +96,10 @@ public class W : EnemyBase
     {
         var list = FightManager.Instance.EnvList;
         var displays = new List<EnvironmentDisplay>();
+        int count = list.Count;
         foreach (var index in indices)
         {
-            if (EnvToExplode.TryGetValue(list[index], out _))
+            if (index < 0 || index >= count || EnvToExplode.TryGetValue(list[index], out _))
             {
                 continue;
             }
@@ -102,7 +111,7 @@ public class W : EnemyBase
 
     public void AddDangerEnv()
     {
-        DangerousEnv dangerEnv = new DangerousEnv("E004", "危险环境", "造成的修剪值减半", 2, null);
+        DangerousEnv dangerEnv = new DangerousEnv("E004", "危险环境", "造成的修剪值减半", 3, null);
         dangerEnv.AddToEnvSlot();
         Display.AddDangerEnv();
     }

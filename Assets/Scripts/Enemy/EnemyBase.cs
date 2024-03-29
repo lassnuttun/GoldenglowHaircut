@@ -35,14 +35,23 @@ public abstract class EnemyBase : IProperty<EnemyDisplay>
 
     public void HitBy(CardBase card, out int deltaHP, out int deltaSP)
     {
-        deltaHP = card.CardHP;
-        deltaSP = card.CardSP;
+        double hpfactor = 1;
+        double spfactor = 1;
+        foreach(var env in FightManager.Instance.EnvList)
+        {
+            if (env is DangerousEnv)
+            {
+                hpfactor *= 0.5;
+            }
+        }
+        deltaHP = (int)(card.CardHP * hpfactor);
+        deltaSP = (int)(card.CardSP * spfactor);
     }
 
     // 需要加入环境卡对应的接口吗？
-    public virtual void ChangeState(CardBase card)
+    public virtual void ChangeState(CardBase card, out int deltaHP, out int deltaSP)
     {
-        HitBy(card, out int deltaHP, out int deltaSP);
+        HitBy(card, out deltaHP, out deltaSP);
         ModifyHP(deltaHP);
         ModifySP(deltaSP);
     }

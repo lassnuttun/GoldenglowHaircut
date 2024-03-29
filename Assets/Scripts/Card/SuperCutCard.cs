@@ -31,7 +31,7 @@ public class SuperCutCard : CardBase
     {
         for (int i = 0; i < 3; i++)
         {
-            target.ChangeState(this);
+            target.ChangeState(this, out _, out _);
         }
     }
 }

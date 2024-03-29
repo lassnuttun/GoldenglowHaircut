@@ -57,7 +57,7 @@ public abstract class CardBase : IProperty<CardDisplay>
     {
         if (target != null)
         {
-            target.ChangeState(this);
+            target.ChangeState(this, out _, out _);
         }
     }
 

@@ -18,4 +18,10 @@ public class DangerousEnvDisplay : EnvironmentDisplay
             Environment = obj as DangerousEnv;
         }
     }
+
+    public override void UpdateDisplayInfo()
+    {
+        base.UpdateDisplayInfo();
+        DescripText.text = Environment.EnvDescription;
+    }
 }

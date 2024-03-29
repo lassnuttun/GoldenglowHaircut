@@ -29,7 +29,7 @@ public class QXJJCard : CardBase
 
     public override void UseStep2(EnemyBase target = null)
     {
-        target.ChangeState(this); 
+        target.ChangeState(this, out _, out _); 
         foreach (CardBase card1 in FightManager.Instance.CardPiles[1])
         {
             if (card1.CardHP > 0)

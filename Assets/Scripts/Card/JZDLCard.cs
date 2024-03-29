@@ -29,7 +29,7 @@ public class JZDLCard : CardBase
 
     public override void UseStep2(EnemyBase target = null)
     {
-        target.ChangeState(this);
+        target.ChangeState(this, out int deltaHP, out _);
         int x = 0;
 
         foreach (CardBase card1 in FightManager.Instance.CardPiles[1])
@@ -48,7 +48,7 @@ public class JZDLCard : CardBase
                 {
                     if (y == 0)
                     {
-                        card2.CardHP += this.CardHP;
+                        card2.CardHP += deltaHP;
                         card2.Get()?.UpdateDisplayInfo();
                     }
                     y--;
