@@ -10,6 +10,7 @@ public abstract class CardBase : IProperty<CardDisplay>
     public int CardCost;
     public int CardHP;
     public int CardSP;
+    public int CardSA;
 
     protected void LoadModel()
     {
@@ -38,6 +39,7 @@ public abstract class CardBase : IProperty<CardDisplay>
         CardCost = info.cost;
         CardHP = info.hp;
         CardSP = info.sp;
+        CardSA = info.sa;
     }
 
     public void Use(EnemyBase target = null)

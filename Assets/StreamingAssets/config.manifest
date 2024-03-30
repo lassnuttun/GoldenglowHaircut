@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 593293041
+CRC: 646785144
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a64ee853f7ba728e2d9bce4b357be0a7
+    Hash: 89cf1533c8f7015ed9af943a1213bc07
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -16,6 +16,7 @@ Assets:
 - Assets/GameConfig/CardConfig/CardA004.json
 - Assets/GameConfig/SubGameConfig/DemoGame.json
 - Assets/GameConfig/CardConfig/CardA000.json
+- Assets/GameConfig/CardConfig/CardA005.json
 - Assets/GameConfig/CardConfig/CardA003.json
 - Assets/GameConfig/CardConfig/CardE001.json
 - Assets/GameConfig/EnemyConfig/Mlynar.json

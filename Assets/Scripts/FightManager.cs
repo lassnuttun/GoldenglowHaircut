@@ -115,8 +115,11 @@ public class FightManager : MonoBehaviour
     {
         foreach (var card in CardPiles[1].AsEnumerable().Reverse())
         {
-            card.DiscardFromHandPile();
-            yield return new WaitForSeconds(FightUI.CardInterval);
+            if (card.CardSA != 1)
+            {
+                card.DiscardFromHandPile();
+                yield return new WaitForSeconds(FightUI.CardInterval);
+            }
         }
     }
 

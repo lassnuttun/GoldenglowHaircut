@@ -69,6 +69,13 @@ public class PlayerInfoManager
                     Deck.Add(new JZDLCard(cardConfigInfo));
                 }
             }
+            else if (card.id == "CardA005")
+            {
+                for (int i = 0; i < card.cnt; i++)
+                {
+                    Deck.Add(new DDYLLCard(cardConfigInfo));
+                }
+            }
             else if (card.id == "CardE001")
             {
                 for (int i = 0; i < card.cnt; i++)
@@ -94,6 +101,7 @@ public class CardConfigInfo
     public int sp;
     public int dura;
     public string env;
+    public int sa;
 }
 
 public class CardCount

@@ -34,7 +34,7 @@ public class JZDLCard : CardBase
 
         foreach (CardBase card1 in FightManager.Instance.CardPiles[1])
         {
-            if (card1.CardHP > 0)
+            if (card1 != this && card1.CardHP > 0)
             {
                 x++;
             }
@@ -44,7 +44,7 @@ public class JZDLCard : CardBase
             int y = Random.Range(0, x);
             foreach (CardBase card2 in FightManager.Instance.CardPiles[1])
             {
-                if (card2.CardHP > 0)
+                if (card2 != this && card2.CardHP > 0)
                 {
                     if (y == 0)
                     {
