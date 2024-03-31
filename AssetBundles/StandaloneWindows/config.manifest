@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 646785144
+CRC: 3960496486
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 89cf1533c8f7015ed9af943a1213bc07
+    Hash: 1f359227a0e5b759b6f8ee47c2bf2ac4
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -20,6 +20,7 @@ Assets:
 - Assets/GameConfig/CardConfig/CardA003.json
 - Assets/GameConfig/CardConfig/CardE001.json
 - Assets/GameConfig/EnemyConfig/Mlynar.json
+- Assets/GameConfig/CardConfig/CardS001.json
 - Assets/GameConfig/CardConfig/CardA002.json
 - Assets/GameConfig/EnemyConfig/W.json
 - Assets/GameConfig/EnemyConfig/Blemishine.json

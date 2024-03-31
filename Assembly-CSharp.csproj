@@ -61,6 +61,7 @@
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleUI.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleUtils.cs" />
+     <Compile Include="Assets\RSYD.cs" />
      <Compile Include="Assets\Scripts\AssetBundleManager.cs" />
      <Compile Include="Assets\Scripts\Card\BasicCutCard.cs" />
      <Compile Include="Assets\Scripts\Card\BasicCutDisplay.cs" />
@@ -78,6 +79,8 @@
      <Compile Include="Assets\Scripts\Card\JZDLDisplay.cs" />
      <Compile Include="Assets\Scripts\Card\QXJJCard.cs" />
      <Compile Include="Assets\Scripts\Card\QXJJDisplay.cs" />
+     <Compile Include="Assets\Scripts\Card\RSYDCard.cs" />
+     <Compile Include="Assets\Scripts\Card\RSYDDisplay.cs" />
      <Compile Include="Assets\Scripts\Card\SuperCutCard.cs" />
      <Compile Include="Assets\Scripts\Card\SuperCutDisplay.cs" />
      <Compile Include="Assets\Scripts\DemoStart.cs" />

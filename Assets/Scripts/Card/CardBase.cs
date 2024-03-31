@@ -11,6 +11,9 @@ public abstract class CardBase : IProperty<CardDisplay>
     public int CardHP;
     public int CardSP;
     public int CardSA;
+    public int CardFT;
+    public int CardHPC;
+    public int CardSPC;
 
     protected void LoadModel()
     {
@@ -39,7 +42,11 @@ public abstract class CardBase : IProperty<CardDisplay>
         CardCost = info.cost;
         CardHP = info.hp;
         CardSP = info.sp;
+        CardFT = info.ft;
         CardSA = info.sa;
+        CardHPC= info.hp;
+        CardSPC = info.sp;
+
     }
 
     public void Use(EnemyBase target = null)
@@ -79,9 +86,16 @@ public abstract class CardBase : IProperty<CardDisplay>
 
     public void DiscardFromHandPile()
     {
+        ResetCardToInitialValues();
         List<List<CardBase>> cards = FightManager.Instance.CardPiles;
         cards[1].Remove(this);
         cards[2].Add(this);
         Get().MoveFromHandToDiscard();
+
+    }
+    private void ResetCardToInitialValues()
+    {
+        CardHP = CardHPC;
+        CardSP = CardSPC;
     }
 }

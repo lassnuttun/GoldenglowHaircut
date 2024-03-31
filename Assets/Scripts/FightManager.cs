@@ -80,7 +80,7 @@ public class FightManager : MonoBehaviour
         }
     }
 
-    public IEnumerator DrawCards(int count)
+    public IEnumerator DrawCards(int count, bool isDrawingCards = true)
     {
         count = Mathf.Min(count, MaxHandPileCount - CardPiles[1].Count);
         if (count <= 0)
@@ -107,7 +107,8 @@ public class FightManager : MonoBehaviour
             CardPiles[0][len - i - 1].DrawFromDeckPile();
             yield return new WaitForSeconds(FightUI.CardInterval);
         }
-        Instance.MoveOn(FightUnitType.PlayerTurn);
+        if (isDrawingCards)
+             Instance.MoveOn(FightUnitType.PlayerTurn);
         yield break;
     }
 
@@ -209,3 +210,4 @@ public class EnemyConfigInfo
     public int hp;
     public int sp;
 }
+

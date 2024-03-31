@@ -34,7 +34,7 @@ public class QXJJCard : CardBase
         {
             if (card1.CardHP > 0)
             {
-                card1.CardHP += 2;
+                card1.CardHP += 3;
                 card1.Get()?.UpdateDisplayInfo();
             }
         }

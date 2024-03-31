@@ -686,4 +686,3 @@ MonoBehaviour:
   CardDescriptionText: {fileID: 426630609430696454}
   CardCostText: {fileID: 5849217591339046159}
   CardImage: {fileID: 4439495523152718982}
-  InHand: 0

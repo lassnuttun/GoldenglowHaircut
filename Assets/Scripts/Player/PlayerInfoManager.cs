@@ -76,6 +76,13 @@ public class PlayerInfoManager
                     Deck.Add(new DDYLLCard(cardConfigInfo));
                 }
             }
+            else if (card.id == "CardS001")
+            {
+                for (int i = 0; i < card.cnt; i++)
+                {
+                    Deck.Add(new RSYDCard(cardConfigInfo));
+                }
+            }
             else if (card.id == "CardE001")
             {
                 for (int i = 0; i < card.cnt; i++)
@@ -102,6 +109,7 @@ public class CardConfigInfo
     public int dura;
     public string env;
     public int sa;
+    public int ft;
 }
 
 public class CardCount
